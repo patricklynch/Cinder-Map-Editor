@@ -37,16 +37,22 @@ void Node::draw()
 	switch( mNodeType )
 	{
 		case NodeTypeSphere:
+			glEnable( GL_CULL_FACE );
+			glCullFace( GL_BACK );
 			gl::drawSphere( Vec3f::zero(), size.x );
+			glDisable( GL_CULL_FACE );
 			break;
 			
 		case NodeTypeCube: {
+			glEnable( GL_CULL_FACE );
+			glCullFace( GL_BACK );
 			glMatrixMode( GL_TEXTURE );
 			glPushMatrix();
 			glScalef( mTextureUnitSize, mTextureUnitSize, 1.0f );
 			glTranslatef( textureLoc.x, textureLoc.y, 0.0f );
 			gl::drawCube( Vec3f::zero() + mAnchoredPosition, size * Vec3f::one() );
 			glPopMatrix();
+			glDisable( GL_CULL_FACE );
 		}
 			break;
 			

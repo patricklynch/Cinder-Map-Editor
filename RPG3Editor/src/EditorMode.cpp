@@ -102,7 +102,7 @@ void EditorMode::pickObjectAtScreenPoint( ci::Vec2i screenPoint )
 {
 	Ray ray = mCamera->rayIntoScene( screenPoint );
 	bool objectPicked = false;
-	sort( mTiles.begin(), mTiles.end(), EditableTile::sortCameraDistance );
+	std::sort( mTiles.begin(), mTiles.end(), EditableTile::sortCameraDistance );
 	for( std::vector<EditableTile*>::iterator iter = mTiles.begin(); iter != mTiles.end(); iter++) {
 		if ( mMultiSelect ) {
 			if ( (*iter)->pick( ray ) ) {
