@@ -73,7 +73,7 @@ void EditorMode::draw()
 	
 	gl::disableDepthRead();
 	
-	gl::setMatricesWindow( app::getWindowSize(), true );
+	//gl::setMatricesWindow( app::getWindowSize(), true );
 	
 }
 void EditorMode::applyCurrentMode( ci::Vec2i screenPoint )

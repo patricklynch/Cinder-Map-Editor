@@ -19,7 +19,7 @@ Input* Input::get()
 
 Input::Input() : mMouseDrag( new MouseDrag() ), mCursorPositionHasBeenSet( false )
 {
-	mCurrentMovePos = app::getWindowCenter();
+	mCurrentMovePos = Vec2i(0,0);
 	mLastMovePos = mCurrentMovePos;
 	
 	mMouseInputs[ Input::MOUSE_LEFT ] = false;

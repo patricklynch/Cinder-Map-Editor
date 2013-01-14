@@ -30,7 +30,6 @@
 	}
 	
 	mUpdateRate = 1.0f / 60.0f;
-    
     CADisplayLink* displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(update:)];
     [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 	mLastTimestamp = 0.0f;

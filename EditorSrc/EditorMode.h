@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Input.h"
 #include "Tile.h"
 #include "EditorCamera.h"
 #include "InputButtons.h"
@@ -29,6 +30,12 @@ class EditorMode {
 public:
 	EditorMode( Game* game );
 	virtual ~EditorMode();
+	
+	void mouseDown( ci::app::MouseEvent event ) { Input::get()->mouseDown( event ); }
+	void mouseMove( ci::app::MouseEvent event ) { Input::get()->mouseMove( event ); }
+	void mouseDrag( ci::app::MouseEvent event ) { Input::get()->mouseDrag( event ); }
+	void mouseUp  ( ci::app::MouseEvent event ) { Input::get()->mouseUp( event ); }
+	void keyDown  ( ci::app::KeyEvent event )   { Input::get()->keyDown  ( event ); }
 	
 	void draw();
 	void update( const float deltaTime );
