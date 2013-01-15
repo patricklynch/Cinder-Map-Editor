@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "Camera.h"
 #include "Input.h"
+#include "Constants.h"
 
 #include <algorithm>
 
@@ -15,11 +16,12 @@ using namespace ci;
 using namespace ci::app;
 
 
-EditorMode::EditorMode( Game* game ) : mGame( game ), mPaintMode( EditorPaintMove ), mCurrentElevation( 0.0f ), mMultiSelect( false )
+EditorMode::EditorMode( Game* game ) : mGame( game ), mPaintMode( EditorPaintSelection ), mCurrentElevation( 0.0f ), mMultiSelect( false )
 {
 	mCamera = ly::Camera::get();
+	mCurrentTextureLoc.set( 0, 0 );
 	mGame->setEditorModeActive( true );
-	
+	 
 	std::vector<Tile*>& gameTiles = mGame->tiles();
 	for( std::vector<Tile*>::iterator iter = gameTiles.begin(); iter != gameTiles.end(); iter++) {
 		mTiles.push_back( new EditableTile( *iter ) );
@@ -33,9 +35,9 @@ void EditorMode::setMode( int index )
 	mPaintMode = (EditorPaintMode) index;
 }
 
-void EditorMode::setCurrentTexture( int index )
+void EditorMode::setCurrentTextureLoc( int x, int y )
 {
-	mCurrentTextureIndex = index;
+	mCurrentTextureLoc = Vec2i( x, y );
 }
 
 void EditorMode::setCurrentElevation( float value )
@@ -82,14 +84,49 @@ void EditorMode::applyCurrentMode( ci::Vec2i screenPoint )
 	if ( selectedTile() != NULL ) {
 		switch( mPaintMode ) {
 			case EditorPaintTexture:
-				selectedTile()->setTexture( mCurrentTextureIndex );
+				addCommand( new ChangeTileTextureCommand( selectedTile(), mCurrentTextureLoc ) );
 				break;
 			case EditorPaintElevation:
-				selectedTile()->setElevation( mCurrentElevation );
+				addCommand( new ChangeTileElevationCommand( selectedTile(), mCurrentElevation ) );
 				break;
 			default:break;
 		}
 	}
+}
+
+void EditorMode::addCommand( EditorCommand* command )
+{
+	// If the current command is not the end, i.e. an undo has taken place, break off that future branch and delete it
+	if ( mCommandQueue.size() > 0 && currentCommand < mCommandQueue.end()-1 ) {
+		for( std::vector<EditorCommand*>::iterator iter = currentCommand+1; iter != mCommandQueue.end(); iter++ )
+			delete *iter;
+		mCommandQueue.erase( currentCommand+1, mCommandQueue.end() );
+	}
+	
+	// If the command can and did perform (returns true), add to the queue, and set the current command to the end of the queue
+	if ( command->execute() ) {
+		if ( mCommandQueue.size() >= kMaxUndo ) {
+			delete *mCommandQueue.begin();
+			mCommandQueue.erase( mCommandQueue.begin() );
+		}
+		mCommandQueue.push_back( command );
+		currentCommand = mCommandQueue.end()-1;
+	}
+	else delete command;
+}
+
+void EditorMode::undo()
+{
+	if ( !canUndo() ) return;
+	(*currentCommand)->undo();
+	currentCommand--;
+}
+
+void EditorMode::redo()
+{
+	if ( !canRedo() ) return;
+	currentCommand++;
+	(*currentCommand)->execute();
 }
 
 EditableTile* EditorMode::selectedTile() const

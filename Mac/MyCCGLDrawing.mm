@@ -1,4 +1,5 @@
 #import "MyCCGLDrawing.h"
+#import "MyController.h"
 
 @implementation MyCCGLDrawing
 
@@ -6,12 +7,14 @@
 {
 	[super setup];
 	
-	mGame = ly::Game::create( self.frame.size.width, self.frame.size.height );
+	mGame = ly::Game::create( self.frame.size.width, self.frame.size.height, 30 );
 	mEditor = new ly::EditorMode( mGame );
 	
 	mUpdateRate = 1.0f / 60.0f;
 	mLastDate = [[NSDate date] retain];
 	[NSTimer scheduledTimerWithTimeInterval:mUpdateRate target:self selector:@selector(update) userInfo:nil repeats:YES];
+	
+	[controller setEditor:mEditor];
 }
 
 
@@ -33,11 +36,6 @@
 	
 	mGame->draw();
 	mEditor->draw();
-}
-
-- (void) setCubeSize: (int) size
-{
-	console() << size << endl;
 }
 
 - (void)reshape

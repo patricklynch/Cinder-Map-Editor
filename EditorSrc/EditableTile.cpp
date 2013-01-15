@@ -26,6 +26,11 @@ void EditableTile::update( const float deltaTime )
 	mBoundingBox = AxisAlignedBox3f( min, max );
 }
 
+void EditableTile::setTextureLoc( ci::Vec2i loc )
+{
+	mTile->node().textureLoc = loc;
+}
+
 void EditableTile::setTexture( int index )
 {
 	Vec2i loc = Vec2i::zero();
@@ -37,6 +42,7 @@ void EditableTile::setTexture( int index )
 
 void EditableTile::setElevation(float value)
 {
+	console() << "value = " << value << std::endl;
 	mTile->node().size.y += value;
 }
 

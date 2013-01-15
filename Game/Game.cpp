@@ -57,6 +57,7 @@ void Game::createLevel()
 	for(int x = -n; x <= n; x++) {
 		for(int y = -n; y <= n; y++) {
 			Tile* tile = new Tile( x, y );
+			tile->node().size.y = randFloat() * 2.0f;
 			mTiles.push_back( tile );
 		}
 	}

@@ -3,8 +3,10 @@
 #include "Input.h"
 #include "Tile.h"
 #include "EditorCamera.h"
+#include "EditorCommand.h"
 #include "InputButtons.h"
 #include "EditableTile.h"
+#include "EditorTypes.h"
 
 #include "cinder/Vector.h"
 #include "cinder/AxisAlignedBox.h"
@@ -15,16 +17,6 @@ namespace ly {
 
 class Game;
 class Camera;
-	
-/*class Drag {
-public:
-	Drag() : isActive( false ) {}
-	bool isActive;
-	int touchCount;
-	ci::Vec2f current;
-	ci::Vec2f start;
-	ci::Vec2f amount() const { return current - start; }
-};*/
 	
 class EditorMode {
 public:
@@ -42,22 +34,28 @@ public:
 	void onButtonUp( int buttonTag );
 	void onButtonDown( int buttonTag );
 	
-	/*void touchesBegan( std::vector<Touch> touches );
-	void touchesMoved( std::vector<Touch> touches );
-	void touchesEnded( std::vector<Touch> touches );*/
-	
 	void setMode( int index );
-	void setCurrentTexture( int index );
+	void setCurrentTextureLoc( int x, int y );
 	void setCurrentElevation( float value );
 	void setMultiSelect( bool value ) { mMultiSelect = value; }
+	
 	
 	EditableTile* selectedTile() const;
 	EditorCamera mEditorCamera;
 	
+	void addCommand( EditorCommand* command );
+	void redo();
+	void undo();
+	bool canUndo() const { return mCommandQueue.size() > 0 && currentCommand >= mCommandQueue.begin(); }
+	bool canRedo() const { return mCommandQueue.size() > 0 && currentCommand < mCommandQueue.end()-1; }
+	
 private:
-	int mCurrentTextureIndex;
+	ci::Vec2i mCurrentTextureLoc;
 	float mCurrentElevation;
 	bool mMultiSelect;
+	
+	std::vector<EditorCommand*> mCommandQueue;
+	std::vector<EditorCommand*>::iterator currentCommand;
 	
 	void applyCurrentMode( ci::Vec2i screenPoint );
 	void pickObjectAtScreenPoint( ci::Vec2i screenPoint );

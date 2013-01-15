@@ -24,7 +24,6 @@ void EditorCamera::reset()
 	mCamera->setZoom( mDefaultZoom );
 	mCamera->position = mDefaultPosition;
 	mCamera->rotation = mDefaultRotation;
-	
 }
 
 void EditorCamera::update( const float deltaTime )

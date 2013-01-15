@@ -1,5 +1,7 @@
 #include "CCGLView.h"
 
+#import "MyController.h"
+
 #include "cinder/Camera.h"
 #include "cinder/MayaCamUI.h"
 
@@ -14,6 +16,7 @@
 	ly::EditorMode* mEditor;
 	float mUpdateRate;
 	NSDate* mLastDate;
+	IBOutlet MyController* controller;
 }
 
 - (void) update;
@@ -24,7 +27,5 @@
 - (void)mouseDown:(NSEvent*)theEvent initiator:(int) initiator;
 - (void)mouseDragged:(NSEvent*)theEvent initiator:(int) initiator;
 - (void)mouseMoved:(NSEvent*)theEvent initiator:(int) initiator;
-
-- (void) setCubeSize: (int) bits;
 
 @end

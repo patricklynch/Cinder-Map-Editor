@@ -55,6 +55,17 @@ void ly::Renderer::draw()
     
     gl::setMatrices( mCamera->cinderCamera() );
 	
+	glEnable( GL_LIGHTING );
+	glEnable (GL_COLOR_MATERIAL );
+	glEnable( GL_LIGHT0 );
+	GLfloat light_position[] = { 10.0f, 100.0f, -50.0f, 0 };
+	glLightfv( GL_LIGHT0, GL_POSITION, light_position );
+	
+	GLfloat mat_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
+	glMaterialfv( GL_FRONT, GL_DIFFUSE,	mat_diffuse );
+	GLfloat mat_ambient[] = { 2.0, 2.0, 2.0, 3.0 };
+	glMaterialfv( GL_FRONT, GL_AMBIENT,	mat_ambient );
+	
 	for( std::vector<Node*>::iterator iter = mNodes.begin(); iter != mNodes.end(); iter++) {
 		Node* node = *iter;
 		glMatrixMode( GL_MODELVIEW );
@@ -79,6 +90,10 @@ void ly::Renderer::draw()
 		glPopMatrix();
 	}
 	glDisable( GL_BLEND );
+	
+	glDisable( GL_LIGHTING );
+	glDisable( GL_COLOR_MATERIAL );
+	glDisable( GL_LIGHT0 );
 	
 	float length = 20.0f;
 	gl::color( 1, 0, 0, 1 );

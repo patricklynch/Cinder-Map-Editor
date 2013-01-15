@@ -1,10 +1,9 @@
 #pragma once
 #include "cinder/Color.h"
 
-static const float kWindowWidth		= 1024.0f;
-static const float kWindowHeight	= 768.0f;
+static const float kWindowWidth		= 640.0f;
+static const float kWindowHeight	= 480.0f;
 
-static const int kMaxUndo			= 100;
 static const int kParamsWidth		= 200;
 static const int kParamsHeight		= 200;
 

@@ -15,7 +15,7 @@ Tile::Tile( int startX, int startY )
 	x = startX;
 	y = startY;
 	
-	gl::Texture& texture1 = AssetManager::get()->getTexture( "grass.png" );
+	gl::Texture& texture1 = AssetManager::get()->getTexture( "texture_tiles.png" );
 	
 	mNode = new Node( NodeTypeCube );
 	mNode->size = Vec3f( kTileSize, kTileSize, kTileSize );

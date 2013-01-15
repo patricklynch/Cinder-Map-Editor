@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Tile.h"
-#include "InputButtons.h"
+#include "InputButtons.h""
+#include "EditorTypes.h"
 
 #include "cinder/Vector.h"
 #include "cinder/AxisAlignedBox.h"
@@ -10,27 +11,26 @@
 
 namespace ly {
 
-typedef enum {
-	EditorPaintMove,
-	EditorPaintSelection,
-	EditorPaintTexture,
-	EditorPaintElevation
-} EditorPaintMode;
-
 class EditableTile {
 public:
 	EditableTile( Tile* tile );
 	void draw();
 	void update( const float deltaTime );
+	Tile& tile() { return *mTile; }
+	
 	bool pick( ci::Ray );
 	void deselect() { mIsSelected = false; }
 	void select() { mIsSelected = true; }
 	bool isSelected() const { return mIsSelected; }
 	void toggleSelect() { mIsSelected = !mIsSelected; }
+	
 	float cameraDistance();
 	static bool sortCameraDistance( EditableTile* a, EditableTile* b );
+	
 	void setTexture( int index );
+	void setTextureLoc( ci::Vec2i loc );
 	void setElevation( float value );
+	
 private:
 	bool mIsSelected;
 	Tile* mTile;
