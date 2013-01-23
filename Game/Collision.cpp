@@ -73,12 +73,12 @@ void AttackZone::update( const float deltaTime )
 
 Hit::Hit( ci::Vec3f position, float duration )
 {
-	mNode = new Node( NodeTypeSprite );
+	/*mNode = new Node( NodeTypeSprite );
 	mNode->position = position;
 	mNode->position.z  = 0.5f;
 	mNode->size = Vec3f::one();
 	ly::Renderer::get()->addNode( mNode );
-	Animator::animate( &mAlpha, 1.0f, 0.0f, duration ).onUpdate( boost::bind( &Hit::animationUpdate, this ) );
+	Animator::animate( &mAlpha, 1.0f, 0.0f, duration ).onUpdate( boost::bind( &Hit::animationUpdate, this ) );*/
 }
 
 Hit::~Hit()

@@ -5,25 +5,46 @@
 #include "cinder/gl/Fbo.h"
 #include "cinder/ImageIo.h"
 
-#include "cinder/params/Params.h"
+#include <boost/bind.hpp>
 
 #include "Resources.h"
 #include "Constants.h"
+#include "Input.h"
+#include "Game.h"
+#include "EditorMode.h"
 
 using namespace ci;
 using namespace ci::app;
 using namespace std;
 
+namespace ly {
+
 class DesktopApp : public AppBasic {
-  public:
+public:
+	void mouseDown( ci::app::MouseEvent event ) { Input::get()->mouseDown( event ); }
+	void mouseMove( ci::app::MouseEvent event ) { Input::get()->mouseMove( event ); }
+	void mouseDrag( ci::app::MouseEvent event ) { Input::get()->mouseDrag( event ); }
+	void mouseUp  ( ci::app::MouseEvent event ) { Input::get()->mouseUp( event ); }
+	void keyDown  ( ci::app::KeyEvent event )   { Input::get()->keyDown  ( event ); }
+	
 	void prepareSettings( Settings *settings );
 	void setup();
 	void resize( ResizeEvent event );
 	void update();
 	void draw();
 	
-	params::InterfaceGl		mParams;
+	void toggleEditorMode();
+	
+private:
+	bool mEditorMode;
+	float mPrevElapsedSeconds;
+	EditorMode* mEditor;
+	Game* mGame;
 };
+	
+}
+
+using namespace ly;
 
 void DesktopApp::prepareSettings( Settings *settings )
 {
@@ -32,27 +53,37 @@ void DesktopApp::prepareSettings( Settings *settings )
 }
 
 void DesktopApp::setup()
-{
-	mParams = params::InterfaceGl( "Parameters", Vec2i( kParamsWidth, kParamsHeight ) );
-	/*mParams.addParam( "Mix Red", &mMixColorRed, "min=-1.0 max=1.0 step=0.01 keyIncr=r keyDecr=R" );
-	mParams.addParam( "Mix Green", &mMixColorGreen, "min=-1.0 max=1.0 step=0.01 keyIncr=g keyDecr=G" );
-	mParams.addParam( "Mix Blue", &mMixColorBlue, "min=-1.0 max=1.0 step=0.01 keyIncr=b keyDecr=B" );*/
+{	
+	mGame = Game::create( kWindowWidth, kWindowHeight, 20 );
+	mEditor = new EditorMode( mGame );
+	
+	mEditorMode = true;
+	ly::Input::get()->addListenerForKey( boost::bind( &DesktopApp::toggleEditorMode, this ), KeyEvent::KEY_e );
 }
 
-void DesktopApp::resize( ResizeEvent event )
+void DesktopApp::toggleEditorMode()
 {
+	mEditorMode = !mEditorMode;
 }
 
+void DesktopApp::resize( ResizeEvent event ) {}
 
 void DesktopApp::update()
 {
+    float currentTime = app::getElapsedSeconds();
+    float deltaTime = currentTime - mPrevElapsedSeconds;
+    mPrevElapsedSeconds = currentTime;
+	
+	mGame->update( deltaTime );
+	if ( mEditorMode ) mEditor->update( deltaTime );
 }
 
 void DesktopApp::draw()
 {
 	gl::clear( kClearColor );
 	
-	params::InterfaceGl::draw();
+	mGame->draw();
+	if ( mEditorMode ) mEditor->draw();
 }
 
 CINDER_APP_BASIC( DesktopApp, RendererGl(0) )

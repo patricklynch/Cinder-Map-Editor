@@ -1,6 +1,7 @@
 #include "Tile.h"
 #include "Renderer.h"
 #include "AssetManager.h"
+#include "GameConstants.h"
 
 #include "cinder/Rand.h"
 #include "cinder/app/App.h"
@@ -15,13 +16,13 @@ Tile::Tile( int startX, int startY )
 	x = startX;
 	y = startY;
 	
-	gl::Texture& texture1 = AssetManager::get()->getTexture( "texture_tiles.png" );
+	/*gl::Texture& texture1 = AssetManager::get()->getTexture( "texture_tiles.png" );
 	
-	mNode = new Node( NodeTypeCube );
+	mNode = new Node();
 	mNode->size = Vec3f( kTileSize, kTileSize, kTileSize );
 	mNode->setTexture( &texture1 );
 	mNode->anchor = Vec3f( 0.5f, 0.0f, 0.5f );
-	ly::Renderer::get()->addNode( mNode );
+	ly::Renderer::get()->addNode( mNode );*/
 }
 
 Tile::~Tile()

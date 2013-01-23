@@ -2,6 +2,7 @@
 #include "Tile.h"
 #include "Renderer.h"
 #include "AssetManager.h"
+#include "GameConstants.h"
 
 #include "cinder/gl/Texture.h"
 #include "cinder/app/App.h"
@@ -14,14 +15,14 @@ using namespace ci::app;
 
 Character::Character()
 {
-	gl::Texture& texture1 = AssetManager::get()->getTexture( "char_1.png" );
+	/*const gl::Texture* texture1 = AssetManager::get()->getTexture( "char_1.png" );
 					
-	mNode = new Node( NodeTypePlane );
+	mNode = new Node();
 	mNode->rotation.x = -90.0f;
-	mNode->scale = Vec3f( kTileSize, kTileSize, kTileSize ) * 0.5f;
+	mNode->scale = Vec3f( kTileSize, kTileSize, kTileSize ) * 1.0f;
 	mNode->position.y = 2.0f;
 	mNode->setTexture( &texture1 );
-	ly::Renderer::get()->addNode( mNode );
+	ly::Renderer::get()->addNode( mNode );*/
 }
 
 void Character::onEnterTile( const Tile& tile )

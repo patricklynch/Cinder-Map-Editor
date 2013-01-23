@@ -33,8 +33,8 @@ void ly::Camera::setFov( float fov )
 
 ci::Ray ly::Camera::rayIntoScene( ci::Vec2i screenPoint )
 {
-	float windowWidth = 1024;
-	float windowHeight = 768;
+	float windowWidth = app::getWindowWidth();
+	float windowHeight = app::getWindowHeight();
 	float aspect = windowWidth / windowHeight;
 	float u = screenPoint.x / windowWidth;
 	float v = screenPoint.y / windowHeight;

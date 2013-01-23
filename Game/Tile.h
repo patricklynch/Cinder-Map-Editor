@@ -4,9 +4,6 @@
 
 #include "cinder/Vector.h"
 
-const static float	kTileSize							= 0.2f;
-const static int	kDefaultMaxVisibleTileRadius		= 8;
-
 namespace ly {
 
 class Tile {

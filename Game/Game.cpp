@@ -2,6 +2,8 @@
 #include "Renderer.h"
 #include "Animator.h"
 #include "Tile.h"
+#include "GameConstants.h"
+#include "AssetManager.h"
 
 #include "cinder/app/App.h"
 #include "cinder/gl/gl.h"
@@ -43,50 +45,94 @@ Game::Game( int windowWidth, int windowHeight, int maxTileRadius ) : mHastUpdate
 	format.enableMipmapping();
 	format.setMagFilter( GL_NEAREST );
 	
-	createLevel();
-	mCharacter = new Character();
+	//mCharacter = new Character();
+	
+	preloadAssets();
+	
+	ly::Light* light = new ly::Light();
+	light->node().position = Vec3f( 0, 10, 0 );
+	ly::Renderer::get()->setShadowCastingLight( light );
+	
+	ly::Renderer::get()->setCamera( mCamera );
+	
+	Node* node = new Node();
+	node->setMesh( AssetManager::get()->getModel( "models/yoda.obj" ) );
+	node->setTexture( AssetManager::get()->getTexture( "textures/texture_tiles.png" ) );
+	ly::Renderer::get()->addNode( node );
+	
+	Vec2i center = mCharacter ? Tile::tilePosition( mCharacter->node().position ) : Vec2i::zero();
+	
+	float n = 4;
+	for(int x = -n; x <= n; x++) {
+		for(int y = -n; y <= n; y++) {
+			Node* node = new Node();
+			node->position = Vec3f( x, 0.0f, y ) * 1.0f;
+			//node->scale = Vec3f::one() * (float) kTileSize;
+			//node->setTexture( AssetManager::get()->getTexture( "textures/texture_tiles.png" ) );
+			node->setColor( ColorA( 1, 0, 0, 0 ) );
+			node->setMesh( AssetManager::get()->getModel( "models/cube.obj" ) );
+			ly::Renderer::get()->addNode( node );
+		}
+	}
+	
 }
 
 Game::~Game() {}
 
-void Game::createLevel()
+void Game::preloadAssets()
 {
-	Vec2i center = mCharacter ? Tile::tilePosition( mCharacter->node().position ) : Vec2i::zero();
-	
-	float n = mMaxVisibleTileRadius;
-	for(int x = -n; x <= n; x++) {
-		for(int y = -n; y <= n; y++) {
-			Tile* tile = new Tile( x, y );
-			tile->node().size.y = randFloat() * 2.0f;
-			mTiles.push_back( tile );
-		}
-	}
+	std::vector<std::string> testAssets;
+	std::string testAssetsArr[] = {
+		"shaders/passthru_mvp.vert",
+		"shaders/unlit.frag",
+		
+		"fonts/DisposableDroidBB_bld.ttf",
+		"fonts/DisposableDroidBB.ttf",
+		
+		"textures/default_black.png",
+		"textures/default_white.png",
+		"textures/default_gray.png",
+		"textures/texture_tiles.png",
+		
+		"models/yoda.obj",
+		"models/cube_multiface.obj",
+		"models/cube_smooth_multiface.obj",
+		"models/cube_smooth.obj",
+		"models/cube.obj",
+		"models/cylinder.obj",
+		"models/dome_tall.obj",
+		"models/dome.obj",
+		"models/geosphere_center.obj",
+		"models/geosphere.obj",
+		"models/tri_prism.obj",
+	};
+	for(int i = 0; i < sizeof( testAssetsArr ) / sizeof( std::string); i++ )
+		testAssets.push_back( testAssetsArr[i] );
+	AssetManager::get()->loadAssets( testAssets );
 }
 
-void Game::onButtonDown( int buttonIndex )
-{
-}
+void Game::onButtonDown( int buttonIndex ) {}
 
-void Game::onButtonUp( int buttonIndex )
-{
-}
+void Game::onButtonUp( int buttonIndex ) {}
 
 void Game::onJoypadInput( int joypadIndex, float x, float y )
 {
-	mCharacter->move( Vec2f( x, -y ) );
+	//mCharacter->move( Vec2f( x, -y ) );
 }
 
 void Game::update( const float deltaTime )
 {
 	Animator::update( deltaTime );
-	
-	mCharacter->update( deltaTime );
-	
-	if ( !mEditorMode )
-		mCamera->position += (mCharacter->focalPoint() - mCamera->position ) / 10.0f;
+	ly::Renderer::get()->update( deltaTime );
 	mCamera->update( deltaTime );
 	
-	Vec2i center = Tile::tilePosition( mCamera->position );
+	//mCharacter->update( deltaTime );
+	
+	//if ( !mEditorMode )
+	//	mCamera->position += (mCharacter->focalPoint() - mCamera->position ) / 10.0f;
+	
+	
+	/*Vec2i center = Tile::tilePosition( mCamera->position );
 	if ( center != mPrevCenter ) {
 		for( std::vector<Tile*>::iterator iter = mTiles.begin(); iter != mTiles.end(); iter++ ) {
 			Vec2i pos = Vec2i( (*iter)->x, (*iter)->y );
@@ -106,9 +152,12 @@ void Game::update( const float deltaTime )
 	}
 	mPrevCenter = center;
 	
-	for( std::vector<Tile*>::iterator iter = mTiles.begin(); iter != mTiles.end(); iter++ ) {
+	
+	for( std::vector<Block*>::iterator iter = mBlocks.begin(); iter != mBlocks.end(); iter++ )
 		(*iter)->update( deltaTime );
-	}
+	
+	for( std::vector<Tile*>::iterator iter = mTiles.begin(); iter != mTiles.end(); iter++ )
+		(*iter)->update( deltaTime );*/
 	
 	mHastUpdated = true;
 }

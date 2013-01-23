@@ -3,10 +3,12 @@
 #include "cinder/Camera.h"
 #include "cinder/Vector.h"
 
+#include "Light.h"
 #include "Camera.h"
 #include "Node.h"
 #include "Character.h"
 #include "Tile.h"
+#include "Block.h"
 
 #include <vector>
 
@@ -26,8 +28,6 @@ public:
 	void onButtonDown( int buttonIndex );
 	void onButtonUp( int buttonIndex );
 	
-	void createLevel();
-	
 	ci::Vec2f windowSize() { return mWindowSize; }
 	ci::Vec2f windowCenter() { return mWindowSize * 0.5f; }
 	
@@ -42,6 +42,10 @@ private:
 	static Game* sInstance;
 	Game( int windowWidth, int windowHeight, int maxTileRadius = 0 );
 	
+	void preloadAssets();
+	void createBlocks();
+	void createLevel();
+	
 	bool mEditorMode;
 	bool mDebugDraw;
 	
@@ -53,6 +57,7 @@ private:
 	
 	ci::Vec2i mPrevCenter;
 	std::vector<Node*> mNodes;
+	std::vector<Block*> mBlocks;
 	std::vector<Tile*> mTiles;
 	bool mHastUpdated;
 };

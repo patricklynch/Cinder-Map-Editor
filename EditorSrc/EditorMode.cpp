@@ -2,7 +2,7 @@
 #include "Game.h"
 #include "Camera.h"
 #include "Input.h"
-#include "Constants.h"
+#include "EditorConstants.h"
 
 #include <algorithm>
 
@@ -68,7 +68,6 @@ void EditorMode::onButtonUp( int buttonTag ) {}
 
 void EditorMode::draw()
 {
-	
 	gl::color( 1, 1, 1, 1 );
 	for( std::vector<EditableTile*>::iterator iter = mTiles.begin(); iter != mTiles.end(); iter++)
 		(*iter)->draw();
@@ -76,6 +75,8 @@ void EditorMode::draw()
 	gl::disableDepthRead();
 	
 	//gl::setMatricesWindow( app::getWindowSize(), true );
+	
+	mEditorPanel.draw();
 	
 }
 void EditorMode::applyCurrentMode( ci::Vec2i screenPoint )
