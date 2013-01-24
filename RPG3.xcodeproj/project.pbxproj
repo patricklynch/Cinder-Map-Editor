@@ -37,11 +37,23 @@
 		5A46996816A46C7500EDE9CE /* MyCCGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5A46995A16A46C7500EDE9CE /* MyCCGLView.mm */; };
 		5A46996916A46C7500EDE9CE /* MyViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5A46995C16A46C7500EDE9CE /* MyViewController.mm */; };
 		5A46996A16A46C7500EDE9CE /* MyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A46995D16A46C7500EDE9CE /* MyViewController.xib */; };
-		5A7FB2C216AC58160098F9E3 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 5A7FB2BE16AC58160098F9E3 /* fonts */; };
-		5A7FB2C416AC58160098F9E3 /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 5A7FB2C016AC58160098F9E3 /* shaders */; };
-		5A7FB2C516AC58160098F9E3 /* textures in Resources */ = {isa = PBXBuildFile; fileRef = 5A7FB2C116AC58160098F9E3 /* textures */; };
-		5A7FB2CF16AC59270098F9E3 /* models in Resources */ = {isa = PBXBuildFile; fileRef = 5A7FB2CE16AC59270098F9E3 /* models */; };
 		5A7FB2D816AC74100098F9E3 /* Light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5A7FB28F16ABB3E40098F9E3 /* Light.cpp */; };
+		5ACD1A2E16B0AAF0003DC40D /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2A16B0AAF0003DC40D /* fonts */; };
+		5ACD1A2F16B0AAF0003DC40D /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2A16B0AAF0003DC40D /* fonts */; };
+		5ACD1A3016B0AAF0003DC40D /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2A16B0AAF0003DC40D /* fonts */; };
+		5ACD1A3116B0AAF0003DC40D /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2A16B0AAF0003DC40D /* fonts */; };
+		5ACD1A3216B0AAF0003DC40D /* models in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2B16B0AAF0003DC40D /* models */; };
+		5ACD1A3316B0AAF0003DC40D /* models in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2B16B0AAF0003DC40D /* models */; };
+		5ACD1A3416B0AAF0003DC40D /* models in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2B16B0AAF0003DC40D /* models */; };
+		5ACD1A3516B0AAF0003DC40D /* models in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2B16B0AAF0003DC40D /* models */; };
+		5ACD1A3616B0AAF0003DC40D /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2C16B0AAF0003DC40D /* shaders */; };
+		5ACD1A3716B0AAF0003DC40D /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2C16B0AAF0003DC40D /* shaders */; };
+		5ACD1A3816B0AAF0003DC40D /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2C16B0AAF0003DC40D /* shaders */; };
+		5ACD1A3916B0AAF0003DC40D /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2C16B0AAF0003DC40D /* shaders */; };
+		5ACD1A3A16B0AAF0003DC40D /* textures in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2D16B0AAF0003DC40D /* textures */; };
+		5ACD1A3B16B0AAF0003DC40D /* textures in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2D16B0AAF0003DC40D /* textures */; };
+		5ACD1A3C16B0AAF0003DC40D /* textures in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2D16B0AAF0003DC40D /* textures */; };
+		5ACD1A3D16B0AAF0003DC40D /* textures in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2D16B0AAF0003DC40D /* textures */; };
 		5AE3F91516A52E55006BF38E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4698DA16A46B2C00EDE9CE /* Cocoa.framework */; };
 		5AE3F91616A52E55006BF38E /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4698DC16A46B2C00EDE9CE /* AppKit.framework */; };
 		5AE3F91716A52E55006BF38E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A346E0516879CB800D8463A /* Foundation.framework */; };
@@ -93,31 +105,17 @@
 		5AE3F97616A592FF006BF38E /* CGCredits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5AE3F97516A592FF006BF38E /* CGCredits.rtf */; };
 		5AE3F97816A592FF006BF38E /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5AE3F97716A592FF006BF38E /* Credits.rtf */; };
 		5AE3F97B16A592FF006BF38E /* BlockTestApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AE3F97A16A592FF006BF38E /* BlockTestApp.cpp */; };
-		5AE3F98216A592FF006BF38E /* blocks.vert in Resources */ = {isa = PBXBuildFile; fileRef = 5AE3F98116A592FF006BF38E /* blocks.vert */; };
-		5AE3F98416A592FF006BF38E /* blocks.frag in Resources */ = {isa = PBXBuildFile; fileRef = 5AE3F98316A592FF006BF38E /* blocks.frag */; };
-		5AE3F98716A592FF006BF38E /* rg_grad.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AE3F98616A592FF006BF38E /* rg_grad.png */; };
 		5AE3F98D16A593C0006BF38E /* MeshHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AE3F98B16A593C0006BF38E /* MeshHelper.cpp */; };
 		5AE3F98E16A593C0006BF38E /* MeshHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AE3F98B16A593C0006BF38E /* MeshHelper.cpp */; };
 		5AE3F99616A594E7006BF38E /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5A46992316A46C1400EDE9CE /* Camera.cpp */; };
 		5AE3F99716A594F6006BF38E /* Animator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5A46991F16A46C1400EDE9CE /* Animator.cpp */; };
 		5AE3F99816A594F6006BF38E /* AssetManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5A46992116A46C1400EDE9CE /* AssetManager.cpp */; };
 		5AE3F99C16A594F6006BF38E /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5A46992E16A46C1400EDE9CE /* Node.cpp */; };
-		5AE3F9A216A59821006BF38E /* blocks.vert in Sources */ = {isa = PBXBuildFile; fileRef = 5AE3F98116A592FF006BF38E /* blocks.vert */; };
-		5AE3F9A316A59821006BF38E /* blocks.frag in Sources */ = {isa = PBXBuildFile; fileRef = 5AE3F98316A592FF006BF38E /* blocks.frag */; };
-		5AE3F9A616A5C653006BF38E /* terrain.frag in Sources */ = {isa = PBXBuildFile; fileRef = 5AE3F9A416A5C653006BF38E /* terrain.frag */; };
-		5AE3F9A716A5C7F7006BF38E /* terrain.frag in Resources */ = {isa = PBXBuildFile; fileRef = 5AE3F9A416A5C653006BF38E /* terrain.frag */; };
-		5AE3F9B516A65BE2006BF38E /* terrain.vert in Sources */ = {isa = PBXBuildFile; fileRef = 5AE3F9B416A65BE2006BF38E /* terrain.vert */; };
-		5AE3F9B616A65BE2006BF38E /* terrain.vert in Sources */ = {isa = PBXBuildFile; fileRef = 5AE3F9B416A65BE2006BF38E /* terrain.vert */; };
-		5AE3F9B716A65BF9006BF38E /* terrain.vert in Resources */ = {isa = PBXBuildFile; fileRef = 5AE3F9B416A65BE2006BF38E /* terrain.vert */; };
 		5AECAA0916AF878300514130 /* Block.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AECAA0716AF878300514130 /* Block.cpp */; };
 		5AECAA0B16AF895D00514130 /* EditorCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AEEAD6916A49E780021B88F /* EditorCamera.cpp */; };
 		5AECAA0C16AF895D00514130 /* EditorCamera.h in Sources */ = {isa = PBXBuildFile; fileRef = 5AEEAD6A16A49E780021B88F /* EditorCamera.h */; };
 		5AECAA0D16AF896800514130 /* Input.h in Sources */ = {isa = PBXBuildFile; fileRef = 5AEEAD7116A49E780021B88F /* Input.h */; };
 		5AECAA0E16AF896A00514130 /* Input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AEEAD7016A49E780021B88F /* Input.cpp */; };
-		5AECAA1716B021FD00514130 /* models in Resources */ = {isa = PBXBuildFile; fileRef = 5A7FB2CE16AC59270098F9E3 /* models */; };
-		5AECAA1816B021FD00514130 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 5A7FB2BE16AC58160098F9E3 /* fonts */; };
-		5AECAA1916B021FD00514130 /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 5A7FB2C016AC58160098F9E3 /* shaders */; };
-		5AECAA1A16B021FD00514130 /* textures in Resources */ = {isa = PBXBuildFile; fileRef = 5A7FB2C116AC58160098F9E3 /* textures */; };
 		5AEEAD3A16A49E1E0021B88F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4698DA16A46B2C00EDE9CE /* Cocoa.framework */; };
 		5AEEAD3B16A49E1E0021B88F /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4698DC16A46B2C00EDE9CE /* AppKit.framework */; };
 		5AEEAD3C16A49E1E0021B88F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4699D516A48A1400EDE9CE /* ApplicationServices.framework */; };
@@ -221,10 +219,10 @@
 		5A7FB28416ABAD460098F9E3 /* GlslInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GlslInclude.h; path = Utils/GlslInclude.h; sourceTree = "<group>"; };
 		5A7FB28F16ABB3E40098F9E3 /* Light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Light.cpp; sourceTree = "<group>"; };
 		5A7FB29016ABB3E40098F9E3 /* Light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Light.h; sourceTree = "<group>"; };
-		5A7FB2BE16AC58160098F9E3 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = Resources/fonts; sourceTree = "<group>"; };
-		5A7FB2C016AC58160098F9E3 /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = shaders; path = Resources/shaders; sourceTree = "<group>"; };
-		5A7FB2C116AC58160098F9E3 /* textures */ = {isa = PBXFileReference; lastKnownFileType = folder; name = textures; path = Resources/textures; sourceTree = "<group>"; };
-		5A7FB2CE16AC59270098F9E3 /* models */ = {isa = PBXFileReference; lastKnownFileType = folder; name = models; path = Resources/models; sourceTree = "<group>"; };
+		5ACD1A2A16B0AAF0003DC40D /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = Resources/fonts; sourceTree = "<group>"; };
+		5ACD1A2B16B0AAF0003DC40D /* models */ = {isa = PBXFileReference; lastKnownFileType = folder; name = models; path = Resources/models; sourceTree = "<group>"; };
+		5ACD1A2C16B0AAF0003DC40D /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = shaders; path = Resources/shaders; sourceTree = "<group>"; };
+		5ACD1A2D16B0AAF0003DC40D /* textures */ = {isa = PBXFileReference; lastKnownFileType = folder; name = textures; path = Resources/textures; sourceTree = "<group>"; };
 		5AE3F91316A52E55006BF38E /* Desktop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Desktop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AE3F92316A52E55006BF38E /* Desktop-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Desktop-Info.plist"; sourceTree = "<group>"; };
 		5AE3F92516A52E55006BF38E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -250,13 +248,8 @@
 		5AE3F97716A592FF006BF38E /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		5AE3F97A16A592FF006BF38E /* BlockTestApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BlockTestApp.cpp; path = src/BlockTestApp.cpp; sourceTree = "<group>"; };
 		5AE3F97D16A592FF006BF38E /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = include/Resources.h; sourceTree = "<group>"; };
-		5AE3F98116A592FF006BF38E /* blocks.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = blocks.vert; path = resources/shaders/blocks.vert; sourceTree = "<group>"; };
-		5AE3F98316A592FF006BF38E /* blocks.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = blocks.frag; path = resources/shaders/blocks.frag; sourceTree = "<group>"; };
-		5AE3F98616A592FF006BF38E /* rg_grad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rg_grad.png; path = resources/images/rg_grad.png; sourceTree = "<group>"; };
 		5AE3F98B16A593C0006BF38E /* MeshHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MeshHelper.cpp; sourceTree = "<group>"; };
 		5AE3F98C16A593C0006BF38E /* MeshHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeshHelper.h; sourceTree = "<group>"; };
-		5AE3F9A416A5C653006BF38E /* terrain.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = terrain.frag; path = resources/shaders/terrain.frag; sourceTree = "<group>"; };
-		5AE3F9B416A65BE2006BF38E /* terrain.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = terrain.vert; path = resources/shaders/terrain.vert; sourceTree = "<group>"; };
 		5AECAA0716AF878300514130 /* Block.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Block.cpp; path = src/Block.cpp; sourceTree = "<group>"; };
 		5AECAA0816AF878300514130 /* Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Block.h; path = src/Block.h; sourceTree = "<group>"; };
 		5AEEAD3816A49E1E0021B88F /* Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mac.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -428,11 +421,11 @@
 			children = (
 				5AE3F98B16A593C0006BF38E /* MeshHelper.cpp */,
 				5AE3F98C16A593C0006BF38E /* MeshHelper.h */,
+				5A46992316A46C1400EDE9CE /* Camera.cpp */,
 				5A46991F16A46C1400EDE9CE /* Animator.cpp */,
 				5A46992016A46C1400EDE9CE /* Animator.h */,
 				5A46992116A46C1400EDE9CE /* AssetManager.cpp */,
 				5A46992216A46C1400EDE9CE /* AssetManager.h */,
-				5A46992316A46C1400EDE9CE /* Camera.cpp */,
 				5A46992416A46C1400EDE9CE /* Camera.h */,
 				5A46992516A46C1400EDE9CE /* Character.cpp */,
 				5A46992616A46C1400EDE9CE /* Character.h */,
@@ -503,10 +496,10 @@
 		5A7FB2BD16AC58050098F9E3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				5A7FB2CE16AC59270098F9E3 /* models */,
-				5A7FB2BE16AC58160098F9E3 /* fonts */,
-				5A7FB2C016AC58160098F9E3 /* shaders */,
-				5A7FB2C116AC58160098F9E3 /* textures */,
+				5ACD1A2A16B0AAF0003DC40D /* fonts */,
+				5ACD1A2B16B0AAF0003DC40D /* models */,
+				5ACD1A2C16B0AAF0003DC40D /* shaders */,
+				5ACD1A2D16B0AAF0003DC40D /* textures */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -574,7 +567,6 @@
 			children = (
 				5AE3F97916A592FF006BF38E /* Source */,
 				5AE3F97C16A592FF006BF38E /* Headers */,
-				5AE3F97F16A592FF006BF38E /* Resources */,
 				5AE3F96F16A592FF006BF38E /* Supporting Files */,
 			);
 			path = BlockTest;
@@ -608,34 +600,6 @@
 				5AE3F97D16A592FF006BF38E /* Resources.h */,
 			);
 			name = Headers;
-			sourceTree = "<group>";
-		};
-		5AE3F97F16A592FF006BF38E /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				5AE3F98016A592FF006BF38E /* Shaders */,
-				5AE3F98516A592FF006BF38E /* Images */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		5AE3F98016A592FF006BF38E /* Shaders */ = {
-			isa = PBXGroup;
-			children = (
-				5AE3F9B416A65BE2006BF38E /* terrain.vert */,
-				5AE3F9A416A5C653006BF38E /* terrain.frag */,
-				5AE3F98116A592FF006BF38E /* blocks.vert */,
-				5AE3F98316A592FF006BF38E /* blocks.frag */,
-			);
-			name = Shaders;
-			sourceTree = "<group>";
-		};
-		5AE3F98516A592FF006BF38E /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				5AE3F98616A592FF006BF38E /* rg_grad.png */,
-			);
-			name = Images;
 			sourceTree = "<group>";
 		};
 		5AEEAD4716A49E1E0021B88F /* Mac */ = {
@@ -805,6 +769,10 @@
 				5A46996316A46C7500EDE9CE /* InfoPlist.strings in Resources */,
 				5A46996616A46C7500EDE9CE /* MainWindow.xib in Resources */,
 				5A46996A16A46C7500EDE9CE /* MyViewController.xib in Resources */,
+				5ACD1A2E16B0AAF0003DC40D /* fonts in Resources */,
+				5ACD1A3216B0AAF0003DC40D /* models in Resources */,
+				5ACD1A3616B0AAF0003DC40D /* shaders in Resources */,
+				5ACD1A3A16B0AAF0003DC40D /* textures in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -818,10 +786,10 @@
 				5AE3F93516A52E55006BF38E /* passthru.vsh in Resources */,
 				5AE3F93716A52E55006BF38E /* shader.fsh in Resources */,
 				5AE3F93A16A52E55006BF38E /* rg_grad.png in Resources */,
-				5A7FB2C216AC58160098F9E3 /* fonts in Resources */,
-				5A7FB2C416AC58160098F9E3 /* shaders in Resources */,
-				5A7FB2C516AC58160098F9E3 /* textures in Resources */,
-				5A7FB2CF16AC59270098F9E3 /* models in Resources */,
+				5ACD1A3016B0AAF0003DC40D /* fonts in Resources */,
+				5ACD1A3416B0AAF0003DC40D /* models in Resources */,
+				5ACD1A3816B0AAF0003DC40D /* shaders in Resources */,
+				5ACD1A3C16B0AAF0003DC40D /* textures in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -831,16 +799,11 @@
 			files = (
 				5AE3F97316A592FF006BF38E /* InfoPlist.strings in Resources */,
 				5AE3F97616A592FF006BF38E /* CGCredits.rtf in Resources */,
-				5AE3F9B716A65BF9006BF38E /* terrain.vert in Resources */,
 				5AE3F97816A592FF006BF38E /* Credits.rtf in Resources */,
-				5AE3F98216A592FF006BF38E /* blocks.vert in Resources */,
-				5AE3F98416A592FF006BF38E /* blocks.frag in Resources */,
-				5AE3F9A716A5C7F7006BF38E /* terrain.frag in Resources */,
-				5AECAA1716B021FD00514130 /* models in Resources */,
-				5AECAA1816B021FD00514130 /* fonts in Resources */,
-				5AECAA1916B021FD00514130 /* shaders in Resources */,
-				5AECAA1A16B021FD00514130 /* textures in Resources */,
-				5AE3F98716A592FF006BF38E /* rg_grad.png in Resources */,
+				5ACD1A3116B0AAF0003DC40D /* fonts in Resources */,
+				5ACD1A3516B0AAF0003DC40D /* models in Resources */,
+				5ACD1A3916B0AAF0003DC40D /* shaders in Resources */,
+				5ACD1A3D16B0AAF0003DC40D /* textures in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -851,6 +814,10 @@
 				5AEEAD4C16A49E1E0021B88F /* InfoPlist.strings in Resources */,
 				5AEEAD5F16A49E1E0021B88F /* InfoPlist.strings in Resources */,
 				5AEEAD9A16A49F570021B88F /* MainMenu.nib in Resources */,
+				5ACD1A2F16B0AAF0003DC40D /* fonts in Resources */,
+				5ACD1A3316B0AAF0003DC40D /* models in Resources */,
+				5ACD1A3716B0AAF0003DC40D /* shaders in Resources */,
+				5ACD1A3B16B0AAF0003DC40D /* textures in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -903,7 +870,6 @@
 				5AE3F95716A53363006BF38E /* EditorPanel.cpp in Sources */,
 				5AE3F95A16A58D45006BF38E /* Block.cpp in Sources */,
 				5AE3F98D16A593C0006BF38E /* MeshHelper.cpp in Sources */,
-				5AE3F9B516A65BE2006BF38E /* terrain.vert in Sources */,
 				5A7FB2D816AC74100098F9E3 /* Light.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -922,10 +888,6 @@
 				5AECAA0C16AF895D00514130 /* EditorCamera.h in Sources */,
 				5AECAA0E16AF896A00514130 /* Input.cpp in Sources */,
 				5AECAA0D16AF896800514130 /* Input.h in Sources */,
-				5AE3F9A216A59821006BF38E /* blocks.vert in Sources */,
-				5AE3F9A316A59821006BF38E /* blocks.frag in Sources */,
-				5AE3F9A616A5C653006BF38E /* terrain.frag in Sources */,
-				5AE3F9B616A65BE2006BF38E /* terrain.vert in Sources */,
 				5AECAA0916AF878300514130 /* Block.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

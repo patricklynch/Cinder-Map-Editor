@@ -3,6 +3,8 @@
 #include "cinder/Vector.h"
 #include "cinder/TriMesh.h"
 #include "cinder/gl/Vbo.h"
+#include "cinder/gl/Texture.h"
+#include "cinder/Surface.h"
 
 #include "Node.h"
 
@@ -10,12 +12,12 @@ namespace ly {
 
 class Block {
 public:
-	Block();
-	virtual ~Block();
-	void update( const float deltaTime );
+							Block();
+	virtual					~Block();
+	void					update( const float deltaTime );
 	
-	ci::Vec2i mTextureOffset;
-	Node* mNode;
+	ci::Vec2i				mTextureOffset;
+	Node*					mNode;
 	
 private:
 	
@@ -23,11 +25,17 @@ private:
 	
 class Terrain {
 public:
-	Terrain() {}
-	virtual ~Terrain() {}
-	void update( const float deltaTime ) {}
+							Terrain();
+	virtual					~Terrain();
+	void					update( const float deltaTime );
 	
-	ci::Vec2i mTextureOffset;
+	ci::Vec2i				mTextureOffset;
+	Node*					mNode;
+	
+	ci::Surface8u			mTilemapSurface;
+	ci::gl::Texture			mTilemapTexture;
+	ci::Surface8u			mTilemapHeightSurface;
+	ci::gl::Texture			mTilemapHeightTexture;
 };
 
 }

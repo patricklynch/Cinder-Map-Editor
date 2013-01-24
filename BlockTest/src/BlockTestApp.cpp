@@ -25,6 +25,11 @@ using namespace ci::app;
 using namespace std;
 
 namespace ly {
+	
+struct SimpleLight {
+	ci::Vec3f position;
+	ci::ColorA color;
+};
 
 class BlockTestApp : public AppBasic {
   public:
@@ -41,25 +46,14 @@ class BlockTestApp : public AppBasic {
 	void update();
 	void draw();
 	
-	gl::Texture*			mTexture;
-	ci::TriMesh				mMesh;
-	ci::TriMesh				mTerrainMesh;
-	gl::VboMesh				mVboMesh;
-	gl::VboMesh				mTerrainVbo;
+	SimpleLight				mLight;
 	ly::Camera*				mCamera;
 	float					mPrevElapsedSeconds;
 	ly::EditorCamera		mEditorCamera;
 	gl::GlslProg			mBlockShader;
 	gl::GlslProg			mTerrainShader;
-	ci::Surface8u			mTilemapSurface;
-	gl::Texture				mTilemapTexture;
-	ci::Surface8u			mTilemapHeightSurface;
-	gl::Texture				mTilemapHeightTexture;
-	
-	// Parallel array, will be part of the object when drawn
-	std::vector<ci::Vec2i>	mObjectTextureOffsets;
-	
 	std::vector<Block*>		mBlocks;
+	Terrain*				mTerrain;
 };
 	
 }
@@ -92,6 +86,7 @@ void BlockTestApp::setup()
 		"models/geosphere_center.obj",
 		"models/geosphere.obj",
 		"models/tri_prism.obj",
+		"models/plane.obj",
 		"textures/texture_tiles.png"
 	};
 	assetManager->loadAssets( &assets[0], sizeof( assets ) / sizeof( std::string ) );
@@ -102,9 +97,12 @@ void BlockTestApp::setup()
 	mCamera->rotation.y = 45.0f;
 	mCamera->setAngle( -45.0f);
 	
+	mLight.position = Vec3f( 20, 100, 30 );
+	mLight.color = ColorA::white();
+	
 	try {
-		mBlockShader	= GlslInclude::compileShader( "blocks.vert",		"blocks.frag" );
-		mTerrainShader	= GlslInclude::compileShader( "terrain.vert",	"terrain.frag" );
+		mBlockShader	= GlslInclude::compileShader( "shaders/blocks.vert",	"shaders/blocks.frag" );
+		mTerrainShader	= GlslInclude::compileShader( "shaders/terrain.vert",	"shaders/terrain.frag" );
 	}
 	catch( gl::GlslProgCompileExc &exc ) {
 		console() << "Shader compile error: " << exc.what() << std::endl;
@@ -115,63 +113,25 @@ void BlockTestApp::setup()
 		exit( 1 );
 	}
 	
-	mMesh = MeshHelper::createCube();
-	gl::VboMesh::Layout layout;
-	layout.setStaticIndices();
-	layout.setStaticNormals();
-	layout.setStaticTexCoords2d();
-	layout.setStaticPositions();
-	mVboMesh = gl::VboMesh( mMesh, layout );
-	
-	mTerrainMesh = MeshHelper::createSquare( Vec2i( kTerrainTileMapSize, kTerrainTileMapSize ) );
-	mTerrainVbo = gl::VboMesh( mTerrainMesh, layout );
-	
-	gl::Texture::Format format;
-	format.enableMipmapping();
-	format.setMagFilter( GL_NEAREST );
-	
-	{	// Setup terrain
-		gl::Texture::Format tilemapFormat;
-		tilemapFormat.enableMipmapping();
-		tilemapFormat.setMagFilter( GL_NEAREST );
-		mTexture = assetManager->getTexture( "textures/texture_tiles.png" );
-		
-		mTilemapSurface = Surface8u( kTerrainTileMapSize, kTerrainTileMapSize, false );
-		for( int y = 0; y < mTilemapSurface.getHeight(); y++) {
-			for( int x = 0; x < mTilemapSurface.getWidth(); x++) {
-				ColorA color( (float) randInt(0,kTextureTileSize) / (float) kTextureTileSize, (float) randInt(0,kTextureTileSize) / (float) kTextureTileSize, 0.0f, 0.0f );
-				mTilemapSurface.setPixel( Vec2i( x, y ), color );
-			}
-		}
-		mTilemapTexture = gl::Texture( mTilemapSurface, format );
-		
-		mTilemapHeightSurface = Surface8u( kTerrainTileMapSize+1, kTerrainTileMapSize+1, false );
-		for( int y = 0; y < mTilemapHeightSurface.getHeight(); y++) {
-			for( int x = 0; x < mTilemapHeightSurface.getWidth(); x++) {
-				ColorA color( 1.0f, randFloat() * 0.1f, 1.0f, 1.0f );
-				mTilemapHeightSurface.setPixel( Vec2i( x, y ), color );
-			}
-		}
-		mTilemapHeightTexture = gl::Texture( mTilemapHeightSurface, tilemapFormat );
-	}
-	
+	mTerrain = new Terrain();
+	mTerrain->mNode->setTexture( assetManager->getTexture( "textures/texture_tiles.png" ) );
+	mTerrain->mNode->mVboMesh = assetManager->getVboMesh( "models/plane.obj" );
 	
 	{	// Create Blocks
 		gl::Texture* texture = assetManager->getTexture( "textures/texture_tiles.png" );
-		int n = 3;
+		int n = 10;
 		int i = 0;
 		for(int x = -n; x < n; x++) {
 			for(int z = -n; z < n; z++) {
-				if ( i+1 > mObjectTextureOffsets.size() ) {
-					Block* block = new Block();
-					block->mTextureOffset = Vec2i( randInt(0,7), randInt(0,7) );
-					block->mNode->scale = Vec3f::one() * kTileSize;
-					block->mNode->setTexture( texture );
-					block->mNode->mVboMesh = assetManager->getVboMesh( "models/cube.obj" );
-					int y = 0;
-					block->mNode->position = Vec3f( x, y, z ) * kTileSize;
-					mBlocks.push_back( block );
-				}
+				if ( randBool() ) continue;
+				Block* block = new Block();
+				block->mTextureOffset = Vec2i( randInt(0,7), randInt(0,7) );
+				block->mNode->scale = Vec3f::one() * kTileSize;
+				block->mNode->setTexture( texture );
+				block->mNode->mVboMesh = assetManager->getVboMesh( "models/dome.obj" );
+				int y = 0;
+				block->mNode->position = Vec3f( x, y, z ) * kTileSize;
+				mBlocks.push_back( block );
 			}
 		}
 	}
@@ -195,6 +155,7 @@ void BlockTestApp::update()
 		Block* block = *iter;
 		block->update( deltaTime );
 	}
+	mTerrain->update( deltaTime );
 }
 
 void BlockTestApp::draw()
@@ -215,7 +176,13 @@ void BlockTestApp::draw()
 		mBlockShader.uniform( "transformMatrix",		block->mNode->transform() );
 		mBlockShader.uniform( "modelviewMatrix",		mCamera->cinderCamera().getModelViewMatrix() );
 		mBlockShader.uniform( "projectionMatrix",		mCamera->cinderCamera().getProjectionMatrix() );
-		mBlockShader.uniform( "color",					block->mNode->color() );
+		mBlockShader.uniform( "eyePos",					mCamera->cinderCamera().getEyePoint() );
+		mBlockShader.uniform( "lightPos",				mLight.position );
+		mBlockShader.uniform( "lightColor",				mLight.color );
+		mBlockShader.uniform( "color",					block->mNode->colors[ MaterialDiffuse ] );
+		mBlockShader.uniform( "ambientColor",			ColorA( 0.1f, 0.1f, 0.1f, 1.0f ) );
+		mBlockShader.uniform( "specularColor",			block->mNode->colors[ MaterialSpecular ] * 0.5f );
+		mBlockShader.uniform( "shininess",				10.0f );
 		mBlockShader.uniform( "offset",					Vec2f( block->mTextureOffset.x, block->mTextureOffset.y ) );
 		mBlockShader.uniform( "numTextures",			(float) kTextureTileSize );
 		gl::draw( *block->mNode->mVboMesh );
@@ -225,15 +192,14 @@ void BlockTestApp::draw()
 	}
 	
 	Matrix44f matrix = Matrix44f::identity();
-	matrix.rotate( toRadians(90.0f) * Vec3f::xAxis() );
 	matrix.scale( Vec3f::one() * kTerrainTileMapSize * kTileSize );
 	
 	for( int pass = 0; pass < 2; pass++ ) {
 		if ( pass == 0 ) {
 			mTerrainShader.bind();
-			mTexture->bind( 0 );
-			mTilemapTexture.bind( 1 );
-			mTilemapHeightTexture.bind( 2 );
+			mTerrain->mNode->texture()->bind( 0 );
+			mTerrain->mTilemapTexture.bind( 1 );
+			mTerrain->mTilemapHeightTexture.bind( 2 );
 			mTerrainShader.uniform( "transformMatrix",		matrix );
 			mTerrainShader.uniform( "modelviewMatrix",		mCamera->cinderCamera().getModelViewMatrix() );
 			mTerrainShader.uniform( "projectionMatrix",		mCamera->cinderCamera().getProjectionMatrix() );
@@ -243,23 +209,18 @@ void BlockTestApp::draw()
 			mTerrainShader.uniform( "color",				ColorA( 1, 1, 1, 1 ) );
 			mTerrainShader.uniform( "numTextures",			(float) kTextureTileSize );
 			mTerrainShader.uniform( "numTiles",				(float) kTerrainTileMapSize );
+			mTerrainShader.uniform( "eyePos",				mCamera->cinderCamera().getEyePoint() );
+			mTerrainShader.uniform( "lightPos",				mLight.position );
+			mTerrainShader.uniform( "lightColor",			mLight.color );
+			mTerrainShader.uniform( "ambientColor",			ColorA( 0.1f, 0.1f, 0.1f, 1.0f ) );
+			mTerrainShader.uniform( "specularColor",		ColorA::white() * 0.5f );
+			mTerrainShader.uniform( "shininess",			0.1f );
 		}
-		else {
-			gl::color( 1, 1, 1, 1 );
-			gl::enableWireframe();
-		}
-		glPushMatrix();
-		gl::draw( mTerrainVbo );
-		glPopMatrix();
-		if ( pass == 0 ) {
-			mTexture->unbind(0);
-			mTilemapTexture.unbind(1);
-			mTilemapHeightTexture.unbind(2);
-			mTerrainShader.unbind();
-		}
-		else {
-			gl::disableWireframe();
-		}
+		gl::draw( *mTerrain->mNode->mVboMesh );
+		mTerrain->mNode->texture()->unbind( 0 );
+		mTerrain->mTilemapTexture.unbind(1);
+		mTerrain->mTilemapHeightTexture.unbind(2);
+		mTerrainShader.unbind();
 	}
 	
 	glDisable( GL_CULL_FACE );

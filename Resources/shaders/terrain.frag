@@ -1,10 +1,10 @@
 uniform sampler2D	texture;
 uniform sampler2D	tileMap;
-
 uniform vec4		color;
-varying vec3		normal;
 uniform float		numTiles;
 uniform float		numTextures;
+
+#include "shaders/includes/light_ambi_diff_spec.frag"
 
 void main()
 {
@@ -22,7 +22,7 @@ void main()
 	
 	st = st + offset;
 	vec4 sample = texture2D( texture, offset ) * color;
-	gl_FragColor = sample;
+	gl_FragColor = _lightingAmbiDiffSpecShort( sample );
 	
 }
 

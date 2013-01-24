@@ -28,7 +28,7 @@ void ly::Camera::setAngle( float angleX )
 void ly::Camera::setFov( float fov )
 {
 	mFov = fov;
-	mCinderCamera.setPerspective( mFov, 1024.0f/768.0f, 1.0f, 4000.0f );
+	mCinderCamera.setPerspective( mFov, 1024.0f/768.0f, 0.1f, 4000.0f );
 }
 
 ci::Ray ly::Camera::rayIntoScene( ci::Vec2i screenPoint )
