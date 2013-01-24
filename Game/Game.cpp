@@ -9,6 +9,7 @@
 #include "cinder/gl/gl.h"
 #include "cinder/ImageIo.h"
 #include "cinder/Rand.h"
+#include "cinder/app/AppBasic.h"
 
 using namespace ly;
 

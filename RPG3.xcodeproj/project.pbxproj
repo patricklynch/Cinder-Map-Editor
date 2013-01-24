@@ -54,6 +54,8 @@
 		5ACD1A3B16B0AAF0003DC40D /* textures in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2D16B0AAF0003DC40D /* textures */; };
 		5ACD1A3C16B0AAF0003DC40D /* textures in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2D16B0AAF0003DC40D /* textures */; };
 		5ACD1A3D16B0AAF0003DC40D /* textures in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2D16B0AAF0003DC40D /* textures */; };
+		5ACD1A4316B16CCA003DC40D /* Game_render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5ACD1A4116B16CCA003DC40D /* Game_render.cpp */; };
+		5ACD1A4416B16CCA003DC40D /* Game_setup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5ACD1A4216B16CCA003DC40D /* Game_setup.cpp */; };
 		5AE3F91516A52E55006BF38E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4698DA16A46B2C00EDE9CE /* Cocoa.framework */; };
 		5AE3F91616A52E55006BF38E /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4698DC16A46B2C00EDE9CE /* AppKit.framework */; };
 		5AE3F91716A52E55006BF38E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A346E0516879CB800D8463A /* Foundation.framework */; };
@@ -223,6 +225,9 @@
 		5ACD1A2B16B0AAF0003DC40D /* models */ = {isa = PBXFileReference; lastKnownFileType = folder; name = models; path = Resources/models; sourceTree = "<group>"; };
 		5ACD1A2C16B0AAF0003DC40D /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = shaders; path = Resources/shaders; sourceTree = "<group>"; };
 		5ACD1A2D16B0AAF0003DC40D /* textures */ = {isa = PBXFileReference; lastKnownFileType = folder; name = textures; path = Resources/textures; sourceTree = "<group>"; };
+		5ACD1A3F16B16C8B003DC40D /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = src/Game.h; sourceTree = "<group>"; };
+		5ACD1A4116B16CCA003DC40D /* Game_render.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game_render.cpp; path = src/Game_render.cpp; sourceTree = "<group>"; };
+		5ACD1A4216B16CCA003DC40D /* Game_setup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game_setup.cpp; path = src/Game_setup.cpp; sourceTree = "<group>"; };
 		5AE3F91316A52E55006BF38E /* Desktop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Desktop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AE3F92316A52E55006BF38E /* Desktop-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Desktop-Info.plist"; sourceTree = "<group>"; };
 		5AE3F92516A52E55006BF38E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -590,6 +595,9 @@
 				5AE3F97A16A592FF006BF38E /* BlockTestApp.cpp */,
 				5AECAA0716AF878300514130 /* Block.cpp */,
 				5AECAA0816AF878300514130 /* Block.h */,
+				5ACD1A3F16B16C8B003DC40D /* Game.h */,
+				5ACD1A4116B16CCA003DC40D /* Game_render.cpp */,
+				5ACD1A4216B16CCA003DC40D /* Game_setup.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -889,6 +897,8 @@
 				5AECAA0E16AF896A00514130 /* Input.cpp in Sources */,
 				5AECAA0D16AF896800514130 /* Input.h in Sources */,
 				5AECAA0916AF878300514130 /* Block.cpp in Sources */,
+				5ACD1A4316B16CCA003DC40D /* Game_render.cpp in Sources */,
+				5ACD1A4416B16CCA003DC40D /* Game_setup.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
