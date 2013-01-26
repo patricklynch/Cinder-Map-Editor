@@ -52,9 +52,11 @@ void Node::update( const float deltaTime )
 	if ( size.y <= min ) size.y = min;
 	if ( size.z <= min ) size.z = min;
 	
-	mTransform = Matrix44f::identity();
-	if ( parent != NULL )
+	if ( parent != NULL ) {
 		mTransform = parent->transform();
+	} else {
+		mTransform = Matrix44f::identity();
+	}
 	mTransform.translate( position );
 	mTransform.rotate( rotation * M_PI / 180.0f );
 	mTransform.scale( scale );

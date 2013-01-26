@@ -3,12 +3,14 @@ uniform sampler2D	tileMap;
 uniform vec4		color;
 uniform float		numTiles;
 uniform float		numTextures;
+uniform float		scaleAdjust;
+uniform float		offsetAdjust;
 
 #include "shaders/includes/light_ambi_diff_spec.frag"
 
 void main()
 {
-	float unit = numTiles / numTextures;
+	float unit = numTiles / numTextures * scaleAdjust;
 	vec2 st = gl_TexCoord[0].st;
 	vec2 offset = st * unit;
 	
@@ -21,7 +23,7 @@ void main()
 	offset.y = fract( offset.y );
 	
 	st = st + offset;
-	vec4 sample = texture2D( texture, offset ) * color;
+	vec4 sample = texture2D( texture, offset + offsetAdjust ) * color;
 	gl_FragColor = _lightingAmbiDiffSpecShort( sample );
 	
 }

@@ -6,14 +6,14 @@
 #include "cinder/MayaCamUI.h"
 
 #include "Game.h"
-#include "EditorMode.h"
+#include "Editor.h"
 
 @interface MyCCGLDrawing : CCGLView
 {
 	MayaCamUI mMayaCam;
 	int mCubeSize;
 	ly::Game* mGame;
-	ly::EditorMode* mEditor;
+	ly::Editor* mEditor;
 	float mUpdateRate;
 	NSDate* mLastDate;
 	IBOutlet MyController* controller;

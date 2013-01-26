@@ -68,7 +68,7 @@ ci::Vec2i Input::mousePosition() const
 
 MouseDrag* Input::mouseDrag(MouseButton mouseButton) const
 {
-	if ( mMouseDrag->isActive && mMouseDrag->mouseButton == mouseButton ) return mMouseDrag;
+	if ( mMouseDrag->mouseButton == mouseButton && mMouseDrag->isActive ) return mMouseDrag;
 	else return NULL;
 }
 
@@ -95,11 +95,13 @@ void Input::mouseDrag( ci::app::MouseEvent event )
 
 void Input::mouseDown( ci::app::MouseEvent event )
 {
-	mMouseDrag->isActive = false; // not yet, until drag event comes
+	mMouseDrag->isActive = true;
 	mMouseDrag->origin = event.getPos();
+	mMouseDrag->current = event.getPos();
 	mMouseDrag->isAltDown = event.isAltDown();
 	mMouseDrag->isControlDown = event.isControlDown();
 	mMouseDrag->mouseButton = buttonForEvent( event );
+	
 	mMouseInputs[ buttonForEvent( event ) ] = true;
 }
 

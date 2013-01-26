@@ -3,10 +3,8 @@
 namespace ly {
 
 typedef enum {
-	EditorPaintSelection,
-	EditorPaintTexture,
-	EditorPaintElevation,
-	EditorPaintObject
-} EditorPaintMode;
+	ModeObjectSelection,
+	ModeTerrainPaint,
+} EditorMode;
 	
 }

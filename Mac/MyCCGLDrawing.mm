@@ -8,7 +8,7 @@
 	[super setup];
 	
 	mGame = ly::Game::create( self.frame.size.width, self.frame.size.height, 30 );
-	mEditor = new ly::EditorMode( mGame );
+	mEditor = new ly::Editor( mGame );
 	
 	mUpdateRate = 1.0f / 60.0f;
 	mLastDate = [[NSDate date] retain];

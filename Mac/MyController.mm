@@ -10,7 +10,7 @@
     return self;
 }
 
--(void) setEditor:(ly::EditorMode*)editor
+-(void) setEditor:(ly::Editor*)editor
 {
 	mEditor = editor;
 }

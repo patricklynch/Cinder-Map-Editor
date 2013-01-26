@@ -1,7 +1,0 @@
-//
-// Prefix header for all source files of the 'Desktop' target in the 'Desktop' project
-//
-
-#ifdef __OBJC__
-	#import <Cocoa/Cocoa.h>
-#endif

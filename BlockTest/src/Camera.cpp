@@ -28,24 +28,21 @@ void ly::Camera::setAngle( float angleX )
 void ly::Camera::setFov( float fov )
 {
 	mFov = fov;
-	mCinderCamera.setPerspective( mFov, 1024.0f/768.0f, 0.1f, 4000.0f );
+	mCinderCamera.setPerspective( mFov, app::getWindowAspectRatio(), 0.1f, 4000.0f );
 }
 
 ci::Ray ly::Camera::rayIntoScene( ci::Vec2i screenPoint )
 {
-	float windowWidth = app::getWindowWidth();
-	float windowHeight = app::getWindowHeight();
-	float aspect = windowWidth / windowHeight;
-	float u = screenPoint.x / windowWidth;
-	float v = screenPoint.y / windowHeight;
-	Ray ray = mCinderCamera.generateRay(u , 1.0f - v, aspect );
+	float u = (float) screenPoint.x / (float) app::getWindowWidth();
+	float v = (float) screenPoint.y / (float) app::getWindowHeight();
+	Ray ray = mCinderCamera.generateRay(u , 1.0f - v, mCinderCamera.getAspectRatio() );
 	return ray;
 }
 
 ly::Camera::Camera()
 {
 	mFov = 45.0f;
-	mCinderCamera.setPerspective( mFov, 1024.0f/768.0f, 1.0f, 4000.0f );
+	mCinderCamera.setPerspective( mFov, app::getWindowAspectRatio(), 1.0f, 4000.0f );
 	
 	mPivot.rotation.x	= -13.0f;
 	mBody.position.z	= 30.0f;

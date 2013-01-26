@@ -1,5 +1,4 @@
 #include "Light.h"
-#include "Renderer.h"
 
 #include "cinder/app/App.h"
 

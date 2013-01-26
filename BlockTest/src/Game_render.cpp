@@ -1,11 +1,16 @@
 #include "Game.h"
 
 #include "cinder/app/AppBasic.h"
+#include "cinder/params/Params.h"
 
 using namespace ly;
 
 using namespace ci;
 using namespace ci::app;
+
+// DEBUG params
+float mTerrainScaleAdjust;
+float mTerrainOffsetAdjust;
 
 void Game::setupRenderer()
 {
@@ -21,11 +26,18 @@ void Game::setupRenderer()
 		console() << "Cannot load shader: " << exc.what() << std::endl;
 		exit( 1 );
 	}
+	
+	/*mParams = params::InterfaceGl( "DEBUG", Vec2i( 200, 300 ) );
+	mTerrainScaleAdjust = 1.0f;
+	mParams.addParam( "Terrain Scale Adjust", &mTerrainScaleAdjust, "max=2.0 min=0.0 step=0.00001" );
+	mTerrainOffsetAdjust = 0.0f;
+	mParams.addParam( "Terrain Offset Adjust", &mTerrainOffsetAdjust, "max=1.0 min=-1.0 step=0.00001" );*/
 }
 
 void Game::draw()
 {
-	gl::clear( kClearColor );
+	gl::clear( ColorA( 0, 0, 0, 0 ) );
+	
 	gl::enableDepthRead();
 	gl::enableAlphaBlending();
 	glEnable( GL_CULL_FACE );
@@ -55,21 +67,17 @@ void Game::draw()
 		mBlockShader.unbind();
 	}
 	
-	Matrix44f matrix = Matrix44f::identity();
-	matrix.scale( Vec3f::one() * kTerrainTileMapSize * kTileSize );
-	
+	/*
 	for( int pass = 0; pass < 2; pass++ ) {
 		if ( pass == 0 ) {
 			mTerrainShader.bind();
 			mTerrain->mNode->texture()->bind( 0 );
 			mTerrain->mTilemapTexture.bind( 1 );
-			mTerrain->mTilemapHeightTexture.bind( 2 );
-			mTerrainShader.uniform( "transformMatrix",		matrix );
+			mTerrainShader.uniform( "transformMatrix",		mTerrain->mNode->transform() );
 			mTerrainShader.uniform( "modelviewMatrix",		mCamera->cinderCamera().getModelViewMatrix() );
 			mTerrainShader.uniform( "projectionMatrix",		mCamera->cinderCamera().getProjectionMatrix() );
 			mTerrainShader.uniform( "texture",				0 );
 			mTerrainShader.uniform( "tileMap",				1 );
-			mTerrainShader.uniform( "heightMap",			2 );
 			mTerrainShader.uniform( "color",				ColorA( 1, 1, 1, 1 ) );
 			mTerrainShader.uniform( "numTextures",			(float) kTextureTileSize );
 			mTerrainShader.uniform( "numTiles",				(float) kTerrainTileMapSize );
@@ -79,13 +87,15 @@ void Game::draw()
 			mTerrainShader.uniform( "ambientColor",			ColorA( 0.1f, 0.1f, 0.1f, 1.0f ) );
 			mTerrainShader.uniform( "specularColor",		mTerrain->mNode->colors[ MaterialSpecular ] * 0.5f );
 			mTerrainShader.uniform( "shininess",			0.1f );
+			mTerrainShader.uniform( "offsetAdjust",			0.0f ); //mTerrainOffsetAdjust );
+			mTerrainShader.uniform( "scaleAdjust",			1.0f ); //mTerrainScaleAdjust );
 		}
 		gl::draw( *mTerrain->mNode->mVboMesh );
 		mTerrain->mNode->texture()->unbind( 0 );
 		mTerrain->mTilemapTexture.unbind(1);
-		mTerrain->mTilemapHeightTexture.unbind(2);
 		mTerrainShader.unbind();
 	}
+	*/
 	
 	glDisable( GL_CULL_FACE );
 	

@@ -1,20 +1,43 @@
 #pragma once
 
 #include "cinder/params/Params.h"
+#include "cinder/gl/Texture.h"
+#include "cinder/Vector.h"
+
+#include <vector>
 
 namespace ly {
 	
-enum {
-	EditorPaintSelection2,
-	EditorPaintTexture2,
-	EditorPaintElevation2,
-	EditorPaintObject2
+class EditorPalette;
+	
+class EditorThumbnail {
+public:
+	EditorThumbnail() : palette( NULL ) {}
+	ci::Vec2i position;
+	ci::Vec2i size;
+	ci::gl::Texture* mTexture;
+	void draw();
+	EditorPalette* palette;
 };
-
+	
+class EditorPalette {
+public:
+	EditorPalette();
+	ci::Vec2i position;
+	ci::Vec2i size;
+	std::string name;
+	void draw();
+	int innerMargin;
+private:
+	std::vector<EditorThumbnail*> mThumbnails;
+};
+	
 class EditorPanel {
 public:
 	EditorPanel();
 	virtual ~EditorPanel();
+	
+	int brushSize;
 	
 	void draw();
 	void update( const float deltaTime );
@@ -22,11 +45,9 @@ public:
 	void test();
 	
 private:
-	float mElevation;
-	int mTextureIndex;
-	int mCurrentTool;
-	bool mTexturePaint;
 	ci::params::InterfaceGl mParams;
+	EditorPalette mTexturePicker;
+	EditorPalette mObjectPicker;
 	
 };
 
