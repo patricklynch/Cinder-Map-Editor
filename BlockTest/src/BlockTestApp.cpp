@@ -18,6 +18,7 @@ class BlockTestApp : public AppBasic {
 	void prepareSettings( Settings *settings );
 	void setup();
 	
+	void mouseWheel( ci::app::MouseEvent event ) { ly::Input::get()->mouseWheel( event ); }
 	void mouseDown( ci::app::MouseEvent event ) { ly::Input::get()->mouseDown( event ); }
 	void mouseMove( ci::app::MouseEvent event ) { ly::Input::get()->mouseMove( event ); }
 	void mouseDrag( ci::app::MouseEvent event ) { ly::Input::get()->mouseDrag( event ); }

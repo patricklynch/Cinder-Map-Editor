@@ -17,9 +17,9 @@ using namespace ci::app;
 
 bool testModeBlock = false;
 
-EditorSelection::EditorSelection( ci::Vec3f iPosition, Block* block ) : mIsSelected( false ), mBlock( block ), mHasBeenEdited( false ), mBlockMeshType( BlockMeshCenter ), mNeedsSurroundingUpdate( false )
+EditorSelection::EditorSelection( Block* block ) : mIsSelected( false ), mBlock( block ), mHasBeenEdited( false ), mBlockMeshType( BlockMeshCenter ), mNeedsSurroundingUpdate( false ), mIsPickable( true ), mNumSurroundingUpdates( 100 )
 {
-	tilePosition = iPosition;
+	tilePosition = block->tilePosition;
 	position = tilePosition * kTileSize;
 	defineBoundingBox();
 }
@@ -67,6 +67,15 @@ void EditorSelection::update( const float deltaTime )
 
 void EditorSelection::updateSurrounding( std::vector<EditorSelection*>& selections )
 {
+	
+	// This prevents this from being called too often.  It relies on the constant updates
+	// from other blocks being edited, so it's good to run continutally, but not too much.
+	// If a situation is identified where it should start updating, the value is reset to 0
+	//if ( mNumSurroundingUpdates++ > 4 ) return;
+	
+	// This vector holds pointers to surrounding pieces.  The indicies correspond to specific
+	// relation positions, so we need to fill it up with NULL values first in order to check
+	// whether there is a block in that position.
 	mSurroundings.clear();
 	for( int i = 0; i < 8; i++ ) {
 		mSurroundings.push_back( NULL );
@@ -74,23 +83,23 @@ void EditorSelection::updateSurrounding( std::vector<EditorSelection*>& selectio
 	
 	for( std::vector<EditorSelection*>::iterator iter = selections.begin(); iter != selections.end(); iter++) {
 		EditorSelection* edge = *iter;
-		Vec2i relPos = edge->tilePosition.xz() - tilePosition.xz();
-		if ( relPos.length() >= 2 ) continue;
-		
-		int relHeight = edge->tilePosition.y - tilePosition.y;
+		//if ( edge->tilePosition.y == 0 ) continue;
+		Vec3i relPos = edge->tilePosition - tilePosition;
+		if ( relPos.y != 0 ) continue;
 		SurroundingType index = NONE;
-		if ( relPos == Vec2i( -1, -1 ) && relHeight == 0 )	index = BL;
-		if ( relPos == Vec2i(  0, -1 ) && relHeight == 0 )	index = BC;
-		if ( relPos == Vec2i(  1, -1 ) && relHeight == 0 )	index = BR;
-		if ( relPos == Vec2i( -1,  0 ) && relHeight == 0 )	index = ML;
-		if ( relPos == Vec2i(  1,  0 ) && relHeight == 0 )	index = MR;
-		if ( relPos == Vec2i( -1,  1 ) && relHeight == 0 )	index = TL;
-		if ( relPos == Vec2i(  0,  1 ) && relHeight == 0 )	index = TC;
-		if ( relPos == Vec2i(  1,  1 ) && relHeight == 0 )	index = TR;
-				
+		if ( relPos == Vec3i( -1,  0, -1 ) )	index = BL;
+		if ( relPos == Vec3i(  0,  0, -1 ) )	index = BC;
+		if ( relPos == Vec3i(  1,  0, -1 ) )	index = BR;
+		if ( relPos == Vec3i( -1,  0,  0 ) )	index = ML;
+		if ( relPos == Vec3i(  1,  0,  0 ) )	index = MR;
+		if ( relPos == Vec3i( -1,  0,  1 ) )	index = TL;
+		if ( relPos == Vec3i(  0,  0,  1 ) )	index = TC;
+		if ( relPos == Vec3i(  1,  0,  1 ) )	index = TR;
+		
 		if ( index != NONE ) {
 			mSurroundings[ (int) index ] = *iter;
 			
+			// Collect data in a nice short hand form for easier syntax when we analyze it
 			MeshPositionData& md = mMeshPositionData;
 			md.top				= mSurroundings[ TL ] != NULL && mSurroundings[ TC ] != NULL && mSurroundings[ TR ] != NULL;
 			md.bottom			= mSurroundings[ BL ] != NULL && mSurroundings[ BC ] != NULL && mSurroundings[ BR ] != NULL;
@@ -114,6 +123,7 @@ void EditorSelection::updateSurrounding( std::vector<EditorSelection*>& selectio
 
 void EditorSelection::updateMesh()
 {
+	
 	if ( mSurroundings.size() == 0 ) return;
 	BlockMeshType newType = mBlockMeshType;
 	
@@ -165,7 +175,26 @@ void EditorSelection::updateMesh()
 
 bool EditorSelection::pick( ci::Ray ray )
 {
+	if ( !mIsPickable ) {
+		// Reset this to start updates again.  If a picking attempt was made, blocks in the neighborhood
+		// are being edited, therefore we should allow the update to run and select the right new meshes.
+		mNumSurroundingUpdates = 0;
+		return false;
+	}
 	return mBoundingBox.intersects( ray );
+}
+
+void EditorSelection::editingComplete()
+{
+	mHasBeenEdited = false;
+	mIsPickable = true;
+}
+
+void EditorSelection::editingStarted()
+{
+	mNumSurroundingUpdates = 0;
+	mHasBeenEdited = true;
+	mNeedsSurroundingUpdate = true;
 }
 
 float EditorSelection::cameraDistance()
@@ -191,9 +220,9 @@ void EditorSelection::draw()
 		gl::drawStrokedCube( mBoundingBox );
 		
 		/*glPushMatrix();
-		glMultMatrixf( mBlock->mNode->transform().m );
-		gl::draw( *mBlock->mNode->mVboMesh );
-		glPopMatrix();*/
+		 glMultMatrixf( mBlock->mNode->transform().m );
+		 gl::draw( *mBlock->mNode->mVboMesh );
+		 glPopMatrix();*/
 	}
 }
 

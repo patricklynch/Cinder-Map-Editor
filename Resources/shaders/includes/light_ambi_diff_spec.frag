@@ -28,7 +28,7 @@ vec4 _lightingAmbiDiffSpec(in vec4 _diffuseColor,
     vec3 E = normalize( _eyePos - _vertex.xyz );
     vec3 H = normalize( L + E );
 	float df = max( 0.0, dot( N, L ) );
-	float sf = pow( max( 0.0, dot( N, H ) ), 30.0 );
+	float sf = pow( max( 0.0, dot( N, H ) ), _shininess );
 	return _ambientColor * _diffuseColor + _diffuseColor * df + _specularColor * sf;
 }
 

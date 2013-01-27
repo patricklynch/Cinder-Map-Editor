@@ -17,7 +17,8 @@ using namespace ly;
 using namespace ci;
 using namespace ci::app;
 
-static const ci::Vec3f kPointSelectionOffset = Vec3f( 0.5f, 0.0f, 0.5f );
+static const ci::Vec3f	kPointSelectionOffset		= Vec3f( 0.5f, 0.0f, 0.5f );
+static const int		kBlockTargetElevationReset	= -999;
 
 Editor::Editor( Game* game ) : mGame( game )
 {
@@ -33,18 +34,10 @@ Editor::Editor( Game* game ) : mGame( game )
 	
 	std::vector<Block*>& blocks = mGame->blocks();
 	for( std::vector<Block*>::iterator iter = blocks.begin(); iter != blocks.end(); iter++ ) {
-		createSelectionFromBlock( *iter );
+		mSelections.push_back( new EditorSelection( *iter ) );
 	}
 	
 	mGame->mDelegate = this;
-}
-
-void Editor::createSelectionFromBlock( Block* block )
-{
-	EditorSelection* selection = findBlock( mSelections, block->tilePosition );
-	if ( selection == NULL ) {
-		mSelections.push_back( new EditorSelection( block->tilePosition, block) );
-	}
 }
 
 void Editor::removeSelectionForBlock( Block* block )
@@ -95,65 +88,89 @@ void Editor::update( const float deltaTime )
 {
 	mEditorCamera.update( deltaTime );
 	
+	// This is going to hold newly created blocks until they are merged with the main container (mSelections)
+	std::vector<EditorSelection*> selectionsToAddImmediately;
+	
 	Input* input = Input::get();
 	MouseDrag* drag = input->mouseDrag( Input::MOUSE_LEFT );
-	
-	if ( drag == NULL ) {
-		for( std::vector<EditorSelection*>::iterator iter = mSelections.begin(); iter != mSelections.end(); iter++ ) {
-			EditorSelection* activeSelection = *iter;
-			activeSelection->mHasBeenEdited = false;
-		}
+	if ( drag == NULL  ) {
 		if ( mMode == ModeTerrainPaint ) {
-			// If the painting just stopped
+			// If the editing just stopped
 			if ( mLastDrag != NULL ) {
-				updateMeshes( mSelections );
+				for( std::vector<EditorSelection*>::iterator iter = mSelections.begin(); iter != mSelections.end(); iter++ ) {
+					(*iter)->editingComplete();
+				}
+				mBlockTargetElevation = kBlockTargetElevationReset;
 			}
 		}
 	}
-	else if ( drag != NULL && !drag->isControlDown && !drag->isAltDown) {
+	else if ( drag != NULL && !drag->isControlDown && !drag->isAltDown ) {
 		int range = 1;
 		if ( mMode == ModeTerrainPaint ) {
 			range = mEditorPanel.brushSize;
-			performPicking( drag->current, range );
+			std::vector<EditorSelection*> activeSelections = select( drag->current, range );
+			//mSelectionsToUpdate = select( drag->current, range + 4, false );
 			
 			// Apply to selected items
 			// TODO: Make a command and use queue
-			for( std::vector<EditorSelection*>::iterator iter = mActiveSelections.begin(); iter != mActiveSelections.end(); iter++ ) {
+			std::vector<EditorSelection*>::iterator iter;
+			for( iter = activeSelections.begin(); iter != activeSelections.end(); iter++ ) {
 				EditorSelection* activeSelection = *iter;
 				if ( activeSelection->mHasBeenEdited ) continue;
 				Vec3i tilePos = activeSelection->tilePosition;
-				//tilePos.y += mEditorPanel.brushErase ? -1 : 1;
-				tilePos.y = 1;
-				activeSelection->resetTilePosition( tilePos );
-				activeSelection->mHasBeenEdited = true;
-				activeSelection->mNeedsSurroundingUpdate = true;
+				if ( mBlockTargetElevation == kBlockTargetElevationReset ) {
+					mBlockTargetElevation = tilePos.y + 1;
+				}
+				if ( tilePos.y + 1 > mBlockTargetElevation ) {
+					tilePos.y = mBlockTargetElevation;
+				}
+				else {
+					tilePos.y += 1;
+				}
+				Block* block = mGame->addBlock( tilePos );
+				if ( block ) {
+					EditorSelection* newSelection = new EditorSelection( block );
+					newSelection->mIsPickable = false;
+					activeSelection->editingStarted();
+					newSelection->editingStarted();
+					selectionsToAddImmediately.push_back( newSelection );
+					mSelectionsToUpdate.push_back( newSelection );
+				}
 			}
 		}
 	}
 	mLastDrag = drag;
 	
-	updateMeshes( mActiveSelections );
+	// Transfer the newly created blocks to the main block container
+	for( std::vector<EditorSelection*>::iterator iter = selectionsToAddImmediately.begin(); iter != selectionsToAddImmediately.end(); iter++) {
+		mSelections.push_back( *iter );
+	}
+	
+	// Constantly call this to keep meshes updating to the right shape and rotation
+	// The EditorSelection object will manage its own performance to keep this moving smooth
+	//updateMeshes( mSelections );
+	updateMeshes( mSelectionsToUpdate );
 	
 	// Update the selection objects
 	for( std::vector<EditorSelection*>::iterator iter = mSelections.begin(); iter != mSelections.end(); iter++) {
 		(*iter)->update( deltaTime );
 	}
+	
 }
 
 void Editor::updateMeshes( std::vector<EditorSelection*>& selections )
 {
 	// Update each block's references to its surrounding blocks
 	for( std::vector<EditorSelection*>::iterator iter = selections.begin(); iter != selections.end(); iter++) {
-		(*iter)->updateSurrounding( mSelections );
-	}
-	// Update the mesh selection based on surrounding blocks
-	for( std::vector<EditorSelection*>::iterator iter = mSelections.begin(); iter != mSelections.end(); iter++) {
+		(*iter)->updateSurrounding( mSelectionsToUpdate );
 		(*iter)->updateMesh();
 	}
 }
 
-void Editor::performPicking( ci::Vec2i screenPoint, int range )
+std::vector<EditorSelection*> Editor::select( ci::Vec2i screenPoint, int range, bool showHighlight )
 {
+	std::vector<EditorSelection*> output;
+	
 	Ray ray = mCamera->rayIntoScene( screenPoint );
 	std::sort( mSelections.begin(), mSelections.end(), EditorSelection::sortCameraDistance );
 	std::vector<EditorSelection*>::iterator iter;
@@ -162,48 +179,50 @@ void Editor::performPicking( ci::Vec2i screenPoint, int range )
 	}
 	for( iter = mSelections.begin(); iter != mSelections.end(); iter++) {
 		if ( (*iter)->pick( ray ) ) {
-			select( *iter, range );
-			return;
-		}
-	}
-}
-
-void Editor::select( EditorSelection* centerSelection, int range )
-{
-	mActiveSelections.clear();
-	centerSelection->select();
-	mActiveSelections.push_back( centerSelection );
-	
-	int n = range / 2;
-	int start = -n;
-	int end = range % 2 == 0 ? n-1 : n;
-	for( int z = start; z <= end; z++ ) {
-		for( int x = start; x <= end; x++ ) {
-			if ( x == 0 && z == 0 ) continue;
-			Vec3f offset = Vec3f( x, 0, z );
+			EditorSelection* centerSelection = *iter;
 			
-			// Find surrounding blocks
-			Vec3i tilePos = centerSelection->tilePosition + offset;
-			std::vector<EditorSelection*> allSurroundingSelections;
-			for( std::vector<EditorSelection*>::iterator iter = mSelections.begin(); iter != mSelections.end(); iter++ ) {
-				if ( (*iter)->tilePosition.x == tilePos.x && (*iter)->tilePosition.z == tilePos.z ) {
-					allSurroundingSelections.push_back( *iter );
-					break;
+			if ( showHighlight ) {
+				centerSelection->select();
+			}
+			output.push_back( centerSelection );
+			
+			int n = range / 2;
+			int start = -n;
+			int end = range % 2 == 0 ? n-1 : n;
+			for( int z = start; z <= end; z++ ) {
+				for( int x = start; x <= end; x++ ) {
+					if ( x == 0 && z == 0 ) continue;
+					Vec3f offset = Vec3f( x, 0, z );
+					
+					// Find surrounding blocks
+					Vec3i tilePos = centerSelection->tilePosition + offset;
+					std::vector<EditorSelection*> allSurroundingSelections;
+					for( std::vector<EditorSelection*>::iterator iter = mSelections.begin(); iter != mSelections.end(); iter++ ) {
+						if ( (*iter)->tilePosition.x == tilePos.x && (*iter)->tilePosition.z == tilePos.z ) {
+							allSurroundingSelections.push_back( *iter );
+							break;
+						}
+					}
+					
+					EditorSelection* surrounding;
+					if ( allSurroundingSelections.size() == 0 ) {
+						continue;
+					} else if ( allSurroundingSelections.size() > 1 ) {
+						std::sort( allSurroundingSelections.begin(), allSurroundingSelections.end(), EditorSelection::sortHeight );
+					}
+					
+					surrounding = *(allSurroundingSelections.end()-1);
+					if ( showHighlight ) {
+						surrounding->select();
+					}
+					output.push_back( surrounding );
 				}
 			}
-			
-			EditorSelection* surrounding;
-			if ( allSurroundingSelections.size() == 0 ) {
-				continue;
-			} else if ( allSurroundingSelections.size() > 1 ) {
-				std::sort( allSurroundingSelections.begin(), allSurroundingSelections.end(), EditorSelection::sortHeight );
-			}
-			
-			surrounding = *(allSurroundingSelections.end()-1);
-			surrounding->select();
-			mActiveSelections.push_back( surrounding );
+			return output;
 		}
 	}
+	
+	return output;
 }
 
 void Editor::draw()

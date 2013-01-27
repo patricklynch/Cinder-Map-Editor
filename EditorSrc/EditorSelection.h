@@ -39,7 +39,7 @@ class EditorSelection {
 public:
 	enum							{ SELECTION_POINT, SELECTION_BLOCK };
 	
-									EditorSelection( ci::Vec3f iPosition, Block* block );
+									EditorSelection( Block* block );
 	
 	ci::Vec3f						position;
 	ci::Vec3f						tilePosition;
@@ -52,6 +52,8 @@ public:
 	void							select() { mIsSelected = true; }
 	bool							isSelected() const { return mIsSelected; }
 	void							toggleSelect() { mIsSelected = !mIsSelected; }
+	void							editingComplete();
+	void							editingStarted();
 	
 	static bool						sortCameraDistance( EditorSelection* a, EditorSelection* b );
 	static bool						sortHeight( EditorSelection* a, EditorSelection* b );
@@ -66,6 +68,8 @@ public:
 	void							updateSurrounding( std::vector<EditorSelection*>& selections );
 	void							updateMesh();
 	bool							mNeedsSurroundingUpdate;
+	bool							mIsPickable;
+	int								mNumSurroundingUpdates;
 	
 private:
 	std::vector<EditorSelection*>	mSurroundings;

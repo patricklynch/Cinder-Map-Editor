@@ -27,7 +27,7 @@ void Game::setupScene()
 	mCamera->rotation.y = 45.0f;
 	mCamera->setAngle( -45.0f);
 	
-	mLight.position = Vec3f( 20, 100, 100 );
+	mLight.position = Vec3f( 100, 100, 100 );
 	mLight.color = ColorA::white();
 	
 	mTerrain = new Terrain();
@@ -37,15 +37,27 @@ void Game::setupScene()
 	
 	mMaxVisibleTileRadius = kDefaultMaxVisibleTileRadius;
 	
-	// Terrain tile blocks
+	// Create a flat plain of blocks
+	// TODO: Load existing blocks
 	int n = mMaxVisibleTileRadius;
 	for(int x = -n; x < n; x++) {
 		for(int z = -n; z < n; z++) {
-			int y = 0;
-			//if ( randFloat() > 0.1f && ( x > -6 && x < 6 )) y = 1;
-			Vec3i tilePos = Vec3f( x, y, z );
-			mBlocks.push_back( Block::createBlock( tilePos ) );
+			addBlock( Vec3f( x, 0, z ) );
 		}
+	}
+}
+
+Block* Game::addBlock( ci::Vec3i atTilePosition )
+{
+	Block* block = Block::createBlock( atTilePosition );
+	std::vector<Block*>::iterator match = std::find( mBlocks.begin(), mBlocks.end(), block );
+	if ( match == mBlocks.end() ) {
+		mBlocks.push_back( block );
+		return block;
+	}
+	else {
+		delete block;
+		return NULL;
 	}
 }
 

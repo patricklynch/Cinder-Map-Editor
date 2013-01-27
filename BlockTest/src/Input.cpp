@@ -17,7 +17,7 @@ Input* Input::get()
 	return sInstance;
 }
 
-Input::Input() : mMouseDrag( new MouseDrag() ), mCursorPositionHasBeenSet( false )
+Input::Input() : mMouseDrag( new MouseDrag() ), mCursorPositionHasBeenSet( false ), mMouseWheelCallback( NULL )
 {
 	mCurrentMovePos = Vec2i(0,0);
 	mLastMovePos = mCurrentMovePos;
@@ -91,6 +91,17 @@ void Input::mouseDrag( ci::app::MouseEvent event )
 	mMouseDrag->current = event.getPos();
 	mMouseDrag->mouseButton = buttonForEvent( event );
 	mMouseInputs[ buttonForEvent( event ) ] = true;
+}
+
+void Input::mouseWheel( ci::app::MouseEvent event )
+{
+	if ( mMouseWheelCallback != NULL )
+		mMouseWheelCallback( event.getWheelIncrement() );
+}
+
+void Input::addListenerMouseWheel( boost::function<void (float)> callback )
+{
+	mMouseWheelCallback = callback;
 }
 
 void Input::mouseDown( ci::app::MouseEvent event )

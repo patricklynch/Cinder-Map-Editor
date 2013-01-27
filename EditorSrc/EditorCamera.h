@@ -8,7 +8,8 @@ class EditorCamera {
 public:
 	EditorCamera();
 	void reset();
-	virtual void update( const float deltaTime );
+	void onMouseWheel( float increment );
+	void update( const float deltaTime );
 	
 private:
 	ly::Camera* mCamera;

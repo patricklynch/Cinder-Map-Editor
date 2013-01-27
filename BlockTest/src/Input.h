@@ -28,11 +28,14 @@ public:
 	} MouseButton;
 	
 	void addListenerForKey( boost::function<void (int)> callback, int keyCode );
+	void addListenerMouseWheel( boost::function<void (float)> callback );
+	
 	void keyDown( ci::app::KeyEvent event );
 	void keyUp( ci::app::KeyEvent event );
 	void mouseMove( ci::app::MouseEvent event );
 	void mouseDrag( ci::app::MouseEvent event );
 	void mouseDown( ci::app::MouseEvent event );
+	void mouseWheel( ci::app::MouseEvent event );
 	void mouseUp( ci::app::MouseEvent event );
 	void update( const float deltaTime );
 	
@@ -61,6 +64,8 @@ private:
 	
 	std::map<int, bool> mKeyInputs;
 	std::map<MouseButton, bool> mMouseInputs;
+	
+	boost::function<void (float)> mMouseWheelCallback;
 	
 	static Input* sInstance;
 };

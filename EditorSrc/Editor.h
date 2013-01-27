@@ -35,7 +35,7 @@ public:
 		
 	/** IGameEventDelegate methods */
 	virtual void							mapCenterDidUpdate( ci::Vec3i center );
-	void									createSelectionFromBlock( Block* block );
+	
 	void									removeSelectionForBlock( Block* block );
 	
 private:
@@ -46,15 +46,19 @@ private:
 	MouseDrag*								mLastDrag;
 	
 	ci::gl::VboMesh*						mBoundingCube;
-	void									performPicking( ci::Vec2i screenPoint, int range );
-	void									select( EditorSelection* centerSelection, int range );
+	std::vector<EditorSelection*>			select( ci::Vec2i screenPoint, int range, bool showHighlight = true );
 	void									updateMeshes( std::vector<EditorSelection*>& selections );
 	
 	EditorMode								mMode;
 	Game*									mGame;
 	ly::Camera*								mCamera;
 	std::vector<EditorSelection*>			mSelections;
-	std::vector<EditorSelection*>			mActiveSelections;
+	std::vector<EditorSelection*>			mSelectionsToUpdate;
+	
+	/** This property keeps the elevation (tilePosition.y) applied to each new block the same as the
+		block first selected when editing beings.  This gives more control to users by preventing
+		unwanted pileup of blocks when overlapping elevated area */
+	int										mBlockTargetElevation;
 	
 	// Dragging properties
 	float									mCameraStartZoom;

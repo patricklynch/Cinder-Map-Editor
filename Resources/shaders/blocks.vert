@@ -8,7 +8,7 @@ varying vec4	vertex;
 void main()
 {
 	normal = vec4( transformMatrix * vec4( gl_Normal, 0 ) ).xyz;
-	vertex = gl_Vertex;
+	vertex = transformMatrix * gl_Vertex;
 	gl_TexCoord[0] = gl_MultiTexCoord0;
 	gl_TexCoord[1] = gl_MultiTexCoord1;
 	gl_Position = projectionMatrix * modelviewMatrix * transformMatrix * gl_Vertex;

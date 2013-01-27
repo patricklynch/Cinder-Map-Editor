@@ -16,7 +16,12 @@ EditorCamera::EditorCamera()
 	mDefaultPosition = mCamera->position;
 	mDefaultRotation = mCamera->rotation;
 	
-	Input::get()->addListenerForKey( boost::bind( &EditorCamera::reset, this ), KeyEvent::KEY_r );
+	//Input::get()->addListenerMouseWheel( boost::bind( &EditorCamera::onMouseWheel, this ) );
+}
+
+void EditorCamera::onMouseWheel( float increment )
+{
+	mCamera->setZoom( mCamera->zoom() + increment );
 }
 
 void EditorCamera::reset()
@@ -31,13 +36,13 @@ void EditorCamera::update( const float deltaTime )
 	MouseDrag* drag;
 	Input* input = Input::get();
 	
-	drag = input->mouseDrag( Input::MOUSE_LEFT );
+	drag = input->mouseDrag( Input::MOUSE_MIDDLE );
 	if (drag != NULL) {
 		if ( drag->isAltDown ) {
 			mCamera->rotation.y = mRotationStart.y - drag->difference().x * 0.17f;
 			mCamera->rotation.x = mRotationStart.x - drag->difference().y * 0.17f;
 		}
-		else if ( drag->isControlDown ) {
+		else {
 			float targetX = drag->difference().x * 0.001f * mCamera->zoom();
 			float targetZ = drag->difference().y * 0.001f * mCamera->zoom();
 			Vec3f tr = mCamera->transform().transformVec( Vec3f( targetX, 0.0f, targetZ ) );

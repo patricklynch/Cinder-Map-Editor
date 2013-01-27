@@ -42,6 +42,8 @@ public:
 	static ci::Vec3f		blockResetPosition( ci::Vec3f tilePosition, ci::Vec3f center, int radius );
 	IGameEventDelegate*		mDelegate;
 	
+	Block*					addBlock( ci::Vec3i atTilePosition );
+	
 private:
 	SimpleLight				mLight;
 	ly::Camera*				mCamera;

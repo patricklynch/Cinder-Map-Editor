@@ -58,7 +58,7 @@ void Game::draw()
 		mBlockShader.uniform( "color",					block->mNode->colors[ MaterialDiffuse ] );
 		mBlockShader.uniform( "ambientColor",			ColorA( 0.3f, 0.3f, 0.3f, 1.0f ) );
 		mBlockShader.uniform( "specularColor",			block->mNode->colors[ MaterialSpecular ] * 0.5f );
-		mBlockShader.uniform( "shininess",				10.0f );
+		mBlockShader.uniform( "shininess",				50.0f );
 		mBlockShader.uniform( "offset",					Vec2f( block->mTextureOffset.x, block->mTextureOffset.y ) );
 		mBlockShader.uniform( "numTextures",			(float) kTextureTileSize );
 		gl::draw( *block->mNode->mVboMesh );
