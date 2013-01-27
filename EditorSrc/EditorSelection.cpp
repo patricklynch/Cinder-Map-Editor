@@ -83,18 +83,18 @@ void EditorSelection::updateSurrounding( std::vector<EditorSelection*>& selectio
 	
 	for( std::vector<EditorSelection*>::iterator iter = selections.begin(); iter != selections.end(); iter++) {
 		EditorSelection* edge = *iter;
-		//if ( edge->tilePosition.y == 0 ) continue;
 		Vec3i relPos = edge->tilePosition - tilePosition;
-		if ( relPos.y != 0 ) continue;
+		if ( relPos.y <= -1 ) continue;
 		SurroundingType index = NONE;
-		if ( relPos == Vec3i( -1,  0, -1 ) )	index = BL;
-		if ( relPos == Vec3i(  0,  0, -1 ) )	index = BC;
-		if ( relPos == Vec3i(  1,  0, -1 ) )	index = BR;
-		if ( relPos == Vec3i( -1,  0,  0 ) )	index = ML;
-		if ( relPos == Vec3i(  1,  0,  0 ) )	index = MR;
-		if ( relPos == Vec3i( -1,  0,  1 ) )	index = TL;
-		if ( relPos == Vec3i(  0,  0,  1 ) )	index = TC;
-		if ( relPos == Vec3i(  1,  0,  1 ) )	index = TR;
+		
+		if ( relPos.xz() == Vec2i( -1, -1 ) )	index = BL;
+		if ( relPos.xz() == Vec2i(  0, -1 ) )	index = BC;
+		if ( relPos.xz() == Vec2i(  1, -1 ) )	index = BR;
+		if ( relPos.xz() == Vec2i( -1,  0 ) )	index = ML;
+		if ( relPos.xz() == Vec2i(  1,  0 ) )	index = MR;
+		if ( relPos.xz() == Vec2i( -1,  1 ) )	index = TL;
+		if ( relPos.xz() == Vec2i(  0,  1 ) )	index = TC;
+		if ( relPos.xz() == Vec2i(  1,  1 ) )	index = TR;
 		
 		if ( index != NONE ) {
 			mSurroundings[ (int) index ] = *iter;

@@ -61,7 +61,7 @@ void Game::draw()
 		mBlockShader.uniform( "shininess",				50.0f );
 		mBlockShader.uniform( "offset",					Vec2f( block->mTextureOffset.x, block->mTextureOffset.y ) );
 		mBlockShader.uniform( "numTextures",			(float) kTextureTileSize );
-		gl::draw( *block->mNode->mVboMesh );
+		block->draw( &mBlockShader );
 		if ( block->mNode->texture() )
 			block->mNode->texture()->unbind(0);
 		mBlockShader.unbind();

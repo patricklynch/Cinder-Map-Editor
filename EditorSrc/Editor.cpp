@@ -109,7 +109,7 @@ void Editor::update( const float deltaTime )
 		if ( mMode == ModeTerrainPaint ) {
 			range = mEditorPanel.brushSize;
 			std::vector<EditorSelection*> activeSelections = select( drag->current, range );
-			//mSelectionsToUpdate = select( drag->current, range + 4, false );
+			mSelectionsToUpdate = select( drag->current, range + 4, false );
 			
 			// Apply to selected items
 			// TODO: Make a command and use queue
@@ -127,7 +127,9 @@ void Editor::update( const float deltaTime )
 				else {
 					tilePos.y += 1;
 				}
-				Block* block = mGame->addBlock( tilePos );
+				activeSelection->resetTilePosition( tilePos );
+				
+				/*Block* block = mGame->addBlock( tilePos );
 				if ( block ) {
 					EditorSelection* newSelection = new EditorSelection( block );
 					newSelection->mIsPickable = false;
@@ -135,21 +137,24 @@ void Editor::update( const float deltaTime )
 					newSelection->editingStarted();
 					selectionsToAddImmediately.push_back( newSelection );
 					mSelectionsToUpdate.push_back( newSelection );
-				}
+				}*/
 			}
+			
+			updateMeshes( activeSelections );
+			updateMeshes( mSelectionsToUpdate );
 		}
 	}
 	mLastDrag = drag;
 	
 	// Transfer the newly created blocks to the main block container
-	for( std::vector<EditorSelection*>::iterator iter = selectionsToAddImmediately.begin(); iter != selectionsToAddImmediately.end(); iter++) {
+	/*for( std::vector<EditorSelection*>::iterator iter = selectionsToAddImmediately.begin(); iter != selectionsToAddImmediately.end(); iter++) {
 		mSelections.push_back( *iter );
-	}
+	}*/
 	
 	// Constantly call this to keep meshes updating to the right shape and rotation
 	// The EditorSelection object will manage its own performance to keep this moving smooth
 	//updateMeshes( mSelections );
-	updateMeshes( mSelectionsToUpdate );
+	//updateMeshes( mSelectionsToUpdate );
 	
 	// Update the selection objects
 	for( std::vector<EditorSelection*>::iterator iter = mSelections.begin(); iter != mSelections.end(); iter++) {
@@ -162,7 +167,7 @@ void Editor::updateMeshes( std::vector<EditorSelection*>& selections )
 {
 	// Update each block's references to its surrounding blocks
 	for( std::vector<EditorSelection*>::iterator iter = selections.begin(); iter != selections.end(); iter++) {
-		(*iter)->updateSurrounding( mSelectionsToUpdate );
+		(*iter)->updateSurrounding( mSelections );
 		(*iter)->updateMesh();
 	}
 }
