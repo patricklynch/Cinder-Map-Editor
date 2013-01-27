@@ -38,42 +38,13 @@ void Game::setupScene()
 	mMaxVisibleTileRadius = kDefaultMaxVisibleTileRadius;
 	
 	// Terrain tile blocks
-	gl::Texture* texture = assetManager->getTexture( "textures/texture_tiles.png" );
 	int n = mMaxVisibleTileRadius;
 	for(int x = -n; x < n; x++) {
-		for(int y = -1; y < 1; y++) {
-			for(int z = -n; z < n; z++) {
-				Block* block = new Block();
-				if ( (y == 0 && randFloat() > 0.1f) && ( x > -6 && x < 6 )) continue;
-				Vec3i tilePos = Vec3f( x, y, z );
-				block->tilePosition = tilePos;
-				block->mTextureOffset = Vec2i( randInt(0,7), randInt(0,7) );
-				block->mNode->scale = Vec3f::one() * kTileSize;
-				block->mNode->setTexture( texture );
-				block->mNode->mVboMesh = assetManager->getVboMesh( "models/cube.obj" );
-				block->mNode->mMesh = assetManager->getMesh( "models/cube.obj" );
-				block->mNode->position = tilePos * kTileSize;
-				mBlocks.push_back( block );
-			}
-		}
-	}
-	return;
-	// Random object blocks
-	for(int x = -n; x < n; x++) {
 		for(int z = -n; z < n; z++) {
-			for(int y = 0; y < 5; y++) {
-				if ( randBool() || randBool()  || randBool() ) continue;
-				Block* block = new Block();
-				Vec3i tilePos = Vec3f( x, y, z );
-				block->tilePosition = tilePos;
-				block->mTextureOffset = Vec2i( randInt(0,7), randInt(0,7) );
-				block->mNode->scale = Vec3f::one() * kTileSize;
-				block->mNode->setTexture( texture );
-				block->mNode->mVboMesh = assetManager->getVboMesh( "models/cube_smooth.obj" );
-				block->mNode->mMesh = assetManager->getMesh( "models/cube.obj" );
-				block->mNode->position = tilePos * kTileSize;
-				mBlocks.push_back( block );
-			}
+			int y = 0;
+			//if ( randFloat() > 0.1f && ( x > -6 && x < 6 )) y = 1;
+			Vec3i tilePos = Vec3f( x, y, z );
+			mBlocks.push_back( Block::createBlock( tilePos ) );
 		}
 	}
 }

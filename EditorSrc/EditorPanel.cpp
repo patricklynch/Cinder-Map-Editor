@@ -60,10 +60,13 @@ EditorPanel::EditorPanel()
 	toolStrings.push_back( "Elevation" );
 	toolStrings.push_back( "Object" );
 	mCurrentTool = EditorPaintSelection2;
-	mParams.addParam( "CURRENT TOOL", toolStrings, &mCurrentTool );*/
+	 mParams.addParam( "CURRENT TOOL", toolStrings, &mCurrentTool );*/
 	
-	brushSize = 2;
+	brushSize = 3;
 	mParams.addParam( "Brush Size", &brushSize, "max=10 min=1 step=1" );
+	
+	brushErase = false;
+	mParams.addParam( "Erase", &brushErase );
 	
 	mParams.addSeparator();
 	mParams.addButton( "UNDO", boost::bind( &EditorPanel::test, this ) );

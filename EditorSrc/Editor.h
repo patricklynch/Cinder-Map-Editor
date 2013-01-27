@@ -35,20 +35,26 @@ public:
 		
 	/** IGameEventDelegate methods */
 	virtual void							mapCenterDidUpdate( ci::Vec3i center );
+	void									createSelectionFromBlock( Block* block );
+	void									removeSelectionForBlock( Block* block );
 	
 private:
 	EditorCamera							mEditorCamera;
 	EditorPanel								mEditorPanel;
 	EditorCommandQueue						mCommandQueue;
 	
+	MouseDrag*								mLastDrag;
+	
 	ci::gl::VboMesh*						mBoundingCube;
 	void									performPicking( ci::Vec2i screenPoint, int range );
-	void									select( EditorSelection* block, int range );
+	void									select( EditorSelection* centerSelection, int range );
+	void									updateMeshes( std::vector<EditorSelection*>& selections );
 	
 	EditorMode								mMode;
 	Game*									mGame;
 	ly::Camera*								mCamera;
 	std::vector<EditorSelection*>			mSelections;
+	std::vector<EditorSelection*>			mActiveSelections;
 	
 	// Dragging properties
 	float									mCameraStartZoom;
