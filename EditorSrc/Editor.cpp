@@ -28,13 +28,17 @@ Editor::Editor( Game* game ) : mGame( game )
 	mCamera->setFov( 45 );
 	mCamera->setZoom( 20 );
 	mCamera->rotation.y = 0.0f;
-	mCamera->setAngle( -90.0f);
+	//mCamera->setAngle( -90.0f);
+	mCamera->setAngle( -45.0f);
 	
-	mBoundingCube = AssetManager::get()->getVboMesh( "models/cube.obj" );
-	
+	// Create EditorSeletion as a wrapper for each block in the game
 	std::vector<Block*>& blocks = mGame->blocks();
 	for( std::vector<Block*>::iterator iter = blocks.begin(); iter != blocks.end(); iter++ ) {
 		mSelections.push_back( new EditorSelection( *iter ) );
+	}
+	// Set references to each block's surrounding blocks
+	for( std::vector<EditorSelection*>::iterator iter = mSelections.begin(); iter != mSelections.end(); iter++) {
+		(*iter)->updateSurrounding( mSelections );
 	}
 	
 	mGame->mDelegate = this;
@@ -109,7 +113,6 @@ void Editor::update( const float deltaTime )
 		if ( mMode == ModeTerrainPaint ) {
 			range = mEditorPanel.brushSize;
 			std::vector<EditorSelection*> activeSelections = select( drag->current, range );
-			mSelectionsToUpdate = select( drag->current, range + 4, false );
 			
 			// Apply to selected items
 			// TODO: Make a command and use queue
@@ -118,6 +121,7 @@ void Editor::update( const float deltaTime )
 				EditorSelection* activeSelection = *iter;
 				if ( activeSelection->mHasBeenEdited ) continue;
 				Vec3i tilePos = activeSelection->tilePosition;
+				activeSelection->editingStarted();
 				if ( mBlockTargetElevation == kBlockTargetElevationReset ) {
 					mBlockTargetElevation = tilePos.y + 1;
 				}
@@ -128,47 +132,14 @@ void Editor::update( const float deltaTime )
 					tilePos.y += 1;
 				}
 				activeSelection->resetTilePosition( tilePos );
-				
-				/*Block* block = mGame->addBlock( tilePos );
-				if ( block ) {
-					EditorSelection* newSelection = new EditorSelection( block );
-					newSelection->mIsPickable = false;
-					activeSelection->editingStarted();
-					newSelection->editingStarted();
-					selectionsToAddImmediately.push_back( newSelection );
-					mSelectionsToUpdate.push_back( newSelection );
-				}*/
 			}
-			
-			updateMeshes( activeSelections );
-			updateMeshes( mSelectionsToUpdate );
 		}
 	}
 	mLastDrag = drag;
 	
-	// Transfer the newly created blocks to the main block container
-	/*for( std::vector<EditorSelection*>::iterator iter = selectionsToAddImmediately.begin(); iter != selectionsToAddImmediately.end(); iter++) {
-		mSelections.push_back( *iter );
-	}*/
-	
-	// Constantly call this to keep meshes updating to the right shape and rotation
-	// The EditorSelection object will manage its own performance to keep this moving smooth
-	//updateMeshes( mSelections );
-	//updateMeshes( mSelectionsToUpdate );
-	
 	// Update the selection objects
 	for( std::vector<EditorSelection*>::iterator iter = mSelections.begin(); iter != mSelections.end(); iter++) {
 		(*iter)->update( deltaTime );
-	}
-	
-}
-
-void Editor::updateMeshes( std::vector<EditorSelection*>& selections )
-{
-	// Update each block's references to its surrounding blocks
-	for( std::vector<EditorSelection*>::iterator iter = selections.begin(); iter != selections.end(); iter++) {
-		(*iter)->updateSurrounding( mSelections );
-		(*iter)->updateMesh();
 	}
 }
 

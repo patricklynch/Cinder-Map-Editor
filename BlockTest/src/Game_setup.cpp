@@ -27,7 +27,7 @@ void Game::setupScene()
 	mCamera->rotation.y = 45.0f;
 	mCamera->setAngle( -45.0f);
 	
-	mLight.position = Vec3f( 100, 100, 100 );
+	mLight.position = Vec3f( 100, 100, -100 );
 	mLight.color = ColorA::white();
 	
 	mTerrain = new Terrain();
@@ -40,8 +40,8 @@ void Game::setupScene()
 	// Create a flat plain of blocks
 	// TODO: Load existing blocks
 	int n = mMaxVisibleTileRadius;
-	for(int x = -n; x < n; x++) {
-		for(int z = -n; z < n; z++) {
+	for(int x = -n; x <= n; x++) {
+		for(int z = -n; z <= n; z++) {
 			addBlock( Vec3f( x, 0, z ) );
 		}
 	}
@@ -64,7 +64,7 @@ Block* Game::addBlock( ci::Vec3i atTilePosition )
 ci::Vec3f Game::blockResetPosition( ci::Vec3f tilePosition, ci::Vec3f center, int radius )
 {
 	int n = radius;
-	int edgeResetDist = n*2;
+	int edgeResetDist = n*2+1;
 	Vec3f diff = tilePosition - center;
 	Vec3f output = tilePosition;
 	if ( diff.x > n )			output.x -= edgeResetDist;

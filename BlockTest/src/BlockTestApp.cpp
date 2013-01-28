@@ -62,6 +62,7 @@ void BlockTestApp::setup()
 		"models/dome_tall.obj",
 		"models/edge_straight.obj",
 		"models/edge_diagonal.obj",
+		"models/edge_inner_corner.obj",
 		"models/dome.obj",
 		"models/geosphere_center.obj",
 		"models/geosphere.obj",

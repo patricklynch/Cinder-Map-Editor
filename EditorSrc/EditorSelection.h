@@ -66,12 +66,10 @@ public:
 	BlockMeshType					mBlockMeshType;
 	void							setBlockMeshType( BlockMeshType type );
 	void							updateSurrounding( std::vector<EditorSelection*>& selections );
-	void							updateMesh();
 	bool							mNeedsSurroundingUpdate;
-	bool							mIsPickable;
-	int								mNumSurroundingUpdates;
 	
 private:
+	void							updateMesh( int elevation, ci::gl::VboMesh** vboMesh, float* rotation );
 	std::vector<EditorSelection*>	mSurroundings;
 	bool							mIsSelected;
 	ci::AxisAlignedBox3f			mBoundingBox;

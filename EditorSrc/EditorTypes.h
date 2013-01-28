@@ -11,6 +11,7 @@ typedef enum {
 	BlockMeshCenter,
 	BlockMeshEdgeWall,
 	BlockMeshEdgeCenter,
+	BlockMeshEdgeInnerCorner,
 	BlockMeshEdgeOuterCorner
 } BlockMeshType;
 	

@@ -45,15 +45,12 @@ private:
 	
 	MouseDrag*								mLastDrag;
 	
-	ci::gl::VboMesh*						mBoundingCube;
 	std::vector<EditorSelection*>			select( ci::Vec2i screenPoint, int range, bool showHighlight = true );
-	void									updateMeshes( std::vector<EditorSelection*>& selections );
 	
 	EditorMode								mMode;
 	Game*									mGame;
 	ly::Camera*								mCamera;
 	std::vector<EditorSelection*>			mSelections;
-	std::vector<EditorSelection*>			mSelectionsToUpdate;
 	
 	/** This property keeps the elevation (tilePosition.y) applied to each new block the same as the
 		block first selected when editing beings.  This gives more control to users by preventing
