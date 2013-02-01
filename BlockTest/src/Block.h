@@ -20,11 +20,7 @@ public:
 	ci::Vec2i				mTextureOffset;
 	Node*					mNode;
 	ci::Vec3i				tilePosition;
-	
-	ci::gl::VboMesh*		mStackVboMesh;
-	ci::gl::VboMesh*		mTopVboMesh;
-	float					mRotationTop;
-	float					mRotationStack;
+	float					mRotation;
 	
 	bool					operator==( Block* other ) { return other->tilePosition == tilePosition; }
 	

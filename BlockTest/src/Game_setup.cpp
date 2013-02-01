@@ -50,14 +50,16 @@ void Game::setupScene()
 Block* Game::addBlock( ci::Vec3i atTilePosition )
 {
 	Block* block = Block::createBlock( atTilePosition );
+	mBlocks.push_back( block );
+	return block;
+}
+
+void Game::removeBlock( Block* block )
+{
 	std::vector<Block*>::iterator match = std::find( mBlocks.begin(), mBlocks.end(), block );
-	if ( match == mBlocks.end() ) {
-		mBlocks.push_back( block );
-		return block;
-	}
-	else {
-		delete block;
-		return NULL;
+	if ( match != mBlocks.end() ) {
+		delete *match;
+		mBlocks.erase( match );
 	}
 }
 

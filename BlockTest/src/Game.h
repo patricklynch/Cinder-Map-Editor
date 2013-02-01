@@ -43,6 +43,7 @@ public:
 	IGameEventDelegate*		mDelegate;
 	
 	Block*					addBlock( ci::Vec3i atTilePosition );
+	void					removeBlock( Block* block );
 	
 private:
 	SimpleLight				mLight;

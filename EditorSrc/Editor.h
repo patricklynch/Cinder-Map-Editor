@@ -8,9 +8,10 @@
 #include "EditorCamera.h"
 #include "EditorCommand.h"
 #include "EditorSelection.h"
-#include "EditorTypes.h"
+#include "EditorState.h"
 #include "EditorPanel.h"
 #include "EditorCommandQueue.h"
+#include "EditorKeyCommands.h"
 
 #include "cinder/gl/Vbo.h"
 #include "cinder/Vector.h"
@@ -21,6 +22,10 @@
 namespace ly {
 	
 class Camera;
+	
+static const ci::Vec3f	kPointSelectionOffset		= ci::Vec3f( 0.5f, 0.0f, 0.5f );
+static const ci::Vec3f	kTargetUndefined			= ci::Vec3f( -9999, -9999, -9999 );
+static const int		kUndefinedElevation			= -99999;
 	
 class Editor : public IGameEventDelegate {
 public:
@@ -38,24 +43,30 @@ public:
 	
 	void									removeSelectionForBlock( Block* block );
 	
-private:
 	EditorCamera							mEditorCamera;
-	EditorPanel								mEditorPanel;
+	EditorPanel*							mPanel;
 	EditorCommandQueue						mCommandQueue;
+	EditorKeyCommands*						mKeyCommands;
+	EditorState								mState;
 	
-	MouseDrag*								mLastDrag;
+	bool									setElevation( EditorSelection* selection, int targetElevation );
+	int										currentElevationTarget;
 	
-	std::vector<EditorSelection*>			select( ci::Vec2i screenPoint, int range, bool showHighlight = true );
+private:
+	ci::Vec3f								mLastSelectionTarget;
+	void									applyUserEdits();
+	bool									mDragWasActive;
+	
+	std::vector<EditorSelection*>			select( ci::Ray ray, int range, float maxDistance = MAXFLOAT, bool allIntersections = false );
+	void									selectStraightLine( ci::Vec3f origin, ci::Vec3f target );
 	
 	EditorMode								mMode;
 	Game*									mGame;
 	ly::Camera*								mCamera;
 	std::vector<EditorSelection*>			mSelections;
-	
-	/** This property keeps the elevation (tilePosition.y) applied to each new block the same as the
-		block first selected when editing beings.  This gives more control to users by preventing
-		unwanted pileup of blocks when overlapping elevated area */
-	int										mBlockTargetElevation;
+	std::vector<EditorSelection*>			mActiveSelections;
+	void									clearActiveSelections();
+	bool									mDidPaintStraightLine;
 	
 	// Dragging properties
 	float									mCameraStartZoom;

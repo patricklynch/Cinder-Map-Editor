@@ -3,7 +3,8 @@
 #include "Terrain.h"
 #include "Block.h"
 #include "InputButtons.h"
-#include "EditorTypes.h"
+#include "EditorState.h"
+#include "EditorMeshSelector.h"
 
 #include "cinder/Vector.h"
 #include "cinder/AxisAlignedBox.h"
@@ -12,46 +13,25 @@
 
 namespace ly {
 	
-struct MeshPositionData {
-	bool top;
-	bool bottom;
-	bool horizontal;
-	bool vertical;
-	bool br;
-	bool bc;
-	bool bl;
-	bool mr;
-	bool ml;
-	bool tr;
-	bool tc;
-	bool tl;
-	bool rowl;
-	bool rowr;
-	bool rowt;
-	bool rowb;
-};
+class Editor;
 	
-typedef enum {
-	NONE = -1, BL, BC, BR, ML, MR, TL, TC, TR
-} SurroundingType;
-
 class EditorSelection {
 public:
-	enum							{ SELECTION_POINT, SELECTION_BLOCK };
 	
-									EditorSelection( Block* block );
+									EditorSelection( Block* block, Editor* editor );
 	
+	void							setSelectionMode( SelectionMode selectionMode );
 	ci::Vec3f						position;
 	ci::Vec3f						tilePosition;
 	
 	void							update( const float deltaTime );
-	void							draw();
+	void							draw( int targetElevation, bool gridLines = false );
 	
 	bool							pick( ci::Ray );
-	void							deselect() { mIsSelected = false; }
-	void							select() { mIsSelected = true; }
-	bool							isSelected() const { return mIsSelected; }
-	void							toggleSelect() { mIsSelected = !mIsSelected; }
+	void							unhighlight() { mIsHighlighted = false; }
+	void							highlight() { mIsHighlighted = true; }
+	bool							isHighlighted() const { return mIsHighlighted; }
+	
 	void							editingComplete();
 	void							editingStarted();
 	
@@ -62,19 +42,24 @@ public:
 	
 	void							resetTilePosition( ci::Vec3f iPosition );
 	Block*							mBlock;
+	std::vector<Block*>				mBlockStack;
 	bool							mHasBeenEdited;
-	BlockMeshType					mBlockMeshType;
-	void							setBlockMeshType( BlockMeshType type );
-	void							updateSurrounding( std::vector<EditorSelection*>& selections );
-	bool							mNeedsSurroundingUpdate;
+	BlockMeshType					mTopBlockMeshType;
+	void							findSurroundingBlocks( std::vector<EditorSelection*>& selections );
+	void							addBlock( Block* block );
+	Block* 							removeBlock();
+	bool							checkSingleBlock();
+	ci::Vec3f						boundingBoxCenter() const { return mBoundingBoxCenter; }
 	
 private:
-	void							updateMesh( int elevation, ci::gl::VboMesh** vboMesh, float* rotation );
-	std::vector<EditorSelection*>	mSurroundings;
-	bool							mIsSelected;
+	ci::Vec3f						mBoundingBoxCenter;
 	ci::AxisAlignedBox3f			mBoundingBox;
+	EditorMeshSelector				mMeshSelector;
+	Editor*							mEditor;
+	int								selectionMode;
+	void							updateMesh( int elevation, ci::gl::VboMesh** vboMesh, float* rotation );
+	bool							mIsHighlighted;
 	int								mSelectionMode;
-	MeshPositionData				mMeshPositionData;
 };
 
 }

@@ -17,17 +17,8 @@
 		5A346E1216879CB800D8463A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A346E1116879CB800D8463A /* AVFoundation.framework */; };
 		5A346E1416879CB800D8463A /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A346E1316879CB800D8463A /* CoreMedia.framework */; };
 		5A346E1616879CB800D8463A /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A346E1516879CB800D8463A /* CoreText.framework */; };
-		5A46996016A46C7500EDE9CE /* CCGLTouchAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5A46994C16A46C7500EDE9CE /* CCGLTouchAppDelegate.mm */; };
-		5A46996116A46C7500EDE9CE /* CCGLTouchView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5A46994E16A46C7500EDE9CE /* CCGLTouchView.mm */; };
-		5A46996216A46C7500EDE9CE /* CCGLTouchViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5A46995016A46C7500EDE9CE /* CCGLTouchViewController.mm */; };
-		5A46996316A46C7500EDE9CE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A46995116A46C7500EDE9CE /* InfoPlist.strings */; };
-		5A46996416A46C7500EDE9CE /* JoypadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A46995416A46C7500EDE9CE /* JoypadViewController.m */; };
-		5A46996516A46C7500EDE9CE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A46995516A46C7500EDE9CE /* main.m */; };
-		5A46996616A46C7500EDE9CE /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A46995616A46C7500EDE9CE /* MainWindow.xib */; };
-		5A46996716A46C7500EDE9CE /* MyAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5A46995816A46C7500EDE9CE /* MyAppDelegate.mm */; };
-		5A46996816A46C7500EDE9CE /* MyCCGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5A46995A16A46C7500EDE9CE /* MyCCGLView.mm */; };
-		5A46996916A46C7500EDE9CE /* MyViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5A46995C16A46C7500EDE9CE /* MyViewController.mm */; };
-		5A46996A16A46C7500EDE9CE /* MyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A46995D16A46C7500EDE9CE /* MyViewController.xib */; };
+		5AC4CA0216BB4DA200EFD45C /* EditorMeshSelector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4CA0016BB4DA200EFD45C /* EditorMeshSelector.cpp */; };
+		5AC4CA0516BB50EE00EFD45C /* EditorMeshSelector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4CA0016BB4DA200EFD45C /* EditorMeshSelector.cpp */; };
 		5ACD1A2E16B0AAF0003DC40D /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2A16B0AAF0003DC40D /* fonts */; };
 		5ACD1A2F16B0AAF0003DC40D /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2A16B0AAF0003DC40D /* fonts */; };
 		5ACD1A3016B0AAF0003DC40D /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2A16B0AAF0003DC40D /* fonts */; };
@@ -106,18 +97,11 @@
 		5AEEAD4416A49E1E0021B88F /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4698E816A46B2C00EDE9CE /* QTKit.framework */; };
 		5AEEAD4516A49E1E0021B88F /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A346E0F16879CB800D8463A /* CoreVideo.framework */; };
 		5AEEAD4616A49E1E0021B88F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4698ED16A46B2C00EDE9CE /* OpenGL.framework */; };
-		5AEEAD4C16A49E1E0021B88F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5AEEAD4A16A49E1E0021B88F /* InfoPlist.strings */; };
-		5AEEAD4E16A49E1E0021B88F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEEAD4D16A49E1E0021B88F /* main.m */; };
-		5AEEAD5F16A49E1E0021B88F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5AEEAD5E16A49E1E0021B88F /* InfoPlist.strings */; };
 		5AEEAD7A16A49E780021B88F /* EditorSelection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AEEAD6516A49E780021B88F /* EditorSelection.cpp */; };
 		5AEEAD7C16A49E780021B88F /* EditorCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AEEAD6916A49E780021B88F /* EditorCamera.cpp */; };
 		5AEEAD7D16A49E780021B88F /* Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AEEAD6B16A49E780021B88F /* Editor.cpp */; };
-		5AEEAD9A16A49F570021B88F /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 5AEEAD9516A49F570021B88F /* MainMenu.nib */; };
-		5AEEAD9B16A49F570021B88F /* MyCCGLDrawing.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5AEEAD9716A49F570021B88F /* MyCCGLDrawing.mm */; };
-		5AEEAD9C16A49F570021B88F /* MyController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5AEEAD9916A49F570021B88F /* MyController.mm */; };
-		5AEEADA016A49F850021B88F /* CCGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5AEEAD9F16A49F850021B88F /* CCGLView.mm */; };
-		5AEEADAF16A4B6C20021B88F /* TexturePalette.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEEADAD16A4B6C20021B88F /* TexturePalette.m */; };
 		5AEEADB616A4BDEB0021B88F /* EditorCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AEEADB416A4BDEB0021B88F /* EditorCommand.cpp */; };
+		5AF2FBE416B6404400BA9F58 /* EditorKeyCommands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AF2FBE216B6404400BA9F58 /* EditorKeyCommands.cpp */; };
 		5AFC196C16B43895007BE26A /* EditorCommandQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AFC196916B437F7007BE26A /* EditorCommandQueue.cpp */; };
 /* End PBXBuildFile section */
 
@@ -142,29 +126,12 @@
 		5A4698E816A46B2C00EDE9CE /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = Library/Frameworks/QTKit.framework; sourceTree = DEVELOPER_DIR; };
 		5A4698EB16A46B2C00EDE9CE /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = Library/Frameworks/Carbon.framework; sourceTree = DEVELOPER_DIR; };
 		5A4698ED16A46B2C00EDE9CE /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
-		5A46994B16A46C7500EDE9CE /* CCGLTouchAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGLTouchAppDelegate.h; sourceTree = "<group>"; };
-		5A46994C16A46C7500EDE9CE /* CCGLTouchAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCGLTouchAppDelegate.mm; sourceTree = "<group>"; };
-		5A46994D16A46C7500EDE9CE /* CCGLTouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGLTouchView.h; sourceTree = "<group>"; };
-		5A46994E16A46C7500EDE9CE /* CCGLTouchView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCGLTouchView.mm; sourceTree = "<group>"; };
-		5A46994F16A46C7500EDE9CE /* CCGLTouchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGLTouchViewController.h; sourceTree = "<group>"; };
-		5A46995016A46C7500EDE9CE /* CCGLTouchViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCGLTouchViewController.mm; sourceTree = "<group>"; };
-		5A46995216A46C7500EDE9CE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		5A46995316A46C7500EDE9CE /* JoypadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoypadViewController.h; sourceTree = "<group>"; };
-		5A46995416A46C7500EDE9CE /* JoypadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoypadViewController.m; sourceTree = "<group>"; };
-		5A46995516A46C7500EDE9CE /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		5A46995616A46C7500EDE9CE /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
-		5A46995716A46C7500EDE9CE /* MyAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAppDelegate.h; sourceTree = "<group>"; };
-		5A46995816A46C7500EDE9CE /* MyAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyAppDelegate.mm; sourceTree = "<group>"; };
-		5A46995916A46C7500EDE9CE /* MyCCGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCCGLView.h; sourceTree = "<group>"; };
-		5A46995A16A46C7500EDE9CE /* MyCCGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyCCGLView.mm; sourceTree = "<group>"; };
-		5A46995B16A46C7500EDE9CE /* MyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyViewController.h; sourceTree = "<group>"; };
-		5A46995C16A46C7500EDE9CE /* MyViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyViewController.mm; sourceTree = "<group>"; };
-		5A46995D16A46C7500EDE9CE /* MyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyViewController.xib; sourceTree = "<group>"; };
-		5A46995E16A46C7500EDE9CE /* RPG3-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RPG3-Info.plist"; sourceTree = "<group>"; };
-		5A46995F16A46C7500EDE9CE /* RPG3-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RPG3-Prefix.pch"; sourceTree = "<group>"; };
 		5A4699D516A48A1400EDE9CE /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = Library/Frameworks/ApplicationServices.framework; sourceTree = DEVELOPER_DIR; };
 		5A4699D716A48A1400EDE9CE /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Library/Frameworks/CoreData.framework; sourceTree = DEVELOPER_DIR; };
 		5A7FB28416ABAD460098F9E3 /* GlslInclude.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GlslInclude.h; path = Utils/GlslInclude.h; sourceTree = "<group>"; };
+		5AC4CA0016BB4DA200EFD45C /* EditorMeshSelector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMeshSelector.cpp; sourceTree = "<group>"; };
+		5AC4CA0116BB4DA200EFD45C /* EditorMeshSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorMeshSelector.h; sourceTree = "<group>"; };
+		5AC4CA0416BB4FAC00EFD45C /* EditorState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditorState.h; sourceTree = "<group>"; };
 		5ACD1A2A16B0AAF0003DC40D /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = Resources/fonts; sourceTree = "<group>"; };
 		5ACD1A2B16B0AAF0003DC40D /* models */ = {isa = PBXFileReference; lastKnownFileType = folder; name = models; path = Resources/models; sourceTree = "<group>"; };
 		5ACD1A2C16B0AAF0003DC40D /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = shaders; path = Resources/shaders; sourceTree = "<group>"; };
@@ -203,11 +170,6 @@
 		5AE3F97716A592FF006BF38E /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		5AE3F97D16A592FF006BF38E /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = include/Resources.h; sourceTree = "<group>"; };
 		5AEEAD3816A49E1E0021B88F /* Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mac.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		5AEEAD4916A49E1E0021B88F /* Mac-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Mac-Info.plist"; sourceTree = "<group>"; };
-		5AEEAD4B16A49E1E0021B88F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		5AEEAD4D16A49E1E0021B88F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		5AEEAD4F16A49E1E0021B88F /* Mac-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac-Prefix.pch"; sourceTree = "<group>"; };
-		5AEEAD5E16A49E1E0021B88F /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
 		5AEEAD6416A49E780021B88F /* EditorConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorConstants.h; sourceTree = "<group>"; };
 		5AEEAD6516A49E780021B88F /* EditorSelection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorSelection.cpp; sourceTree = "<group>"; };
 		5AEEAD6616A49E780021B88F /* EditorSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorSelection.h; sourceTree = "<group>"; };
@@ -215,18 +177,10 @@
 		5AEEAD6A16A49E780021B88F /* EditorCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorCamera.h; sourceTree = "<group>"; };
 		5AEEAD6B16A49E780021B88F /* Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Editor.cpp; sourceTree = "<group>"; };
 		5AEEAD6C16A49E780021B88F /* Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Editor.h; sourceTree = "<group>"; };
-		5AEEAD9516A49F570021B88F /* MainMenu.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = MainMenu.nib; sourceTree = "<group>"; };
-		5AEEAD9616A49F570021B88F /* MyCCGLDrawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCCGLDrawing.h; sourceTree = "<group>"; };
-		5AEEAD9716A49F570021B88F /* MyCCGLDrawing.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyCCGLDrawing.mm; sourceTree = "<group>"; };
-		5AEEAD9816A49F570021B88F /* MyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyController.h; sourceTree = "<group>"; };
-		5AEEAD9916A49F570021B88F /* MyController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyController.mm; sourceTree = "<group>"; };
-		5AEEAD9E16A49F850021B88F /* CCGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGLView.h; sourceTree = "<group>"; };
-		5AEEAD9F16A49F850021B88F /* CCGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCGLView.mm; sourceTree = "<group>"; };
-		5AEEADA816A4B0B40021B88F /* EditorTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditorTypes.h; sourceTree = "<group>"; };
-		5AEEADAC16A4B6C20021B88F /* TexturePalette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TexturePalette.h; sourceTree = "<group>"; };
-		5AEEADAD16A4B6C20021B88F /* TexturePalette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TexturePalette.m; sourceTree = "<group>"; };
 		5AEEADB416A4BDEB0021B88F /* EditorCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorCommand.cpp; sourceTree = "<group>"; };
 		5AEEADB516A4BDEB0021B88F /* EditorCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorCommand.h; sourceTree = "<group>"; };
+		5AF2FBE216B6404400BA9F58 /* EditorKeyCommands.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorKeyCommands.cpp; sourceTree = "<group>"; };
+		5AF2FBE316B6404400BA9F58 /* EditorKeyCommands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorKeyCommands.h; sourceTree = "<group>"; };
 		5AFC196916B437F7007BE26A /* EditorCommandQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorCommandQueue.cpp; sourceTree = "<group>"; };
 		5AFC196A16B437F7007BE26A /* EditorCommandQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorCommandQueue.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -316,8 +270,6 @@
 				5A7FB2BD16AC58050098F9E3 /* Resources */,
 				5A7FB28616ABAD4E0098F9E3 /* Utils */,
 				5AEEAD6316A49E780021B88F /* EditorSrc */,
-				5A46994916A46C7500EDE9CE /* iOS */,
-				5AEEAD4716A49E1E0021B88F /* Mac */,
 				5AE3F96E16A592FF006BF38E /* BlockTest */,
 				5A346E0216879CB800D8463A /* Frameworks */,
 				5A346E0016879CB800D8463A /* Products */,
@@ -361,41 +313,6 @@
 				5A4699D716A48A1400EDE9CE /* CoreData.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		5A46994916A46C7500EDE9CE /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				5A46994A16A46C7500EDE9CE /* CCGLTouchCore */,
-				5A46995116A46C7500EDE9CE /* InfoPlist.strings */,
-				5A46995316A46C7500EDE9CE /* JoypadViewController.h */,
-				5A46995416A46C7500EDE9CE /* JoypadViewController.m */,
-				5A46995516A46C7500EDE9CE /* main.m */,
-				5A46995616A46C7500EDE9CE /* MainWindow.xib */,
-				5A46995716A46C7500EDE9CE /* MyAppDelegate.h */,
-				5A46995816A46C7500EDE9CE /* MyAppDelegate.mm */,
-				5A46995916A46C7500EDE9CE /* MyCCGLView.h */,
-				5A46995A16A46C7500EDE9CE /* MyCCGLView.mm */,
-				5A46995B16A46C7500EDE9CE /* MyViewController.h */,
-				5A46995C16A46C7500EDE9CE /* MyViewController.mm */,
-				5A46995D16A46C7500EDE9CE /* MyViewController.xib */,
-				5A46995E16A46C7500EDE9CE /* RPG3-Info.plist */,
-				5A46995F16A46C7500EDE9CE /* RPG3-Prefix.pch */,
-			);
-			path = iOS;
-			sourceTree = "<group>";
-		};
-		5A46994A16A46C7500EDE9CE /* CCGLTouchCore */ = {
-			isa = PBXGroup;
-			children = (
-				5A46994B16A46C7500EDE9CE /* CCGLTouchAppDelegate.h */,
-				5A46994C16A46C7500EDE9CE /* CCGLTouchAppDelegate.mm */,
-				5A46994D16A46C7500EDE9CE /* CCGLTouchView.h */,
-				5A46994E16A46C7500EDE9CE /* CCGLTouchView.mm */,
-				5A46994F16A46C7500EDE9CE /* CCGLTouchViewController.h */,
-				5A46995016A46C7500EDE9CE /* CCGLTouchViewController.mm */,
-			);
-			path = CCGLTouchCore;
 			sourceTree = "<group>";
 		};
 		5A7FB28616ABAD4E0098F9E3 /* Utils */ = {
@@ -477,34 +394,6 @@
 			name = Headers;
 			sourceTree = "<group>";
 		};
-		5AEEAD4716A49E1E0021B88F /* Mac */ = {
-			isa = PBXGroup;
-			children = (
-				5AEEAD9D16A49F850021B88F /* CCGLCore */,
-				5AEEAD9516A49F570021B88F /* MainMenu.nib */,
-				5AEEAD9616A49F570021B88F /* MyCCGLDrawing.h */,
-				5AEEAD9716A49F570021B88F /* MyCCGLDrawing.mm */,
-				5AEEAD9816A49F570021B88F /* MyController.h */,
-				5AEEAD9916A49F570021B88F /* MyController.mm */,
-				5AEEAD4816A49E1E0021B88F /* Supporting Files */,
-				5AEEADAC16A4B6C20021B88F /* TexturePalette.h */,
-				5AEEADAD16A4B6C20021B88F /* TexturePalette.m */,
-			);
-			path = Mac;
-			sourceTree = "<group>";
-		};
-		5AEEAD4816A49E1E0021B88F /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				5AEEAD4916A49E1E0021B88F /* Mac-Info.plist */,
-				5AEEAD4A16A49E1E0021B88F /* InfoPlist.strings */,
-				5AEEAD4D16A49E1E0021B88F /* main.m */,
-				5AEEAD4F16A49E1E0021B88F /* Mac-Prefix.pch */,
-				5AEEAD5E16A49E1E0021B88F /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		5AEEAD6316A49E780021B88F /* EditorSrc */ = {
 			isa = PBXGroup;
 			children = (
@@ -515,24 +404,19 @@
 				5AEEAD6A16A49E780021B88F /* EditorCamera.h */,
 				5AEEAD6B16A49E780021B88F /* Editor.cpp */,
 				5AEEAD6C16A49E780021B88F /* Editor.h */,
-				5AEEADA816A4B0B40021B88F /* EditorTypes.h */,
 				5AEEADB416A4BDEB0021B88F /* EditorCommand.cpp */,
 				5AEEADB516A4BDEB0021B88F /* EditorCommand.h */,
 				5AE3F95516A53363006BF38E /* EditorPanel.cpp */,
 				5AE3F95616A53363006BF38E /* EditorPanel.h */,
 				5AFC196916B437F7007BE26A /* EditorCommandQueue.cpp */,
 				5AFC196A16B437F7007BE26A /* EditorCommandQueue.h */,
+				5AF2FBE216B6404400BA9F58 /* EditorKeyCommands.cpp */,
+				5AF2FBE316B6404400BA9F58 /* EditorKeyCommands.h */,
+				5AC4CA0016BB4DA200EFD45C /* EditorMeshSelector.cpp */,
+				5AC4CA0116BB4DA200EFD45C /* EditorMeshSelector.h */,
+				5AC4CA0416BB4FAC00EFD45C /* EditorState.h */,
 			);
 			path = EditorSrc;
-			sourceTree = "<group>";
-		};
-		5AEEAD9D16A49F850021B88F /* CCGLCore */ = {
-			isa = PBXGroup;
-			children = (
-				5AEEAD9E16A49F850021B88F /* CCGLView.h */,
-				5AEEAD9F16A49F850021B88F /* CCGLView.mm */,
-			);
-			path = CCGLCore;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -640,9 +524,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5A46996316A46C7500EDE9CE /* InfoPlist.strings in Resources */,
-				5A46996616A46C7500EDE9CE /* MainWindow.xib in Resources */,
-				5A46996A16A46C7500EDE9CE /* MyViewController.xib in Resources */,
 				5ACD1A2E16B0AAF0003DC40D /* fonts in Resources */,
 				5ACD1A3216B0AAF0003DC40D /* models in Resources */,
 				5ACD1A3616B0AAF0003DC40D /* shaders in Resources */,
@@ -679,9 +560,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5AEEAD4C16A49E1E0021B88F /* InfoPlist.strings in Resources */,
-				5AEEAD5F16A49E1E0021B88F /* InfoPlist.strings in Resources */,
-				5AEEAD9A16A49F570021B88F /* MainMenu.nib in Resources */,
 				5ACD1A2F16B0AAF0003DC40D /* fonts in Resources */,
 				5ACD1A3316B0AAF0003DC40D /* models in Resources */,
 				5ACD1A3716B0AAF0003DC40D /* shaders in Resources */,
@@ -696,14 +574,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5A46996016A46C7500EDE9CE /* CCGLTouchAppDelegate.mm in Sources */,
-				5A46996116A46C7500EDE9CE /* CCGLTouchView.mm in Sources */,
-				5A46996216A46C7500EDE9CE /* CCGLTouchViewController.mm in Sources */,
-				5A46996416A46C7500EDE9CE /* JoypadViewController.m in Sources */,
-				5A46996516A46C7500EDE9CE /* main.m in Sources */,
-				5A46996716A46C7500EDE9CE /* MyAppDelegate.mm in Sources */,
-				5A46996816A46C7500EDE9CE /* MyCCGLView.mm in Sources */,
-				5A46996916A46C7500EDE9CE /* MyViewController.mm in Sources */,
+				5AC4CA0216BB4DA200EFD45C /* EditorMeshSelector.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -741,6 +612,8 @@
 				5ACD1A7016B1FF7E003DC40D /* Terrain.cpp in Sources */,
 				5ACD1A7316B1FFA2003DC40D /* Camera.cpp in Sources */,
 				5AFC196C16B43895007BE26A /* EditorCommandQueue.cpp in Sources */,
+				5AF2FBE416B6404400BA9F58 /* EditorKeyCommands.cpp in Sources */,
+				5AC4CA0516BB50EE00EFD45C /* EditorMeshSelector.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -748,14 +621,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5AEEAD4E16A49E1E0021B88F /* main.m in Sources */,
 				5AEEAD7A16A49E780021B88F /* EditorSelection.cpp in Sources */,
 				5AEEAD7C16A49E780021B88F /* EditorCamera.cpp in Sources */,
 				5AEEAD7D16A49E780021B88F /* Editor.cpp in Sources */,
-				5AEEAD9B16A49F570021B88F /* MyCCGLDrawing.mm in Sources */,
-				5AEEAD9C16A49F570021B88F /* MyController.mm in Sources */,
-				5AEEADA016A49F850021B88F /* CCGLView.mm in Sources */,
-				5AEEADAF16A4B6C20021B88F /* TexturePalette.m in Sources */,
 				5AEEADB616A4BDEB0021B88F /* EditorCommand.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -763,26 +631,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		5A46995116A46C7500EDE9CE /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5A46995216A46C7500EDE9CE /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		5AE3F97116A592FF006BF38E /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				5AE3F97216A592FF006BF38E /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		5AEEAD4A16A49E1E0021B88F /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5AEEAD4B16A49E1E0021B88F /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

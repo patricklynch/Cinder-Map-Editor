@@ -17,33 +17,32 @@ Input* Input::get()
 	return sInstance;
 }
 
-Input::Input() : mMouseDrag( new MouseDrag() ), mCursorPositionHasBeenSet( false ), mMouseWheelCallback( NULL )
+Input::Input() : mCursorPositionHasBeenSet( false ), mMouseWheelCallback( NULL )
 {
 	mCurrentMovePos = Vec2i(0,0);
 	mLastMovePos = mCurrentMovePos;
 	
-	mMouseInputs[ Input::MOUSE_LEFT ] = false;
-	mMouseInputs[ Input::MOUSE_RIGHT ] = false;
-	mMouseInputs[ Input::MOUSE_MIDDLE ] = false;
+	mMouseInputs[ MOUSE_LEFT ] = false;
+	mMouseInputs[ MOUSE_RIGHT ] = false;
+	mMouseInputs[ MOUSE_MIDDLE ] = false;
 }
 
-Input::~Input()
-{
-	delete mMouseDrag;
-}
+Input::~Input() {}
 
 void Input::keyDown( ci::app::KeyEvent event )
 {
 	mKeyInputs[ event.getCode() ] = true;
 	
-	for( std::vector<KeyListener>::iterator iter = mKeyListeners.begin(); iter != mKeyListeners.end(); ++iter)
-		if ( iter->keyCode == event.getCode())
-			iter->callback( event.getCode() );
+	for( std::vector<KeyListener_t>::iterator iter = mKeyListeners.begin(); iter != mKeyListeners.end(); ++iter) {
+		if ( iter->keyCode == event.getCode() || iter->keyCode == 0 ) {
+			iter->callback( event );
+		}
+	}
 }
 
-void Input::addListenerForKey( boost::function<void (int)> callback, int keyCode)
+void Input::addListenerForKey( boost::function<void (ci::app::KeyEvent)> callback, int keyCode )
 {
-	KeyListener listener;
+	KeyListener_t listener;
 	listener.callback = callback;
 	listener.keyCode = keyCode;
 	mKeyListeners.push_back( listener );
@@ -66,10 +65,9 @@ ci::Vec2i Input::mousePosition() const
 	return mCurrentMovePos;
 }
 
-MouseDrag* Input::mouseDrag(MouseButton mouseButton) const
+MouseDrag& Input::getMouseDrag()
 {
-	if ( mMouseDrag->mouseButton == mouseButton && mMouseDrag->isActive ) return mMouseDrag;
-	else return NULL;
+	return mMouseDrag;
 }
 
 void Input::keyUp( ci::app::KeyEvent event )
@@ -85,11 +83,12 @@ void Input::mouseMove( ci::app::MouseEvent event)
 void Input::mouseDrag( ci::app::MouseEvent event )
 {
 	mCurrentMovePos = event.getPos();
-	mMouseDrag->isActive = true;
-	mMouseDrag->isAltDown = event.isAltDown();
-	mMouseDrag->isControlDown = event.isControlDown();
-	mMouseDrag->current = event.getPos();
-	mMouseDrag->mouseButton = buttonForEvent( event );
+	mMouseDrag.isActive = true;
+	mMouseDrag.isAltDown = event.isAltDown();
+	mMouseDrag.isControlDown = event.isControlDown();
+	mMouseDrag.isShiftDown = event.isShiftDown();
+	mMouseDrag.current = event.getPos();
+	mMouseDrag.mouseButton = buttonForEvent( event );
 	mMouseInputs[ buttonForEvent( event ) ] = true;
 }
 
@@ -106,19 +105,21 @@ void Input::addListenerMouseWheel( boost::function<void (float)> callback )
 
 void Input::mouseDown( ci::app::MouseEvent event )
 {
-	mMouseDrag->isActive = true;
-	mMouseDrag->origin = event.getPos();
-	mMouseDrag->current = event.getPos();
-	mMouseDrag->isAltDown = event.isAltDown();
-	mMouseDrag->isControlDown = event.isControlDown();
-	mMouseDrag->mouseButton = buttonForEvent( event );
+	mMouseDrag.isActive = true;
+	mMouseDrag.origin = event.getPos();
+	mCurrentMovePos = event.getPos();
+	mMouseDrag.current = event.getPos();
+	mMouseDrag.isAltDown = event.isAltDown();
+	mMouseDrag.isControlDown = event.isControlDown();
+	mMouseDrag.isShiftDown = event.isShiftDown();
+	mMouseDrag.mouseButton = buttonForEvent( event );
 	
 	mMouseInputs[ buttonForEvent( event ) ] = true;
 }
 
 void Input::mouseUp( ci::app::MouseEvent event )
 {
-	mMouseDrag->isActive = false;
+	mMouseDrag.isActive = false;
 	mMouseInputs[ buttonForEvent( event ) ] = false;
 }
 
@@ -132,9 +133,9 @@ bool Input::mouseIsDown( MouseButton mouseButton )
 	return mMouseInputs[ mouseButton ];
 }
 
-Input::MouseButton Input::buttonForEvent( ci::app::MouseEvent event )
+MouseButton Input::buttonForEvent( ci::app::MouseEvent event )
 {
-	if (event.isLeft()) return Input::MOUSE_LEFT;
-	else if (event.isMiddle()) return Input::MOUSE_MIDDLE;
-	else return Input::MOUSE_RIGHT;
+	if (event.isLeft()) return MOUSE_LEFT;
+	else if (event.isRight()) return MOUSE_RIGHT;
+	else return MOUSE_MIDDLE;
 }

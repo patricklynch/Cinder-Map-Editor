@@ -12,22 +12,21 @@ using namespace ci::app;
 
 using namespace ly;
 
-Block::Block() : mRotationTop( 0.0f ), mRotationStack( 0.0 )
+Block::Block() : mRotation( 0.0f )
 {
 	mNode = new Node();
 }
 
 Block* Block::createBlock( ci::Vec3i tilePosition )
 {
-	Block* block								= new Block();
 	AssetManager* assetManager					= AssetManager::get();
+	Block* block								= new Block();
 	block->tilePosition							= tilePosition;
+	block->mTextureOffset						= Vec2i( 2, 3 );
 	//block->mTextureOffset						= Vec2i( randInt(0,7), randInt(0,7) );
-	block->mTextureOffset						= Vec2i( 0, 0 );
 	block->mNode->scale							= Vec3f::one() * kTileSize;
 	block->mNode->textures[ MaterialDiffuse ]	= assetManager->getTexture( "textures/texture_tiles.png" );
-	block->mStackVboMesh						= assetManager->getVboMesh( "models/cube.obj" );
-	block->mTopVboMesh							= assetManager->getVboMesh( "models/cube.obj" );
+	//block->mNode->colors[ MaterialDiffuse ]		= ColorA(1,0,0,1);
 	block->mNode->position						= tilePosition * kTileSize;
 	
 	return block;
@@ -40,23 +39,12 @@ Block::~Block()
 
 void Block::draw( ci::gl::GlslProg* shader )
 {
-	ci::Matrix44f matrix = mNode->transform();
-	matrix.rotate( Vec3f::yAxis() * toRadians( mRotationTop ) );
-	shader->uniform( "transformMatrix", matrix );
-	shader->uniform( "color", ColorA::white() );
-	gl::draw( *mTopVboMesh );
-	
-	for( int i = 1; i < tilePosition.y+1; i++ ) {
-		ci::Matrix44f matrix = mNode->transform();
-		matrix.rotate( Vec3f::yAxis() * toRadians( mRotationStack ) );
-		matrix.translate( -Vec3i::yAxis() * i * kTileSize );
-		shader->uniform( "transformMatrix", matrix );
-		shader->uniform( "color", ColorA( 1.0f - (float)i / 10.0f, 0.0f, 0.0f, 1.0f ) );
-		gl::draw( *mStackVboMesh );
-	}
+	if ( mNode->mVboMesh )
+		gl::draw( *mNode->mVboMesh );
 }
 
 void Block::update( const float deltaTime )
 {
+	mNode->rotation.y = mRotation;
 	mNode->update( deltaTime );
 }

@@ -1,5 +1,6 @@
 #include "EditorPanel.h"
 #include "EditorConstants.h"
+#include "Editor.h"
 
 #include <boost/bind.hpp>
 
@@ -49,7 +50,7 @@ void EditorThumbnail::draw()
 	gl::drawStrokedRect( r );
 }
 
-EditorPanel::EditorPanel()
+EditorPanel::EditorPanel( Editor* editor ) : mEditor( editor )
 {
 	mParams = params::InterfaceGl( "EDITOR", Vec2i( 200, 400 ) );
 	mParams.addSeparator();
@@ -62,24 +63,21 @@ EditorPanel::EditorPanel()
 	mCurrentTool = EditorPaintSelection2;
 	 mParams.addParam( "CURRENT TOOL", toolStrings, &mCurrentTool );*/
 	
-	brushSize = 3;
-	mParams.addParam( "Brush Size", &brushSize, "max=10 min=1 step=1" );
-	
-	brushErase = false;
-	mParams.addParam( "Erase", &brushErase );
+	mParams.addParam( "Brush Size",		&mEditor->mState.brushSize, "max=10 min=2 step=1" );
+	mParams.addParam( "Elevation",		&mEditor->mState.targetElevation, "max=10 min=0 step=1" );
+	mParams.addParam( "Show Grid",		&mEditor->mState.showGrid );
 	
 	mParams.addSeparator();
-	mParams.addButton( "UNDO", boost::bind( &EditorPanel::test, this ) );
-	mParams.addButton( "REDO", boost::bind( &EditorPanel::test, this ) );
+	mParams.addButton( "UNDO",			boost::bind( &EditorPanel::test, this ) );
+	mParams.addButton( "REDO",			boost::bind( &EditorPanel::test, this ) );
 	
 	mParams.addSeparator();
-	mParams.addButton( "NEW", boost::bind( &EditorPanel::test, this ) );
-	mParams.addButton( "OPEN", boost::bind( &EditorPanel::test, this ) );
-	mParams.addButton( "SAVE", boost::bind( &EditorPanel::test, this ) );
-	mParams.addButton( "RESET", boost::bind( &EditorPanel::test, this ) );
-	mParams.addButton( "COPY", boost::bind( &EditorPanel::test, this ) );
-	mParams.addButton( "EXIT", boost::bind( &EditorPanel::test, this ) );
-
+	mParams.addButton( "NEW",			boost::bind( &EditorPanel::test, this ) );
+	mParams.addButton( "OPEN",			boost::bind( &EditorPanel::test, this ) );
+	mParams.addButton( "SAVE",			boost::bind( &EditorPanel::test, this ) );
+	mParams.addButton( "RESET",			boost::bind( &EditorPanel::test, this ) );
+	mParams.addButton( "COPY",			boost::bind( &EditorPanel::test, this ) );
+	mParams.addButton( "EXIT",			boost::bind( &EditorPanel::test, this ) );
 	
 	mTexturePicker.position = Vec2i( 240, 15 );
 	

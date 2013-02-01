@@ -10,7 +10,7 @@ uniform vec3	lightPos;
 uniform float	shininess;
 
 varying vec3	normal;
-varying vec4	vertex;
+varying vec4	worldPos;
 
 // For other uses, call the fully parameterized function
 vec4 _lightingAmbiDiffSpec(in vec4 _diffuseColor,
@@ -42,6 +42,6 @@ vec4 _lightingAmbiDiffSpecShort( in vec4 _diffuseColor )
 								 lightPos,
 								 lightColor,
 								 eyePos,
-								 vertex,
+								 worldPos,
 								 normal );
 }

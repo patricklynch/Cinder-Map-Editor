@@ -3,7 +3,10 @@
 
 using namespace ly;
 
-EditorCommandQueue::EditorCommandQueue() {}
+EditorCommandQueue::EditorCommandQueue()
+{
+	
+}
 
 EditorCommandQueue::~EditorCommandQueue() {}
 

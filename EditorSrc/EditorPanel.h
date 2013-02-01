@@ -9,6 +9,7 @@
 namespace ly {
 	
 class EditorPalette;
+class Editor;
 	
 class EditorThumbnail {
 public:
@@ -36,11 +37,8 @@ private:
 	
 class EditorPanel {
 public:
-	EditorPanel();
+	EditorPanel( Editor* editor );
 	virtual					~EditorPanel();
-	
-	int						brushSize;
-	bool					brushErase;
 	
 	void					draw();
 	void					update( const float deltaTime );
@@ -48,6 +46,7 @@ public:
 	void					test();
 	
 private:
+	Editor*					mEditor;
 	ci::params::InterfaceGl mParams;
 	EditorPalette			mTexturePicker;
 	EditorPalette			mObjectPicker;

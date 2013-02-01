@@ -13,21 +13,34 @@ namespace ly {
 	
 class MouseDrag;
 	
-class KeyListener {
+class KeyListener_t {
 public:
-	boost::function<void (int)> callback;
+	boost::function<void (ci::app::KeyEvent)> callback;
 	int keyCode;
+};
+	
+typedef enum {
+	MOUSE_LEFT, MOUSE_RIGHT, MOUSE_MIDDLE
+} MouseButton;
+
+class MouseDrag {
+public:
+	MouseDrag() : isActive( false ), isAltDown( false ), isControlDown( false ) {}
+	bool isActive;
+	ci::Vec2i origin;
+	ci::Vec2i current;
+	bool isAltDown;
+	bool isControlDown;
+	bool isShiftDown;
+	ci::Vec2i difference() const { return current - origin; }
+	MouseButton mouseButton;
 };
 	
 class Input {
 public:
 	static Input* get();
 	
-	typedef enum {
-		MOUSE_LEFT, MOUSE_RIGHT, MOUSE_MIDDLE
-	} MouseButton;
-	
-	void addListenerForKey( boost::function<void (int)> callback, int keyCode );
+	void addListenerForKey( boost::function<void (ci::app::KeyEvent)> callback, int keyCode = 0 );
 	void addListenerMouseWheel( boost::function<void (float)> callback );
 	
 	void keyDown( ci::app::KeyEvent event );
@@ -42,11 +55,11 @@ public:
 	ci::Vec2i mousePosition() const;
 	
 	bool keyIsDown( int keyCode);
-	bool mouseIsDown( MouseButton mouseButton);
+	bool mouseIsDown( MouseButton mouseButton );
 	
 	ci::Vec2i moveVelocity() const { return mMoveVelocity; }
 	
-	MouseDrag* mouseDrag(MouseButton mouseButton) const;
+	MouseDrag& getMouseDrag();
 	
 private:
 	Input();
@@ -55,30 +68,19 @@ private:
 	bool mCursorPositionHasBeenSet;
 	
 	MouseButton buttonForEvent( ci::app::MouseEvent event );
-	std::vector<KeyListener> mKeyListeners;
+	std::vector<KeyListener_t> mKeyListeners;
 	ci::Vec2i mLastMovePos;
 	ci::Vec2i mMoveVelocity;
 	ci::Vec2i mCurrentMovePos;
 	
-	MouseDrag* mMouseDrag;
+	MouseDrag mMouseDrag;
 	
 	std::map<int, bool> mKeyInputs;
+	std::map<int, bool> mAllKeyCallbacks;
 	std::map<MouseButton, bool> mMouseInputs;
-	
 	boost::function<void (float)> mMouseWheelCallback;
 	
 	static Input* sInstance;
-};
-
-class MouseDrag {
-public:
-	bool isActive;
-	ci::Vec2i origin;
-	ci::Vec2i current;
-	bool isAltDown;
-	bool isControlDown;
-	ci::Vec2i difference() const { return current - origin; }
-	Input::MouseButton mouseButton;
 };
 
 }

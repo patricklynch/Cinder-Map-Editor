@@ -7,7 +7,7 @@ using namespace ci;
 
 static int nodeIdCounter = 0;
 
-Node::Node() : parent( NULL ), mMesh( NULL ), mIsUnlit( false ), mShouldFaceForward( false ), inverted( false )
+Node::Node() : parent( NULL ), mMesh( NULL ), mVboMesh( NULL ), mIsUnlit( false ), mShouldFaceForward( false ), inverted( false )
 {
 	mNodeId = nodeIdCounter++;
 	mTransform = mLastTransform = Matrix44f::identity();
