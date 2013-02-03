@@ -44,7 +44,7 @@ void EditorKeyCommands::onKeyDown( ci::app::KeyEvent event )
 	
 	else if ( !meta ) {
 		
-		// Brush Size
+		// Set paint mode brush size
 		if ( code == KeyEvent::KEY_LEFTBRACKET ) {
 			mEditor->mState.brushSize--;
 			return;
@@ -53,7 +53,7 @@ void EditorKeyCommands::onKeyDown( ci::app::KeyEvent event )
 			return;
 		}
 		
-		// Elevation
+		// Set elevation
 		else if ( code == KeyEvent::KEY_PLUS || code == KeyEvent::KEY_EQUALS ) {
 			mEditor->mState.targetElevation++;
 			return;
@@ -63,9 +63,14 @@ void EditorKeyCommands::onKeyDown( ci::app::KeyEvent event )
 			return;
 		}
 		
-		// Grid
+		// Show/hide grid
 		else if ( code == KeyEvent::KEY_g ) {
 			mEditor->mState.showGrid = !mEditor->mState.showGrid;
+		}
+		
+		// Clear everything off the map
+		else if ( code == KeyEvent::KEY_SPACE ) {
+			mEditor->resetAll();
 		}
 	}
 	

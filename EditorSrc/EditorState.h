@@ -21,7 +21,7 @@ typedef enum {
 
 class EditorState {
 public:
-	EditorState() : brushSize(3), targetElevation(1), showGrid(false) {}
+	EditorState() : brushSize(2), targetElevation(1), showGrid(false) {}
 	int										brushSize;
 	int										targetElevation;
 	bool									showGrid;

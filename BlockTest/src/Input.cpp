@@ -83,11 +83,17 @@ void Input::mouseMove( ci::app::MouseEvent event)
 void Input::mouseDrag( ci::app::MouseEvent event )
 {
 	mCurrentMovePos = event.getPos();
+	activateDrag( event );
+}
+
+void Input::activateDrag( ci::app::MouseEvent event )
+{
 	mMouseDrag.isActive = true;
+	mMouseDrag.current = event.getPos();
+	mMouseDrag.isMetaDown = event.isMetaDown();
 	mMouseDrag.isAltDown = event.isAltDown();
 	mMouseDrag.isControlDown = event.isControlDown();
 	mMouseDrag.isShiftDown = event.isShiftDown();
-	mMouseDrag.current = event.getPos();
 	mMouseDrag.mouseButton = buttonForEvent( event );
 	mMouseInputs[ buttonForEvent( event ) ] = true;
 }
@@ -105,16 +111,9 @@ void Input::addListenerMouseWheel( boost::function<void (float)> callback )
 
 void Input::mouseDown( ci::app::MouseEvent event )
 {
-	mMouseDrag.isActive = true;
-	mMouseDrag.origin = event.getPos();
 	mCurrentMovePos = event.getPos();
-	mMouseDrag.current = event.getPos();
-	mMouseDrag.isAltDown = event.isAltDown();
-	mMouseDrag.isControlDown = event.isControlDown();
-	mMouseDrag.isShiftDown = event.isShiftDown();
-	mMouseDrag.mouseButton = buttonForEvent( event );
-	
-	mMouseInputs[ buttonForEvent( event ) ] = true;
+	mMouseDrag.origin = event.getPos();
+	activateDrag( event );
 }
 
 void Input::mouseUp( ci::app::MouseEvent event )

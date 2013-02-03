@@ -2,6 +2,7 @@
 
 #include <vector>
 
+#include "Block.h"
 #include "cinder/Vector.h"
 
 namespace ly {
@@ -30,19 +31,6 @@ struct MeshPositionData {
 typedef enum {
 	NONE = -1, BL, BC, BR, ML, MR, TL, TC, TR
 } SurroundingType;
-	
-typedef enum {
-	BlockMeshNone = -1,
-	BlockMeshCenter,
-	BlockMeshFill,
-	BlockMeshEdge,
-	BlockMeshWall,
-	BlockMeshWallEnd,
-	BlockMeshWallDiagonal,
-	BlockMeshInnerCorner,
-	BlockMeshDoubleInnerCorner,
-	BlockMeshOuterCorner
-} BlockMeshType;
 
 struct EditorMeshSelectorResult {
 	float rotation;

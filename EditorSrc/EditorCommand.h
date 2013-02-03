@@ -18,7 +18,7 @@ public:
 };
 	
 class Editor;
-	
+
 class EditorCommandModifyElevation : public EditorCommand {
 public:
 	EditorCommandModifyElevation() {}
@@ -30,5 +30,5 @@ public:
 private:
 	std::vector<int>				previousAmounts;
 };
-	
+
 }

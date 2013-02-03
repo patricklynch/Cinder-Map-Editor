@@ -63,6 +63,7 @@ public:
 	void loadAssets( std::vector<std::string>& assetPaths );
 	void loadAssets( std::string* assets, int numElements );
 	void loadAsset( std::string assetPath );
+	void loadDirectory( std::string path, bool recursive );
 	
 	/** To get at the asset object itself, use this method */
 	template <typename T>

@@ -19,6 +19,7 @@
 		5A346E1616879CB800D8463A /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A346E1516879CB800D8463A /* CoreText.framework */; };
 		5AC4CA0216BB4DA200EFD45C /* EditorMeshSelector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4CA0016BB4DA200EFD45C /* EditorMeshSelector.cpp */; };
 		5AC4CA0516BB50EE00EFD45C /* EditorMeshSelector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4CA0016BB4DA200EFD45C /* EditorMeshSelector.cpp */; };
+		5AC4CA8D16BD986600EFD45C /* terrain in Resources */ = {isa = PBXBuildFile; fileRef = 5AC4CA8C16BD986600EFD45C /* terrain */; };
 		5ACD1A2E16B0AAF0003DC40D /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2A16B0AAF0003DC40D /* fonts */; };
 		5ACD1A2F16B0AAF0003DC40D /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2A16B0AAF0003DC40D /* fonts */; };
 		5ACD1A3016B0AAF0003DC40D /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2A16B0AAF0003DC40D /* fonts */; };
@@ -132,6 +133,7 @@
 		5AC4CA0016BB4DA200EFD45C /* EditorMeshSelector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorMeshSelector.cpp; sourceTree = "<group>"; };
 		5AC4CA0116BB4DA200EFD45C /* EditorMeshSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorMeshSelector.h; sourceTree = "<group>"; };
 		5AC4CA0416BB4FAC00EFD45C /* EditorState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditorState.h; sourceTree = "<group>"; };
+		5AC4CA8C16BD986600EFD45C /* terrain */ = {isa = PBXFileReference; lastKnownFileType = folder; name = terrain; path = Resources/terrain; sourceTree = "<group>"; };
 		5ACD1A2A16B0AAF0003DC40D /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = Resources/fonts; sourceTree = "<group>"; };
 		5ACD1A2B16B0AAF0003DC40D /* models */ = {isa = PBXFileReference; lastKnownFileType = folder; name = models; path = Resources/models; sourceTree = "<group>"; };
 		5ACD1A2C16B0AAF0003DC40D /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = shaders; path = Resources/shaders; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 		5A7FB2BD16AC58050098F9E3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5AC4CA8C16BD986600EFD45C /* terrain */,
 				5ACD1A2A16B0AAF0003DC40D /* fonts */,
 				5ACD1A2B16B0AAF0003DC40D /* models */,
 				5ACD1A2C16B0AAF0003DC40D /* shaders */,
@@ -553,6 +556,7 @@
 				5ACD1A3516B0AAF0003DC40D /* models in Resources */,
 				5ACD1A3916B0AAF0003DC40D /* shaders in Resources */,
 				5ACD1A3D16B0AAF0003DC40D /* textures in Resources */,
+				5AC4CA8D16BD986600EFD45C /* terrain in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -59,10 +59,10 @@ void EditorSelection::update( const float deltaTime )
 {
 	mBlock->tilePosition = tilePosition;
 	mBlock->mNode->position = position;
-	updateMesh( tilePosition.y, &mBlock->mNode->mVboMesh, &mBlock->mRotation );
+	
+	updateMesh( mBlock );
 	for( std::vector<Block*>::iterator iter = mBlockStack.begin(); iter != mBlockStack.end(); iter++ ) {
-		Block* block = *iter;
-		updateMesh( block->tilePosition.y, &block->mNode->mVboMesh, &block->mRotation );
+		updateMesh( *iter );
 	}
 }
 
@@ -90,37 +90,13 @@ void EditorSelection::findSurroundingBlocks( std::vector<EditorSelection*>& sele
 	mMeshSelector.setSurrounding( selections, tilePosition );
 }
 
-void EditorSelection::updateMesh( int elevation, ci::gl::VboMesh** vboMesh, float* rotation )
+void EditorSelection::updateMesh( Block* block )
 {
-	EditorMeshSelectorResult result = mMeshSelector.getMeshSelection( elevation );
-	*rotation = result.rotation;
-	
-	AssetManager* assetManager = AssetManager::get();
-	switch( result.type ) {
-		case BlockMeshFill:
-			*vboMesh = assetManager->getVboMesh( "models/center.obj" );
-			break;
-		case BlockMeshEdge:
-			*vboMesh = assetManager->getVboMesh( "models/wall.obj" );
-			break;
-		case BlockMeshOuterCorner:
-			*vboMesh = assetManager->getVboMesh( "models/outer_corner.obj" );
-			break;
-		case BlockMeshInnerCorner:
-			*vboMesh = assetManager->getVboMesh( "models/inner_corner.obj" );
-			break;
-		case BlockMeshDoubleInnerCorner:
-			*vboMesh = assetManager->getVboMesh( "models/bridge.obj" );
-			break;
-		case BlockMeshNone:
-			*vboMesh = NULL;
-			break;
-		default:
-			break;
-	}
+	EditorMeshSelectorResult result = mMeshSelector.getMeshSelection( block->tilePosition.y );
+	block->setMeshType( result.type, result.rotation );
 	
 	// If it's the top block
-	if ( tilePosition.y == elevation ) {
+	if ( mBlock->tilePosition.y == tilePosition.y ) {
 		mTopBlockMeshType = result.type;
 	}
 }

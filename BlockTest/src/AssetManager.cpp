@@ -18,6 +18,7 @@ bool GameAssetTexture::load()
 		gl::Texture::Format format;
 		format.enableMipmapping();
 		format.setMinFilter( GL_LINEAR_MIPMAP_NEAREST );
+		format.setWrap( GL_REPEAT, GL_REPEAT );
 		mTexture = new gl::Texture( loadImage( loadAsset( mPath ) ), format );
 		return true;
 	} catch ( Exception& exc ) {
@@ -56,8 +57,8 @@ AssetManager* AssetManager::sInstance = 0;
 AssetManager::AssetManager()
 {
 	ci::app::AppBasic* app = ci::app::AppBasic::get();
-	app->addAssetDirectory( app->getAppPath() / "Contents" / "Resources" );
 	app->addAssetDirectory( app->getAppPath() / ".." / "Resources" );
+	app->addAssetDirectory( app->getAppPath() / "Contents" / "Resources" );
 	
 	console() << app->getAppPath().string() << std::endl;
 }
@@ -75,6 +76,30 @@ void AssetManager::loadAssets( std::string* assets, int numElements )
 	}
 }
 
+void AssetManager::loadDirectory( std::string path, bool recursive )
+{
+	ci::app::AppBasic* app = ci::app::AppBasic::get();
+	fs::path directoryPath = app->getAssetPath( path );
+	if ( fs::exists( directoryPath ) && fs::is_directory( directoryPath ) ) {
+		std::vector<fs::path> filePaths;
+		std::copy( fs::directory_iterator( directoryPath ), fs::directory_iterator(), std::back_inserter( filePaths ) );
+		for( std::vector<fs::path>::const_iterator iter( filePaths.begin() ); iter != filePaths.end(); iter++ ) {
+			
+			std::string fullPath = iter->string();
+			int startPos = fullPath.find( path );
+			int endPos = fullPath.length()-1;
+			std::string assetPath = fullPath.substr( startPos, endPos );
+			
+			if ( fs::is_directory( *iter ) && recursive ) {
+				loadDirectory( assetPath, recursive );
+			}
+			else {
+				loadAsset( assetPath );
+			}
+		}
+	}
+}
+
 void AssetManager::loadAssets( vector<string>& assetPaths )
 {
 	vector<string>::const_iterator iter;
@@ -85,12 +110,12 @@ void AssetManager::loadAssets( vector<string>& assetPaths )
 
 void AssetManager::loadAsset( std::string assetPath )
 {
-	int dotIndex = assetPath.find( "."  );
-	if ( dotIndex == string::npos ) {
+	fs::path filePath = assetPath;
+	string extension = filePath.extension().string();
+	if ( extension.empty() ) {
 		console() << "Could not load asset at path '" << assetPath << "' because it does not have an extension." << std::endl;
 		return;
 	}
-	string extension = assetPath.substr( dotIndex );
 	GameAssetType type;
 	if ( extension == ".jpg" || extension == ".png" ) {
 		type = Texture;

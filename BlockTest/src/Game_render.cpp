@@ -15,7 +15,7 @@ float mTerrainOffsetAdjust;
 void Game::setupRenderer()
 {
 	try {
-		mBlockShader	= GlslInclude::compileShader( "shaders/blocks.vert",	"shaders/blocks.frag" );
+		mBlockShader	= GlslInclude::compileShader( "shaders/blocks.vert",	"shaders/blocks2.frag" );
 		mTerrainShader	= GlslInclude::compileShader( "shaders/terrain.vert",	"shaders/terrain.frag" );
 	}
 	catch( gl::GlslProgCompileExc &exc ) {

@@ -48,34 +48,9 @@ void BlockTestApp::setup()
 {
 	// Preload assets
 	AssetManager* assetManager = AssetManager::get();
-	std::string assets[] = {
-		"shaders/blocks.vert",
-		"shaders/blocks.frag",
-		"shaders/terrain.vert",
-		"shaders/terrain.frag",
-		"models/bridge.obj",
-		"models/center.obj",
-		"models/inner_corner.obj",
-		"models/outer_corner.obj",
-		"models/wall.obj",
-		"models/yoda.obj",
-		"models/cube_multiface.obj",
-		"models/cube_smooth_multiface.obj",
-		"models/cube_smooth.obj",
-		"models/cube.obj",
-		"models/cylinder.obj",
-		"models/dome_tall.obj",
-		"models/edge_straight.obj",
-		"models/edge_diagonal.obj",
-		"models/edge_inner_corner.obj",
-		"models/dome.obj",
-		"models/geosphere_center.obj",
-		"models/geosphere.obj",
-		"models/tri_prism.obj",
-		"models/plane.obj",
-		"textures/texture_tiles.png"
-	};
-	assetManager->loadAssets( &assets[0], sizeof( assets ) / sizeof( std::string ) );
+	assetManager->loadDirectory( "models", true );
+	assetManager->loadDirectory( "textures", true );
+	assetManager->loadDirectory( "terrain", true );
 	
 	mGame = new Game();
 	mEditor = new Editor( mGame );

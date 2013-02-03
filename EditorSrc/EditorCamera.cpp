@@ -38,7 +38,7 @@ void EditorCamera::update( const float deltaTime )
 	MouseDrag& drag = input->getMouseDrag();
 	if ( drag.isActive && drag.mouseButton == MOUSE_MIDDLE ) {
 		if ( drag.isAltDown ) {
-			mCamera->rotation.y = mRotationStart.y - drag.difference().x * 0.17f;
+			mCamera->rotation.y = mRotationStart.y - drag.difference().x * 0.17f;	
 			mCamera->rotation.x = mRotationStart.x - drag.difference().y * 0.17f;
 		}
 		else {

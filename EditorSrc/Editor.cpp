@@ -27,7 +27,7 @@ Editor::Editor( Game* game ) : mGame( game )
 	//mCamera->rotation.y = 0.0f;
 	mCamera->setAngle( -80.0f);
 	mCamera->rotation.y = 45.0f;
-	mCamera->setAngle( -45.0f);
+	mCamera->setAngle( -35.0f);
 	
 	// Create EditorSeletion as a wrapper for each block in the game
 	std::vector<Block*>& blocks = mGame->blocks();
@@ -127,6 +127,15 @@ void Editor::clearActiveSelections()
 	mActiveSelections.clear();
 }
 
+void Editor::resetAll()
+{
+	EditorCommandModifyElevation* cmd = new EditorCommandModifyElevation();
+	cmd->activeSelections = mSelections;
+	cmd->editor = this;
+	cmd->amount = 0;
+	mCommandQueue.addCommand( cmd );
+}
+
 void Editor::applyUserEdits()
 {
 	if ( mMode == MODE_PAINT_ELEVATION ) {
@@ -157,8 +166,10 @@ void Editor::applyUserEdits()
 		if ( mMode == MODE_PAINT_ELEVATION ) {
 			
 			// Find all selections between here and the current selection point and add to mActiveSelections
-			if ( drag.isShiftDown && mLastSelectionTarget != kTargetUndefined) {
-				selectStraightLine( mLastSelectionTarget, mActiveSelections[0]->boundingBoxCenter() );
+			if ( drag.isShiftDown && mLastSelectionTarget != kTargetUndefined ) {
+				Vec3f origin = mLastSelectionTarget;
+				Vec3f target = mActiveSelections[0]->boundingBoxCenter();
+				selectStraightLine( origin, target, drag.isMetaDown );
 			}
 			
 			if ( mActiveSelections.size() > 0 ) {
@@ -172,20 +183,41 @@ void Editor::applyUserEdits()
 				cmd->amount = currentElevationTarget;
 				mCommandQueue.addCommand( cmd );
 			}
-		}
-		if (mActiveSelections.size() > 0 ) {
-			mLastSelectionTarget = mActiveSelections[0]->boundingBoxCenter();
-		} else {
-			mLastSelectionTarget = kTargetUndefined;
+			
+			if (mActiveSelections.size() > 0 ) {
+				mLastSelectionTarget = mActiveSelections[0]->boundingBoxCenter();
+			} else {
+				mLastSelectionTarget = kTargetUndefined;
+			}
 		}
 	}
 	mDragWasActive = drag.isActive;
 }
 
-void Editor::selectStraightLine( ci::Vec3f origin, ci::Vec3f target )
+void Editor::selectStraightLine( ci::Vec3f origin, ci::Vec3f target, bool constrain )
 {
-	if ( !mDidPaintStraightLine ) {
+	//if ( !mDidPaintStraightLine ) {
 		mDidPaintStraightLine = true;
+		
+		Vec3f direction = target - origin;
+		
+		if ( constrain && direction != Vec3f::zero() ) {
+			mActiveSelections.clear();
+			
+			int length = direction.length();
+			direction.normalize();
+			
+			if ( direction.x >= 0.5f )			direction.x = 1.0f;
+			else if ( direction.x <= -0.5f )	direction.x = -1.0f;
+			else direction.x = 0.0f;
+			
+			if ( direction.z >= 0.5f )			direction.z = 1.0f;
+			else if ( direction.z <= -0.5f )	direction.z = -1.0f;
+			else direction.z = 0.0f;
+			
+			target = origin + direction * length;
+		}
+		
 		Ray ray( origin, target - origin );
 		float maxDist = origin.distance( target );
 		std::vector<EditorSelection*> selections = select( ray, mState.brushSize, maxDist, true );
@@ -194,7 +226,7 @@ void Editor::selectStraightLine( ci::Vec3f origin, ci::Vec3f target )
 			(*iter)->highlight();
 			mActiveSelections.push_back( *iter );
 		}
-	}
+	//}
 }
 
 bool Editor::setElevation( EditorSelection* selection, int targetElevation )
@@ -232,7 +264,6 @@ std::vector<EditorSelection*> Editor::select( Ray ray, int range, float maxDista
 	for( iter = mSelections.begin(); iter != mSelections.end(); iter++) {
 		bool objectHit = (*iter)->pick( ray );
 		float distance = (*iter)->boundingBoxCenter().distance( ray.getOrigin() );
-		if ( allIntersections ) console() << "Distance = " << distance << ", max = " << maxDistance << std::endl;
 		if ( distance > maxDistance ) {
 			objectHit = false;
 		}

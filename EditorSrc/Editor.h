@@ -37,6 +37,7 @@ public:
 	
 	static Block*							findBlock( std::vector<Block*>& blocks, ci::Vec3i tilePos );
 	static EditorSelection*					findBlock( std::vector<EditorSelection*>& blocks, ci::Vec3i tilePos );
+	void									resetAll();
 		
 	/** IGameEventDelegate methods */
 	virtual void							mapCenterDidUpdate( ci::Vec3i center );
@@ -58,7 +59,7 @@ private:
 	bool									mDragWasActive;
 	
 	std::vector<EditorSelection*>			select( ci::Ray ray, int range, float maxDistance = MAXFLOAT, bool allIntersections = false );
-	void									selectStraightLine( ci::Vec3f origin, ci::Vec3f target );
+	void									selectStraightLine( ci::Vec3f origin, ci::Vec3f target, bool constrain = false );
 	
 	EditorMode								mMode;
 	Game*									mGame;

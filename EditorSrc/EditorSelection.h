@@ -57,7 +57,7 @@ private:
 	EditorMeshSelector				mMeshSelector;
 	Editor*							mEditor;
 	int								selectionMode;
-	void							updateMesh( int elevation, ci::gl::VboMesh** vboMesh, float* rotation );
+	void							updateMesh( Block* block );
 	bool							mIsHighlighted;
 	int								mSelectionMode;
 };

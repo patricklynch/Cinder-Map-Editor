@@ -32,6 +32,7 @@ public:
 	bool isAltDown;
 	bool isControlDown;
 	bool isShiftDown;
+	bool isMetaDown;
 	ci::Vec2i difference() const { return current - origin; }
 	MouseButton mouseButton;
 };
@@ -66,6 +67,7 @@ private:
 	~Input();
 	
 	bool mCursorPositionHasBeenSet;
+	void activateDrag( ci::app::MouseEvent event );
 	
 	MouseButton buttonForEvent( ci::app::MouseEvent event );
 	std::vector<KeyListener_t> mKeyListeners;
