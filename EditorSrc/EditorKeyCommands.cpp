@@ -1,6 +1,8 @@
 // Undo#include "EditorKeyCommands.h"
 #include "Editor.h"
 #include "EditorCommandQueue.h"
+#include "EditorState.h"
+#include "Camera.h"
 
 #include "cinder/app/App.h"
 
@@ -20,6 +22,25 @@ EditorKeyCommands::EditorKeyCommands( Editor* editor ) : mEditor( editor )
 
 EditorKeyCommands::~EditorKeyCommands() {}
 
+void EditorKeyCommands::update( const float deltaTime )
+{
+	if ( mInput->keyIsDown( KeyEvent::KEY_LEFT ) ) {
+		mEditor->mCamera->rotation.y += kKeyRotationSpeed.x * deltaTime;
+	}
+	else if ( mInput->keyIsDown( KeyEvent::KEY_RIGHT ) ) {
+		mEditor->mCamera->rotation.y -= kKeyRotationSpeed.x * deltaTime;
+	}
+	
+	if ( mInput->keyIsDown( KeyEvent::KEY_UP ) ) {
+		float angle = mEditor->mCamera->angle() + kKeyRotationSpeed.y * deltaTime;
+		mEditor->mCamera->setAngle( angle );
+	}
+	else if ( mInput->keyIsDown( KeyEvent::KEY_DOWN ) ) {
+		float angle = mEditor->mCamera->angle() - kKeyRotationSpeed.y * deltaTime;
+		mEditor->mCamera->setAngle( angle );
+	}
+}
+
 void EditorKeyCommands::onKeyDown( ci::app::KeyEvent event )
 {
 	int code = event.getCode();
@@ -27,6 +48,7 @@ void EditorKeyCommands::onKeyDown( ci::app::KeyEvent event )
 	bool ctrl = event.isControlDown();
 	bool shift = event.isShiftDown();
 	bool alt  = event.isAltDown();
+	EditorState& state = mEditor->mState;
 
 	if ( meta ) {
 		
@@ -44,33 +66,62 @@ void EditorKeyCommands::onKeyDown( ci::app::KeyEvent event )
 	
 	else if ( !meta ) {
 		
+		int numValue = -1;
+		switch( code ) {
+			case KeyEvent::KEY_1: numValue = 1; break;
+			case KeyEvent::KEY_2: numValue = 2; break;
+			case KeyEvent::KEY_3: numValue = 3; break;
+			case KeyEvent::KEY_4: numValue = 4; break;
+			case KeyEvent::KEY_5: numValue = 5; break;
+			case KeyEvent::KEY_6: numValue = 6; break;
+			case KeyEvent::KEY_7: numValue = 7; break;
+			case KeyEvent::KEY_8: numValue = 8; break;
+			case KeyEvent::KEY_9: numValue = 9; break;
+			case KeyEvent::KEY_0: numValue = 0; break;
+		}
+		
+		if ( numValue > 0 ) {
+			if ( state.mode == MODE_PAINT_TEXTURE ) {
+				state.texturePaint.textureIndex = numValue-1;
+			}
+			else if ( state.mode == MODE_PAINT_ELEVATION ) {
+				state.elevationSelection = numValue-1;
+			}
+		}
+		
 		// Set paint mode brush size
-		if ( code == KeyEvent::KEY_LEFTBRACKET ) {
-			mEditor->mState.brushSize--;
-			return;
+		else if ( code == KeyEvent::KEY_LEFTBRACKET ) {
+			state.modifySelection( -1 );
 		} else if ( code == KeyEvent::KEY_RIGHTBRACKET ) {
-			mEditor->mState.brushSize++;
-			return;
+			state.modifySelection( 1 );
 		}
 		
 		// Set elevation
 		else if ( code == KeyEvent::KEY_PLUS || code == KeyEvent::KEY_EQUALS ) {
-			mEditor->mState.targetElevation++;
-			return;
+			state.modifyValue( 1 );
 		}
 		else if ( code == KeyEvent::KEY_MINUS || code == KeyEvent::KEY_KP_MINUS ) {
-			mEditor->mState.targetElevation--;
-			return;
+			state.modifyValue( -1 );
 		}
 		
 		// Show/hide grid
 		else if ( code == KeyEvent::KEY_g ) {
-			mEditor->mState.showGrid = !mEditor->mState.showGrid;
+			state.showGrid = !state.showGrid;
 		}
 		
 		// Clear everything off the map
 		else if ( code == KeyEvent::KEY_SPACE ) {
-			mEditor->resetAll();
+			mEditor->resetElevation();
+		}
+		
+		// Set to texture paint mode
+		else if ( code == KeyEvent::KEY_p ) {
+			state.mode = MODE_PAINT_TEXTURE;
+		}
+		
+		// Set to elevation paint mode
+		else if ( code == KeyEvent::KEY_e ) {
+			state.mode = MODE_PAINT_ELEVATION;
 		}
 	}
 	

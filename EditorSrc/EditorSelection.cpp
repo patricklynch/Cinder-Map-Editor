@@ -25,7 +25,7 @@ EditorSelection::EditorSelection( Block* block, Editor* editor ) : mEditor( edit
 	defineBoundingBox();
 }
 
-void EditorSelection::setSelectionMode( SelectionMode mode )
+void EditorSelection::setSelectionMode( SelectionMode_t mode )
 {
 	if ( mode == selectionMode ) return;
 	selectionMode = mode;
@@ -132,13 +132,13 @@ bool EditorSelection::sortHeight( EditorSelection* a, EditorSelection* b )
 	return a->tilePosition.y <= b->tilePosition.y;
 }
 
-void EditorSelection::draw( int targetElevation, bool gridLines )
+void EditorSelection::draw( int elevationHeight, bool gridLines )
 {
 	gl::disableWireframe();
 	gl::enableAlphaBlending();
 	Vec3f size = mBoundingBox.getSize();
-	size.y *= targetElevation;
-	Vec3f center = Vec3f( tilePosition.x, 1.0f + 0.5f * targetElevation, tilePosition.z );
+	size.y *= elevationHeight;
+	Vec3f center = Vec3f( tilePosition.x, 1.0f + 0.5f * elevationHeight, tilePosition.z );
 	
 	if ( mIsHighlighted ) {
 		gl::color( ColorA( 0.0f, 1.0f, 0.0f, 0.1f ) );

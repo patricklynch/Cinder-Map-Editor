@@ -19,9 +19,11 @@ public:
 	bool									canUndo() const;
 	bool									canRedo() const;
 	
+	EditorCommand*							getCurrentCommand() const;
+	
 private:
 	std::vector<EditorCommand*>				mCommandQueue;
-	std::vector<EditorCommand*>::iterator	currentCommand;
+	std::vector<EditorCommand*>::iterator	mCurrentCommand;
 	
 };
 

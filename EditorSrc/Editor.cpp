@@ -17,17 +17,25 @@ using namespace ly;
 using namespace ci;
 using namespace ci::app;
 
-Editor::Editor( Game* game ) : mGame( game )
+Editor::Editor( Game* game ) : mGame( game ), mTexturePaint( NULL ), mPanel( NULL ), mCamera( NULL ), mKeyCommands( NULL )
 {
-	mMode = MODE_PAINT_ELEVATION;
+	mState.mode = MODE_PAINT_TEXTURE;
 	
 	mCamera = ly::Camera::get();
 	mCamera->setFov( 50 );
-	mCamera->setZoom( 20 );
-	//mCamera->rotation.y = 0.0f;
+	mCamera->setZoom( 40 );
 	mCamera->setAngle( -80.0f);
-	mCamera->rotation.y = 45.0f;
-	mCamera->setAngle( -35.0f);
+	mCamera->rotation.y = 180.0f;
+	mCamera->setAngle( -89.0f);
+	
+	mTexturePaint = new EditorTexturePaint( mState.texturePaint );
+	
+	mPanel = new EditorPanel( this );
+	currentElevationTarget = kUndefinedElevation;
+	mGame->mDelegate = this;
+	mKeyCommands = new EditorKeyCommands( this );
+	
+	mDidPaintStraightLine = false;
 	
 	// Create EditorSeletion as a wrapper for each block in the game
 	std::vector<Block*>& blocks = mGame->blocks();
@@ -37,18 +45,13 @@ Editor::Editor( Game* game ) : mGame( game )
 	// Set references to each block's surrounding blocks
 	for( std::vector<EditorSelection*>::iterator iter = mSelections.begin(); iter != mSelections.end(); iter++) {
 		(*iter)->findSurroundingBlocks( mSelections );
+		(*iter)->mBlock->mTexturePaintMask = mTexturePaint->paintMask();
 	}
-	
-	mPanel = new EditorPanel( this );
-	currentElevationTarget = kUndefinedElevation;
-	mGame->mDelegate = this;
-	mKeyCommands = new EditorKeyCommands( this );
-	
-	mDidPaintStraightLine = false;
 }
 
 Editor::~Editor()
 {
+	delete mTexturePaint;
 	delete mKeyCommands;
 }
 
@@ -97,9 +100,22 @@ void Editor::update( const float deltaTime )
 {
 	mEditorCamera.update( deltaTime );
 	
+	mKeyCommands->update( deltaTime );
+	
+	mTexturePaint->update( deltaTime );
+	
+	mPanel->update( deltaTime );
+	
 	applyUserEdits();
 	
-	SelectionMode selectionMode = (mState.brushSize % 2 == 0) ? SELECTION_POINT : SELECTION_FACE;
+	SelectionMode_t selectionMode;
+	
+	if ( mState.mode == MODE_PAINT_ELEVATION ) {
+		selectionMode = (mState.elevationRange % 2 == 0) ? SELECTION_POINT : SELECTION_FACE;
+	}
+	else if ( mState.mode == MODE_PAINT_TEXTURE ) {
+		selectionMode = SELECTION_FACE;
+	}
 	
 	// Update the selection objects
 	std::vector<EditorSelection*>::iterator iter;
@@ -115,7 +131,6 @@ void Editor::update( const float deltaTime )
 			(*iter)->update( deltaTime );
 		}
 	}
-	
 }
 
 void Editor::clearActiveSelections()
@@ -127,7 +142,7 @@ void Editor::clearActiveSelections()
 	mActiveSelections.clear();
 }
 
-void Editor::resetAll()
+void Editor::resetElevation()
 {
 	EditorCommandModifyElevation* cmd = new EditorCommandModifyElevation();
 	cmd->activeSelections = mSelections;
@@ -138,20 +153,32 @@ void Editor::resetAll()
 
 void Editor::applyUserEdits()
 {
-	if ( mMode == MODE_PAINT_ELEVATION ) {
+	if ( mState.mode == MODE_PAINT_ELEVATION ) {
 		clearActiveSelections();
 		Ray ray = mCamera->rayIntoScene( Input::get()->mousePosition() );
-		mActiveSelections = select( ray, mState.brushSize );
+		mActiveSelections = select( ray, mState.elevationRange );
 		std::vector<EditorSelection*>::iterator iter;
 		for( iter = mActiveSelections.begin(); iter != mActiveSelections.end(); iter++) {
 			(*iter)->highlight();
 		}
 	}
+	else if ( mState.mode == MODE_PAINT_TEXTURE ) {
+		Ray ray = mCamera->rayIntoScene( Input::get()->mousePosition() );
+		std::vector<EditorSelection*> selections = select( ray, 1 );
+		if ( selections.size() > 0 ) {
+			float elevation = selections[0]->tilePosition.y;
+			float result;
+			ray.calcPlaneIntersection( Vec3f( 0, elevation + 1, 0 ), Vec3f::yAxis(), &result );
+			mTexturePaint->setTarget( ray.calcPosition( result ) );
+		}
+		else mTexturePaint->resetPosition();
+		mTexturePaint->setState( mState.texturePaint );
+	}
 	
 	Input* input = Input::get();
 	MouseDrag& drag = input->getMouseDrag();
 	if ( !drag.isActive && drag.mouseButton == MOUSE_LEFT ) {
-		if ( mMode == MODE_PAINT_ELEVATION ) {
+		if ( mState.mode == MODE_PAINT_ELEVATION ) {
 			// If the editing just stopped
 			if ( mDragWasActive ) {
 				for( std::vector<EditorSelection*>::iterator iter = mSelections.begin(); iter != mSelections.end(); iter++ ) {
@@ -161,9 +188,13 @@ void Editor::applyUserEdits()
 				mDidPaintStraightLine = false;
 			}
 		}
+		else if ( mState.mode == MODE_PAINT_TEXTURE ) {
+			EditorCommandPaintTexture* cmd = dynamic_cast<EditorCommandPaintTexture*>( mCommandQueue.getCurrentCommand() );
+			if ( cmd ) { cmd->commandComplete(); }
+		}
 	}
 	else if ( drag.isActive && drag.mouseButton == MOUSE_LEFT ) {
-		if ( mMode == MODE_PAINT_ELEVATION ) {
+		if ( mState.mode == MODE_PAINT_ELEVATION ) {
 			
 			// Find all selections between here and the current selection point and add to mActiveSelections
 			if ( drag.isShiftDown && mLastSelectionTarget != kTargetUndefined ) {
@@ -174,7 +205,7 @@ void Editor::applyUserEdits()
 			
 			if ( mActiveSelections.size() > 0 ) {
 				if ( currentElevationTarget == kUndefinedElevation ) {
-					currentElevationTarget = mState.targetElevation;
+					currentElevationTarget = mState.elevationHeight;
 				}
 				
 				EditorCommandModifyElevation* cmd = new EditorCommandModifyElevation();
@@ -188,6 +219,23 @@ void Editor::applyUserEdits()
 				mLastSelectionTarget = mActiveSelections[0]->boundingBoxCenter();
 			} else {
 				mLastSelectionTarget = kTargetUndefined;
+			}
+		}
+		
+		else if ( mState.mode == MODE_PAINT_TEXTURE ) {
+			EditorCommandPaintTexture* cmd;
+			if ( mTexturePaint->isApplying() ) {
+				cmd = dynamic_cast<EditorCommandPaintTexture*>( mCommandQueue.getCurrentCommand() );
+				if ( cmd ) {
+					//console() << "Adding position to current texture paint command" << std::endl;
+					cmd->addPosition( mTexturePaint->position() );
+				}
+			}
+			else {
+				//console() << "Creating new texture paint command" << std::endl;
+				cmd = new EditorCommandPaintTexture( mTexturePaint, mState.texturePaint );
+				cmd->addPosition( mTexturePaint->position() );
+				mCommandQueue.addCommand( cmd );
 			}
 		}
 	}
@@ -220,7 +268,7 @@ void Editor::selectStraightLine( ci::Vec3f origin, ci::Vec3f target, bool constr
 		
 		Ray ray( origin, target - origin );
 		float maxDist = origin.distance( target );
-		std::vector<EditorSelection*> selections = select( ray, mState.brushSize, maxDist, true );
+		std::vector<EditorSelection*> selections = select( ray, mState.elevationRange, maxDist, true );
 		std::vector<EditorSelection*>::iterator iter;
 		for( iter = selections.begin(); iter != selections.end(); iter++) {
 			(*iter)->highlight();
@@ -229,15 +277,16 @@ void Editor::selectStraightLine( ci::Vec3f origin, ci::Vec3f target, bool constr
 	//}
 }
 
-bool Editor::setElevation( EditorSelection* selection, int targetElevation )
+bool Editor::setElevation( EditorSelection* selection, int elevationHeight )
 {
 	Vec3i tilePos = selection->tilePosition;
-	Vec3i newTilePos = Vec3i( tilePos.x, targetElevation, tilePos.z );
+	Vec3i newTilePos = Vec3i( tilePos.x, elevationHeight, tilePos.z );
 	int difference = newTilePos.y - tilePos.y;
 	
 	if ( difference > 0 ) {
 		for( int i = 0; i < difference; i++ ) {
 			Block* newBlock = mGame->addBlock( tilePos + Vec3i::yAxis() * i );
+			newBlock->mTexturePaintMask = mTexturePaint->paintMask();
 			selection->addBlock( newBlock );
 			selection->resetTilePosition( newTilePos );
 			
@@ -254,13 +303,16 @@ bool Editor::setElevation( EditorSelection* selection, int targetElevation )
 			mGame->removeBlock( oldBlock );
 		}
 	}
-	return selection->tilePosition.y == targetElevation;
+	return selection->tilePosition.y == elevationHeight;
 }
 
 std::vector<EditorSelection*> Editor::select( Ray ray, int range, float maxDistance, bool allIntersections )
 {
 	std::vector<EditorSelection*> output;
 	std::vector<EditorSelection*>::iterator iter;
+	if ( !allIntersections ) {
+		std::sort( mSelections.begin(), mSelections.end(), EditorSelection::sortCameraDistance );
+	}
 	for( iter = mSelections.begin(); iter != mSelections.end(); iter++) {
 		bool objectHit = (*iter)->pick( ray );
 		float distance = (*iter)->boundingBoxCenter().distance( ray.getOrigin() );
@@ -300,12 +352,12 @@ std::vector<EditorSelection*> Editor::select( Ray ray, int range, float maxDista
 					output.push_back( surrounding );
 				}
 			}
-			if ( objectHit && !allIntersections ) {
-				return output;
-			}
+		}
+		if ( objectHit && !allIntersections ) {
+			return output;
 		}
 	}
-	
+
 	return output;
 }
 
@@ -314,18 +366,23 @@ void Editor::draw()
 	gl::color( 1, 1, 1, 1 );
 	gl::setMatrices( mCamera->cinderCamera() );
 	
-	gl::enableWireframe();
 	
-	std::vector<EditorSelection*>::iterator iter;
-	for( iter = mSelections.begin(); iter != mSelections.end(); iter++) {
-		EditorSelection* selection = (*iter);
-		selection->draw( mState.targetElevation, mState.showGrid );
+	
+	if ( mState.mode == MODE_PAINT_TEXTURE ) {
+		mTexturePaint->draw();
 	}
-	
-	gl::disableWireframe();
+	else if ( mState.mode == MODE_PAINT_ELEVATION ) {
+		std::vector<EditorSelection*>::iterator iter;
+		for( iter = mSelections.begin(); iter != mSelections.end(); iter++) {
+			EditorSelection* selection = (*iter);
+			selection->draw( mState.elevationHeight, mState.showGrid );
+		}
+	}
 	
 	gl::setMatricesWindow( app::getWindowSize(), true );
 	
+	//mTexturePaint->debugDraw();
+	 
 	mPanel->draw();
 }
 

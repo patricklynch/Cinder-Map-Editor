@@ -1,41 +1,25 @@
 #pragma once
 
+#include "EditorPalette.h"
+
 #include "cinder/params/Params.h"
 #include "cinder/gl/Texture.h"
 #include "cinder/Vector.h"
+#include "cinder/app/App.h"
 
 #include <vector>
 
 namespace ly {
 	
-class EditorPalette;
 class Editor;
 	
-class EditorThumbnail {
-public:
-	EditorThumbnail() : palette( NULL ) {}
-	
-	ci::Vec2i				position;
-	ci::Vec2i				size;
-	ci::gl::Texture*		mTexture;
-	void					draw();
-	EditorPalette*			palette;
+enum {
+	TEXTURE_PICKER,
+	BRUSH_PICKER,
+	MODEL_PICKER
 };
-	
-class EditorPalette {
-public:
-	EditorPalette();
-	
-	ci::Vec2i				position;
-	ci::Vec2i				size;
-	std::string				name;
-	void					draw();
-	int						innerMargin;
-private:
-	std::vector<EditorThumbnail*> mThumbnails;
-};
-	
-class EditorPanel {
+
+class EditorPanel : public IEditorPaletteDelegate {
 public:
 	EditorPanel( Editor* editor );
 	virtual					~EditorPanel();
@@ -45,11 +29,16 @@ public:
 	
 	void					test();
 	
+	/** IEditorPaletteDelegate methods */
+	void					didUpdateSelection( EditorPalette* palette, int index );
+	
 private:
 	Editor*					mEditor;
 	ci::params::InterfaceGl mParams;
-	EditorPalette			mTexturePicker;
-	EditorPalette			mObjectPicker;
+	
+	std::map<int, EditorPalette*> mPalettes;
+	
+	std::vector<ci::gl::Texture*> mBlockThumbs;
 };
 
 }

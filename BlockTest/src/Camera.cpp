@@ -28,7 +28,6 @@ void ly::Camera::setAngle( float angleX )
 void ly::Camera::setFov( float fov )
 {
 	mFov = fov;
-	mCinderCamera.setPerspective( mFov, app::getWindowAspectRatio(), 0.1f, 4000.0f );
 }
 
 ci::Ray ly::Camera::rayIntoScene( ci::Vec2i screenPoint )
@@ -42,13 +41,14 @@ ci::Ray ly::Camera::rayIntoScene( ci::Vec2i screenPoint )
 ly::Camera::Camera()
 {
 	mFov = 45.0f;
-	mCinderCamera.setPerspective( mFov, app::getWindowAspectRatio(), 1.0f, 4000.0f );
 	
 	mPivot.rotation.x	= -13.0f;
 	mBody.position.z	= 30.0f;
 	
 	mBody.parent = &mPivot;
 	mPivot.parent = this;
+	
+	update( 0.0f );
 }
 
 ly::Camera::~Camera() {}
@@ -64,6 +64,8 @@ void ly::Camera::update( const float deltaTime )
 	mPivot.update( deltaTime );
 	mBody.update( deltaTime );
 	
+	glViewport( 0, 0, app::getWindowWidth(), app::getWindowHeight() );
+	mCinderCamera.setPerspective( mFov, app::getWindowAspectRatio(), 1.0f, 4000.0f );
 	mCinderCamera.setWorldUp( Vec3f::yAxis() );
 	mCinderCamera.setEyePoint( mBody.globalPosition() );
 	mCinderCamera.setOrientation( Quatf( mBody.transform() ) );

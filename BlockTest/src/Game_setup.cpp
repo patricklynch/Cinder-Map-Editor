@@ -9,7 +9,7 @@ using namespace ly;
 using namespace ci;
 using namespace ci::app;
 
-Game::Game() : mDelegate( NULL )
+Game::Game() : mDelegate( NULL ), mLoadSequence( NULL )
 {
 	setupScene();
 	setupRenderer();
@@ -19,7 +19,16 @@ Game::~Game() {}
 
 void Game::setupScene()
 {
+	// Preload assets
+	mLoadSequence = new LoadSequence();
 	AssetManager* assetManager = AssetManager::get();
+	//assetManager->loadDirectory( "models", true );
+	assetManager->loadDirectory( "textures", true );
+	assetManager->loadDirectory( "terrain", true );
+	assetManager->loadDirectory( "brushes", true );
+	assetManager->setDelegate( this );
+	delete mLoadSequence;
+	mLoadSequence = NULL;
 	
 	mCamera = ly::Camera::get();
 	mCamera->setFov( 45 );
@@ -49,9 +58,22 @@ void Game::setupScene()
 
 Block* Game::addBlock( ci::Vec3i atTilePosition )
 {
-	Block* block = Block::createBlock( atTilePosition );
+	Block* block = new Block( atTilePosition );
 	mBlocks.push_back( block );
 	return block;
+}
+
+void Game::assetPreloaded( int current, int total )
+{
+	float progress = (float) current / (float) total;
+	console() << "progress = " << progress << std::endl;
+	if ( mLoadSequence != NULL ) {
+		mLoadSequence->setProgress( progress );
+		if ( progress >= 1.0f ) {
+			delete mLoadSequence;
+			mLoadSequence = NULL;
+		}
+	}
 }
 
 void Game::removeBlock( Block* block )

@@ -12,6 +12,7 @@
 #include "EditorPanel.h"
 #include "EditorCommandQueue.h"
 #include "EditorKeyCommands.h"
+#include "EditorTexturePaint.h"
 
 #include "cinder/gl/Vbo.h"
 #include "cinder/Vector.h"
@@ -37,7 +38,7 @@ public:
 	
 	static Block*							findBlock( std::vector<Block*>& blocks, ci::Vec3i tilePos );
 	static EditorSelection*					findBlock( std::vector<EditorSelection*>& blocks, ci::Vec3i tilePos );
-	void									resetAll();
+	void									resetElevation();
 		
 	/** IGameEventDelegate methods */
 	virtual void							mapCenterDidUpdate( ci::Vec3i center );
@@ -50,8 +51,10 @@ public:
 	EditorKeyCommands*						mKeyCommands;
 	EditorState								mState;
 	
-	bool									setElevation( EditorSelection* selection, int targetElevation );
+	bool									setElevation( EditorSelection* selection, int elevationHeight );
 	int										currentElevationTarget;
+	ly::Camera*								mCamera;
+	Game*									mGame;
 	
 private:
 	ci::Vec3f								mLastSelectionTarget;
@@ -61,13 +64,12 @@ private:
 	std::vector<EditorSelection*>			select( ci::Ray ray, int range, float maxDistance = MAXFLOAT, bool allIntersections = false );
 	void									selectStraightLine( ci::Vec3f origin, ci::Vec3f target, bool constrain = false );
 	
-	EditorMode								mMode;
-	Game*									mGame;
-	ly::Camera*								mCamera;
 	std::vector<EditorSelection*>			mSelections;
 	std::vector<EditorSelection*>			mActiveSelections;
 	void									clearActiveSelections();
 	bool									mDidPaintStraightLine;
+	
+	EditorTexturePaint*						mTexturePaint;
 	
 	// Dragging properties
 	float									mCameraStartZoom;

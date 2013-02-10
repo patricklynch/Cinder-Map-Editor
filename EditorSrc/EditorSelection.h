@@ -20,12 +20,12 @@ public:
 	
 									EditorSelection( Block* block, Editor* editor );
 	
-	void							setSelectionMode( SelectionMode selectionMode );
+	void							setSelectionMode( SelectionMode_t selectionMode );
 	ci::Vec3f						position;
 	ci::Vec3f						tilePosition;
 	
 	void							update( const float deltaTime );
-	void							draw( int targetElevation, bool gridLines = false );
+	void							draw( int elevationHeight, bool gridLines = false );
 	
 	bool							pick( ci::Ray );
 	void							unhighlight() { mIsHighlighted = false; }

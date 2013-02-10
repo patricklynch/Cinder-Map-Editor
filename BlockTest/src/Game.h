@@ -17,6 +17,7 @@
 #include "AssetManager.h"
 #include "Resources.h"
 #include "GameConstants.h"
+#include "LoadSequence.h"
 
 namespace ly {
 		
@@ -30,12 +31,14 @@ public:
 	virtual void mapCenterDidUpdate( ci::Vec3i center ) = 0;
 };
 
-class Game {
+class Game : public IAssetManagerDelegate {
 public:
 							Game();
 	virtual					~Game();
 	void					update( const float deltaTime );
 	void					draw();
+	void					drawBlocks( std::vector<Block*>& blocks, ci::Camera& camera );
+	virtual void			assetPreloaded( int current, int total );
 	
 	std::vector<Block*>&	blocks() { return mBlocks; }
 	
@@ -62,7 +65,7 @@ private:
 	void					updateLocation();
 	
 	ci::params::InterfaceGl mParams;
-	
+	LoadSequence*			mLoadSequence;
 };
 
 }

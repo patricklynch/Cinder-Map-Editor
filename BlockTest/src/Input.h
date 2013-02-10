@@ -19,6 +19,12 @@ public:
 	int keyCode;
 };
 	
+class MouseListener_t {
+public:
+	boost::function<void (ci::app::MouseEvent)> callback;
+	int keyCode;
+};
+	
 typedef enum {
 	MOUSE_LEFT, MOUSE_RIGHT, MOUSE_MIDDLE
 } MouseButton;
@@ -42,6 +48,7 @@ public:
 	static Input* get();
 	
 	void addListenerForKey( boost::function<void (ci::app::KeyEvent)> callback, int keyCode = 0 );
+	void addListenerForMouseDown( boost::function<void (ci::app::MouseEvent)> callback );
 	void addListenerMouseWheel( boost::function<void (float)> callback );
 	
 	void keyDown( ci::app::KeyEvent event );
@@ -71,6 +78,7 @@ private:
 	
 	MouseButton buttonForEvent( ci::app::MouseEvent event );
 	std::vector<KeyListener_t> mKeyListeners;
+	std::vector<MouseListener_t> mMouseListeners;
 	ci::Vec2i mLastMovePos;
 	ci::Vec2i mMoveVelocity;
 	ci::Vec2i mCurrentMovePos;

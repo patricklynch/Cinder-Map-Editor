@@ -48,6 +48,13 @@ void Input::addListenerForKey( boost::function<void (ci::app::KeyEvent)> callbac
 	mKeyListeners.push_back( listener );
 }
 
+void Input::addListenerForMouseDown( boost::function<void (ci::app::MouseEvent)> callback )
+{
+	MouseListener_t listener;
+	listener.callback = callback;
+	mMouseListeners.push_back( listener );
+}
+
 void Input::update( const float deltaTime )
 {
 	if( !mCursorPositionHasBeenSet ) {
@@ -114,6 +121,10 @@ void Input::mouseDown( ci::app::MouseEvent event )
 	mCurrentMovePos = event.getPos();
 	mMouseDrag.origin = event.getPos();
 	activateDrag( event );
+	
+	for( std::vector<MouseListener_t>::iterator iter = mMouseListeners.begin(); iter != mMouseListeners.end(); ++iter) {
+		iter->callback( event );
+	}
 }
 
 void Input::mouseUp( ci::app::MouseEvent event )

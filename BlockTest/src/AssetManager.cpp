@@ -54,7 +54,7 @@ bool GameAssetModel::load()
 
 AssetManager* AssetManager::sInstance = 0;
 
-AssetManager::AssetManager()
+AssetManager::AssetManager() : mDelegate( NULL )
 {
 	ci::app::AppBasic* app = ci::app::AppBasic::get();
 	app->addAssetDirectory( app->getAppPath() / ".." / "Resources" );
@@ -76,8 +76,9 @@ void AssetManager::loadAssets( std::string* assets, int numElements )
 	}
 }
 
-void AssetManager::loadDirectory( std::string path, bool recursive )
+std::vector<std::string> AssetManager::getLoadableFiles( std::string path, bool recursive )
 {
+	std::vector<std::string> output;
 	ci::app::AppBasic* app = ci::app::AppBasic::get();
 	fs::path directoryPath = app->getAssetPath( path );
 	if ( fs::exists( directoryPath ) && fs::is_directory( directoryPath ) ) {
@@ -91,11 +92,30 @@ void AssetManager::loadDirectory( std::string path, bool recursive )
 			std::string assetPath = fullPath.substr( startPos, endPos );
 			
 			if ( fs::is_directory( *iter ) && recursive ) {
-				loadDirectory( assetPath, recursive );
+				std::vector<std::string> recursiveOutput = getLoadableFiles( assetPath, recursive );
+				std::vector<std::string>::iterator iter;
+				for( iter = recursiveOutput.begin(); iter != recursiveOutput.end(); iter++ ) {
+					output.push_back( *iter );
+				}
 			}
 			else {
-				loadAsset( assetPath );
+				output.push_back( assetPath );
 			}
+		}
+	}
+	return output;
+}
+
+void AssetManager::loadDirectory( std::string path, bool recursive )
+{
+	std::vector<std::string> loadableFiles = getLoadableFiles( path, recursive );
+	int total = loadableFiles.size();
+	int current = 0;
+	
+	for( std::vector<std::string>::iterator iter = loadableFiles.begin(); iter != loadableFiles.end(); iter++ ) {
+		loadAsset( *iter );
+		if ( mDelegate != NULL ) {
+			mDelegate->assetPreloaded( ++current, total );
 		}
 	}
 }
@@ -108,13 +128,13 @@ void AssetManager::loadAssets( vector<string>& assetPaths )
 	}
 }
 
-void AssetManager::loadAsset( std::string assetPath )
+bool AssetManager::loadAsset( std::string assetPath )
 {
 	fs::path filePath = assetPath;
 	string extension = filePath.extension().string();
 	if ( extension.empty() ) {
 		console() << "Could not load asset at path '" << assetPath << "' because it does not have an extension." << std::endl;
-		return;
+		return false;
 	}
 	GameAssetType type;
 	if ( extension == ".jpg" || extension == ".png" ) {
@@ -129,7 +149,7 @@ void AssetManager::loadAsset( std::string assetPath )
 		type = AssetTypeModel;
 	} else {
 		console() << "Could not load asset at path '" << assetPath << "' because the extension is invalid." << std::endl;
-		return;
+		return false;
 	}
 	
 	GameAsset* asset = NULL;
@@ -140,17 +160,19 @@ void AssetManager::loadAsset( std::string assetPath )
 		case AssetTypeModel:	asset = new GameAssetModel();			break;
 		default:break;
 	}
-	if ( !asset ) { return; }
+	if ( !asset ) { return false; }
 	
 	asset->mPath = path;
 	asset->mType = type;
+	
 	if ( asset->load() ) {
 		mLoadedAssets[ assetPath ] = asset;
 		console() << "Asset loaded: '" << assetPath << "'" << std::endl;
+		return true;
 	}
-	else {
-		delete asset;
-	}
+	
+	return false;
+	delete asset;
 }
 
 ci::gl::Texture* AssetManager::getTexture( const std::string path )

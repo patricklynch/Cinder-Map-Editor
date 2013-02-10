@@ -24,6 +24,7 @@ class BlockTestApp : public AppBasic {
 	void mouseDrag( ci::app::MouseEvent event ) { ly::Input::get()->mouseDrag( event ); }
 	void mouseUp  ( ci::app::MouseEvent event ) { ly::Input::get()->mouseUp( event ); }
 	void keyDown  ( ci::app::KeyEvent event )   {ly:: Input::get()->keyDown  ( event ); }
+	void keyUp    ( ci::app::KeyEvent event )   {ly:: Input::get()->keyUp  ( event ); }
 	
 	void resize( ResizeEvent event );
 	void update();
@@ -46,12 +47,6 @@ void BlockTestApp::prepareSettings( Settings *settings )
 
 void BlockTestApp::setup()
 {
-	// Preload assets
-	AssetManager* assetManager = AssetManager::get();
-	assetManager->loadDirectory( "models", true );
-	assetManager->loadDirectory( "textures", true );
-	assetManager->loadDirectory( "terrain", true );
-	
 	mGame = new Game();
 	mEditor = new Editor( mGame );
 }

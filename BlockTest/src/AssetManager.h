@@ -11,6 +11,10 @@
 #include <string>
 
 namespace ly {
+	
+struct IAssetManagerDelegate {
+	virtual void assetPreloaded( int current, int total ) = 0;
+};
 		
 typedef enum  {
 	ShaderVertex,
@@ -62,8 +66,9 @@ public:
 	static AssetManager* get();
 	void loadAssets( std::vector<std::string>& assetPaths );
 	void loadAssets( std::string* assets, int numElements );
-	void loadAsset( std::string assetPath );
+	bool loadAsset( std::string assetPath );
 	void loadDirectory( std::string path, bool recursive );
+	std::vector<std::string> getLoadableFiles( std::string path, bool recursive );
 	
 	/** To get at the asset object itself, use this method */
 	template <typename T>
@@ -83,10 +88,15 @@ public:
 	ci::TriMesh*		getMesh( const std::string path ); 
 	ci::gl::VboMesh*	getVboMesh( const std::string path );
 	
+	void setDelegate( IAssetManagerDelegate* delegate ) { mDelegate = delegate; }
+	void clearDelegate( IAssetManagerDelegate* delegate ) { mDelegate = NULL; }
+	
 private:
 	AssetManager();
 	static AssetManager* sInstance;
 	std::map<std::string, GameAsset*> mLoadedAssets;
+	IAssetManagerDelegate* mDelegate;
 };
 
 }
+

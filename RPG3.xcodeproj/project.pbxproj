@@ -20,6 +20,11 @@
 		5AC4CA0216BB4DA200EFD45C /* EditorMeshSelector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4CA0016BB4DA200EFD45C /* EditorMeshSelector.cpp */; };
 		5AC4CA0516BB50EE00EFD45C /* EditorMeshSelector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4CA0016BB4DA200EFD45C /* EditorMeshSelector.cpp */; };
 		5AC4CA8D16BD986600EFD45C /* terrain in Resources */ = {isa = PBXBuildFile; fileRef = 5AC4CA8C16BD986600EFD45C /* terrain */; };
+		5AC4CA9916BF20C100EFD45C /* EditorTexturePaint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4CA9716BF20C100EFD45C /* EditorTexturePaint.cpp */; };
+		5AC4CAA016C0917900EFD45C /* EditorPalette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4CA9E16C0917800EFD45C /* EditorPalette.cpp */; };
+		5AC4CAA216C0DF7300EFD45C /* brushes in Resources */ = {isa = PBXBuildFile; fileRef = 5AC4CAA116C0DF7300EFD45C /* brushes */; };
+		5AC4CAA416C13DC400EFD45C /* EditorState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4CAA316C13DC300EFD45C /* EditorState.cpp */; };
+		5AC4CAA816C145D000EFD45C /* LoadSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4CAA516C142EA00EFD45C /* LoadSequence.cpp */; };
 		5ACD1A2E16B0AAF0003DC40D /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2A16B0AAF0003DC40D /* fonts */; };
 		5ACD1A2F16B0AAF0003DC40D /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2A16B0AAF0003DC40D /* fonts */; };
 		5ACD1A3016B0AAF0003DC40D /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 5ACD1A2A16B0AAF0003DC40D /* fonts */; };
@@ -134,6 +139,14 @@
 		5AC4CA0116BB4DA200EFD45C /* EditorMeshSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorMeshSelector.h; sourceTree = "<group>"; };
 		5AC4CA0416BB4FAC00EFD45C /* EditorState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditorState.h; sourceTree = "<group>"; };
 		5AC4CA8C16BD986600EFD45C /* terrain */ = {isa = PBXFileReference; lastKnownFileType = folder; name = terrain; path = Resources/terrain; sourceTree = "<group>"; };
+		5AC4CA9716BF20C100EFD45C /* EditorTexturePaint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorTexturePaint.cpp; sourceTree = "<group>"; };
+		5AC4CA9816BF20C100EFD45C /* EditorTexturePaint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorTexturePaint.h; sourceTree = "<group>"; };
+		5AC4CA9E16C0917800EFD45C /* EditorPalette.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorPalette.cpp; sourceTree = "<group>"; };
+		5AC4CA9F16C0917900EFD45C /* EditorPalette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorPalette.h; sourceTree = "<group>"; };
+		5AC4CAA116C0DF7300EFD45C /* brushes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = brushes; path = Resources/brushes; sourceTree = "<group>"; };
+		5AC4CAA316C13DC300EFD45C /* EditorState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorState.cpp; sourceTree = "<group>"; };
+		5AC4CAA516C142EA00EFD45C /* LoadSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LoadSequence.cpp; path = src/LoadSequence.cpp; sourceTree = "<group>"; };
+		5AC4CAA616C142EB00EFD45C /* LoadSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoadSequence.h; path = src/LoadSequence.h; sourceTree = "<group>"; };
 		5ACD1A2A16B0AAF0003DC40D /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = Resources/fonts; sourceTree = "<group>"; };
 		5ACD1A2B16B0AAF0003DC40D /* models */ = {isa = PBXFileReference; lastKnownFileType = folder; name = models; path = Resources/models; sourceTree = "<group>"; };
 		5ACD1A2C16B0AAF0003DC40D /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = shaders; path = Resources/shaders; sourceTree = "<group>"; };
@@ -328,6 +341,7 @@
 		5A7FB2BD16AC58050098F9E3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5AC4CAA116C0DF7300EFD45C /* brushes */,
 				5AC4CA8C16BD986600EFD45C /* terrain */,
 				5ACD1A2A16B0AAF0003DC40D /* fonts */,
 				5ACD1A2B16B0AAF0003DC40D /* models */,
@@ -362,6 +376,8 @@
 		5AE3F97916A592FF006BF38E /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				5AC4CAA516C142EA00EFD45C /* LoadSequence.cpp */,
+				5AC4CAA616C142EB00EFD45C /* LoadSequence.h */,
 				5ACD1A5216B1FF7E003DC40D /* Animator.cpp */,
 				5ACD1A5316B1FF7E003DC40D /* Animator.h */,
 				5ACD1A5416B1FF7E003DC40D /* AssetManager.cpp */,
@@ -418,6 +434,11 @@
 				5AC4CA0016BB4DA200EFD45C /* EditorMeshSelector.cpp */,
 				5AC4CA0116BB4DA200EFD45C /* EditorMeshSelector.h */,
 				5AC4CA0416BB4FAC00EFD45C /* EditorState.h */,
+				5AC4CAA316C13DC300EFD45C /* EditorState.cpp */,
+				5AC4CA9716BF20C100EFD45C /* EditorTexturePaint.cpp */,
+				5AC4CA9816BF20C100EFD45C /* EditorTexturePaint.h */,
+				5AC4CA9E16C0917800EFD45C /* EditorPalette.cpp */,
+				5AC4CA9F16C0917900EFD45C /* EditorPalette.h */,
 			);
 			path = EditorSrc;
 			sourceTree = "<group>";
@@ -557,6 +578,7 @@
 				5ACD1A3916B0AAF0003DC40D /* shaders in Resources */,
 				5ACD1A3D16B0AAF0003DC40D /* textures in Resources */,
 				5AC4CA8D16BD986600EFD45C /* terrain in Resources */,
+				5AC4CAA216C0DF7300EFD45C /* brushes in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -618,6 +640,10 @@
 				5AFC196C16B43895007BE26A /* EditorCommandQueue.cpp in Sources */,
 				5AF2FBE416B6404400BA9F58 /* EditorKeyCommands.cpp in Sources */,
 				5AC4CA0516BB50EE00EFD45C /* EditorMeshSelector.cpp in Sources */,
+				5AC4CA9916BF20C100EFD45C /* EditorTexturePaint.cpp in Sources */,
+				5AC4CAA016C0917900EFD45C /* EditorPalette.cpp in Sources */,
+				5AC4CAA416C13DC400EFD45C /* EditorState.cpp in Sources */,
+				5AC4CAA816C145D000EFD45C /* LoadSequence.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
