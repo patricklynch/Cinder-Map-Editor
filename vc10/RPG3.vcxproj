@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{74202EDD-91D2-4D2A-B0B6-355CEB16E6BE}</ProjectGuid>
+    <RootNamespace>RPG3App</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\include;..\..\cinder_0.8.4_vc2010\include;..\..\cinder_0.8.4_vc2010\boost;..\Game;..\Editor;..\Utils</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>..\..\..\..\CinderProjects\cinder_0.8.4_vc2010\include;..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>cinder_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\cinder_0.8.4_vc2010\lib;..\..\cinder_0.8.4_vc2010\lib\msw;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+      <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\include;..\..\..\..\CinderProjects\cinder_0.8.4_vc2010\include;..\..\..\..\CinderProjects\cinder_0.8.4_vc2010\boost</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>..\..\..\..\CinderProjects\cinder_0.8.4_vc2010\include;..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>cinder.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\..\CinderProjects\cinder_0.8.4_vc2010\lib;..\..\..\..\CinderProjects\cinder_0.8.4_vc2010\lib\msw;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <GenerateMapFile>true</GenerateMapFile>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>
+      </EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Editor\Editor.cpp" />
+    <ClCompile Include="..\Editor\EditorCamera.cpp" />
+    <ClCompile Include="..\Editor\EditorCommand.cpp" />
+    <ClCompile Include="..\Editor\EditorCommandQueue.cpp" />
+    <ClCompile Include="..\Editor\EditorKeyCommands.cpp" />
+    <ClCompile Include="..\Editor\EditorMeshSelector.cpp" />
+    <ClCompile Include="..\Editor\EditorPalette.cpp" />
+    <ClCompile Include="..\Editor\EditorPanel.cpp" />
+    <ClCompile Include="..\Editor\EditorSelection.cpp" />
+    <ClCompile Include="..\Editor\EditorState.cpp" />
+    <ClCompile Include="..\Editor\EditorTexturePaint.cpp" />
+    <ClCompile Include="..\Game\Animator.cpp" />
+    <ClCompile Include="..\Game\AssetManager.cpp" />
+    <ClCompile Include="..\Game\Block.cpp" />
+    <ClCompile Include="..\Game\BlockTestApp.cpp" />
+    <ClCompile Include="..\Game\Camera.cpp" />
+    <ClCompile Include="..\Game\Game_render.cpp" />
+    <ClCompile Include="..\Game\Game_setup.cpp" />
+    <ClCompile Include="..\Game\Input.cpp" />
+    <ClCompile Include="..\Game\Light.cpp" />
+    <ClCompile Include="..\Game\LoadSequence.cpp" />
+    <ClCompile Include="..\Game\Node.cpp" />
+    <ClCompile Include="..\Game\Terrain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Editor\Editor.h" />
+    <ClInclude Include="..\Editor\EditorCamera.h" />
+    <ClInclude Include="..\Editor\EditorCommand.h" />
+    <ClInclude Include="..\Editor\EditorCommandQueue.h" />
+    <ClInclude Include="..\Editor\EditorConstants.h" />
+    <ClInclude Include="..\Editor\EditorKeyCommands.h" />
+    <ClInclude Include="..\Editor\EditorMeshSelector.h" />
+    <ClInclude Include="..\Editor\EditorPalette.h" />
+    <ClInclude Include="..\Editor\EditorPanel.h" />
+    <ClInclude Include="..\Editor\EditorSelection.h" />
+    <ClInclude Include="..\Editor\EditorState.h" />
+    <ClInclude Include="..\Editor\EditorTexturePaint.h" />
+    <ClInclude Include="..\Game\Animator.h" />
+    <ClInclude Include="..\Game\AssetManager.h" />
+    <ClInclude Include="..\Game\Block.h" />
+    <ClInclude Include="..\Game\Camera.h" />
+    <ClInclude Include="..\Game\Game.h" />
+    <ClInclude Include="..\Game\GameConstants.h" />
+    <ClInclude Include="..\Game\Input.h" />
+    <ClInclude Include="..\Game\InputButtons.h" />
+    <ClInclude Include="..\Game\Light.h" />
+    <ClInclude Include="..\Game\LoadSequence.h" />
+    <ClInclude Include="..\Game\Node.h" />
+    <ClInclude Include="..\Game\Terrain.h" />
+    <ClInclude Include="..\Game\Timer.h" />
+    <ClInclude Include="..\include\Resources.h" />
+    <ClInclude Include="..\Utils\GlslInclude.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resources.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resources\shaders\blocks.frag" />
+    <None Include="..\Resources\shaders\blocks.vert" />
+    <None Include="..\Resources\shaders\blocks2.frag" />
+    <None Include="..\Resources\shaders\depthmap.frag" />
+    <None Include="..\Resources\shaders\depthmap.vert" />
+    <None Include="..\Resources\shaders\depthmap2.frag" />
+    <None Include="..\Resources\shaders\includes\discard_outside_bounds.frag" />
+    <None Include="..\Resources\shaders\includes\light_ambi_diff_spec.frag" />
+    <None Include="..\Resources\shaders\megashader.frag" />
+    <None Include="..\Resources\shaders\megashader.vert" />
+    <None Include="..\Resources\shaders\passthru.frag" />
+    <None Include="..\Resources\shaders\passthru.vert" />
+    <None Include="..\Resources\shaders\passthru_mvp.vert" />
+    <None Include="..\Resources\shaders\simple.frag" />
+    <None Include="..\Resources\shaders\simple.vert" />
+    <None Include="..\Resources\shaders\sprite.frag" />
+    <None Include="..\Resources\shaders\sprite.vert" />
+    <None Include="..\Resources\shaders\sprite_unlit.frag" />
+    <None Include="..\Resources\shaders\terrain.frag" />
+    <None Include="..\Resources\shaders\terrain.vert" />
+    <None Include="..\Resources\shaders\unlit.frag" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

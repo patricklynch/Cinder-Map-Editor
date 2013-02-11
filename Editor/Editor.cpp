@@ -311,7 +311,7 @@ std::vector<EditorSelection*> Editor::select( Ray ray, int range, float maxDista
 	std::vector<EditorSelection*> output;
 	std::vector<EditorSelection*>::iterator iter;
 	if ( !allIntersections ) {
-		std::sort( mSelections.begin(), mSelections.end(), EditorSelection::sortCameraDistance );
+		//std::sort( mSelections.begin(), mSelections.end(), EditorSelection::sortCameraDistance );
 	}
 	for( iter = mSelections.begin(); iter != mSelections.end(); iter++) {
 		bool objectHit = (*iter)->pick( ray );

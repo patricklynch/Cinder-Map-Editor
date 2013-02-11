@@ -57,7 +57,7 @@ AssetManager* AssetManager::sInstance = 0;
 AssetManager::AssetManager() : mDelegate( NULL )
 {
 	ci::app::AppBasic* app = ci::app::AppBasic::get();
-	app->addAssetDirectory( app->getAppPath() / ".." / "Resources" );
+	app->addAssetDirectory( app->getAppPath() / ".." / ".." / "Resources" );
 	app->addAssetDirectory( app->getAppPath() / "Contents" / "Resources" );
 	
 	console() << app->getAppPath().string() << std::endl;
@@ -166,6 +166,17 @@ bool AssetManager::loadAsset( std::string assetPath )
 	asset->mType = type;
 	
 	if ( asset->load() ) {
+
+		// Make sure all path keys are using forward slash instead of back slash
+		// Windows likes to change paths to backslash
+		int loc = 0;
+		while( loc != std::string::npos ) {
+			loc = assetPath.find( "\\" );
+			if ( loc != std::string::npos ) {
+				assetPath.replace( loc, 1, "/" );
+			}
+		}
+
 		mLoadedAssets[ assetPath ] = asset;
 		console() << "Asset loaded: '" << assetPath << "'" << std::endl;
 		return true;

@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{b07d244b-5114-4850-8afc-4c61f5621510}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Editor">
+      <UniqueIdentifier>{d55526c5-87b3-44ad-9d40-37369046ae18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Editor">
+      <UniqueIdentifier>{af1812f9-761b-4f23-8ff3-882b10d3bd28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game">
+      <UniqueIdentifier>{3ce6bffc-7b48-41a1-8b7f-13414ababb2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utils">
+      <UniqueIdentifier>{5ebc953b-688d-407d-91a0-afb690c22a56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{26fcc0b3-857f-455e-850c-22e6bcdc14bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\includes">
+      <UniqueIdentifier>{dc3dc69f-8b7d-42be-b105-99405cee3385}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Game\Animator.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Game\AssetManager.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Game\Block.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Game\BlockTestApp.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Game\Camera.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Game\Game_render.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Game\Game_setup.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Game\Input.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Game\Light.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Game\LoadSequence.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Game\Node.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Game\Terrain.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\EditorCamera.cpp">
+      <Filter>Source Files\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\EditorCommand.cpp">
+      <Filter>Source Files\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\EditorCommandQueue.cpp">
+      <Filter>Source Files\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\EditorKeyCommands.cpp">
+      <Filter>Source Files\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\EditorMeshSelector.cpp">
+      <Filter>Source Files\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\EditorPalette.cpp">
+      <Filter>Source Files\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\EditorPanel.cpp">
+      <Filter>Source Files\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\EditorSelection.cpp">
+      <Filter>Source Files\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\EditorState.cpp">
+      <Filter>Source Files\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\EditorTexturePaint.cpp">
+      <Filter>Source Files\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Editor\Editor.cpp">
+      <Filter>Source Files\Editor</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\Resources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Utils\GlslInclude.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Editor\Editor.h">
+      <Filter>Header Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Editor\EditorTexturePaint.h">
+      <Filter>Header Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Editor\EditorCamera.h">
+      <Filter>Header Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Editor\EditorCommand.h">
+      <Filter>Header Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Editor\EditorCommandQueue.h">
+      <Filter>Header Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Editor\EditorConstants.h">
+      <Filter>Header Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Editor\EditorKeyCommands.h">
+      <Filter>Header Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Editor\EditorMeshSelector.h">
+      <Filter>Header Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Editor\EditorPalette.h">
+      <Filter>Header Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Editor\EditorPanel.h">
+      <Filter>Header Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Editor\EditorSelection.h">
+      <Filter>Header Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Editor\EditorState.h">
+      <Filter>Header Files\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Game\Animator.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Game\AssetManager.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Game\Block.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Game\Camera.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Game\Game.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Game\GameConstants.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Game\Input.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Game\InputButtons.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Game\Light.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Game\LoadSequence.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Game\Node.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Game\Terrain.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Game\Timer.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resources.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resources\shaders\blocks.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\blocks.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\blocks2.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\depthmap.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\depthmap.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\depthmap2.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\megashader.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\megashader.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\passthru.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\passthru.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\passthru_mvp.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\simple.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\simple.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\sprite.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\sprite.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\sprite_unlit.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\terrain.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\terrain.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\unlit.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\Resources\shaders\includes\discard_outside_bounds.frag">
+      <Filter>Shaders\includes</Filter>
+    </None>
+    <None Include="..\Resources\shaders\includes\light_ambi_diff_spec.frag">
+      <Filter>Shaders\includes</Filter>
+    </None>
+  </ItemGroup>
+</Project>

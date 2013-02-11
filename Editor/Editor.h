@@ -21,6 +21,10 @@
 #include <vector>
 
 namespace ly {
+
+#if _WINDOWS
+#define MAXFLOAT FLT_MAX
+#endif
 	
 class Camera;
 	
