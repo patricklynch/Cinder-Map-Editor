@@ -55,7 +55,7 @@ public:
 	EditorKeyCommands*						mKeyCommands;
 	EditorState								mState;
 	
-	bool									setElevation( EditorSelection* selection, int elevationHeight );
+	bool									setElevation( EditorSelection* selection, int elevationHeight, int terrainIndex );
 	int										currentElevationTarget;
 	ly::Camera*								mCamera;
 	Game*									mGame;

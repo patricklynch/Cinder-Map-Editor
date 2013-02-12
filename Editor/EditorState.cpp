@@ -38,7 +38,8 @@ void EditorState::resetDefaults()
 	
 	elevationHeight				= 1;
 	elevationRange				= 3;
-	
+	elevationSelection			= 0;
+
 	showGrid					= false;
 }
 

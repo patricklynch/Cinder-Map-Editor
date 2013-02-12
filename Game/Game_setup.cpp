@@ -2,8 +2,6 @@
 #include "AssetManager.h"
 #include "cinder/Rand.h"
 
-#include "cinder/Surface.h"
-
 using namespace ly;
 
 using namespace ci;
@@ -30,6 +28,14 @@ void Game::setupScene()
 	delete mLoadSequence;
 	mLoadSequence = NULL;
 	
+	mBlockTerrains.push_back( new Terrain( "outcropping" ) );
+	mBlockTerrains.push_back( new Terrain( "citywall" ) );
+
+	mBlockTextures.push_back( assetManager->getTexture( "textures/grass.png" ) );
+	mBlockTextures.push_back( assetManager->getTexture( "textures/stone.png" ) );
+	mBlockTextures.push_back( assetManager->getTexture( "textures/concrete.png" ) );
+	mBlockTextures.push_back( assetManager->getTexture( "textures/brick.png" ) );
+	
 	mCamera = ly::Camera::get();
 	mCamera->setFov( 45 );
 	mCamera->setZoom( 30 );
@@ -39,15 +45,10 @@ void Game::setupScene()
 	mLight.position = Vec3f( 100, 100, -100 );
 	mLight.color = ColorA::white();
 	
-	mTerrain = new Terrain();
-	mTerrain->mNode->setTexture( assetManager->getTexture( "textures/texture_tiles.png" ) );
-	mTerrain->mNode->mVboMesh = assetManager->getVboMesh( "models/plane.obj" );
-	mTerrain->mNode->colors[ MaterialSpecular ] = ColorA::white() * 0.1f;
-	
 	mMaxVisibleTileRadius = kDefaultMaxVisibleTileRadius;
 	
-	// Create a flat plain of blocks
 	// TODO: Load existing blocks
+	// For now, create a flat plain of blocks
 	int n = mMaxVisibleTileRadius;
 	for(int x = -n; x <= n; x++) {
 		for(int z = -n; z <= n; z++) {
@@ -58,7 +59,8 @@ void Game::setupScene()
 
 Block* Game::addBlock( ci::Vec3i atTilePosition )
 {
-	Block* block = new Block( atTilePosition );
+	Block* block = new Block( this );
+	block->setTilePosition( atTilePosition );
 	mBlocks.push_back( block );
 	return block;
 }
@@ -98,10 +100,25 @@ ci::Vec3f Game::blockResetPosition( ci::Vec3f tilePosition, ci::Vec3f center, in
 	return output;
 }
 
+Vec3i Game::mapLocation( Vec3f realPosition )
+{
+	float dx = realPosition.x < 0.0f ? -1.0f : 1.0f;
+	float dy = realPosition.y < 0.0f ? -1.0f : 1.0f;
+	float dz = realPosition.z < 0.0f ? -1.0f : 1.0f;
+	return Vec3i(realPosition.x / kTileSize + kTileSize * 0.5f * dx,
+				 realPosition.y / kTileSize + kTileSize * 0.5f * dy,
+				 realPosition.z / kTileSize + kTileSize * 0.5f * dz);
+}
+
+Vec3f Game::realPosition( Vec3i tilePosition )
+{
+	return tilePosition * kTileSize;
+}
+
 void Game::updateLocation()
 {
 	Vec3f realCenter = mCamera->position;
-	Vec3i mapCenter = Terrain::mapLocation( realCenter );
+	Vec3i mapCenter = Game::mapLocation( realCenter );
 	bool mapCenterDidChange = mapCenter != mPrevMapCenter;
 	mPrevMapCenter = mapCenter;
 	
@@ -111,8 +128,8 @@ void Game::updateLocation()
 		}
 		for( std::vector<Block*>::iterator iter = mBlocks.begin(); iter != mBlocks.end(); iter++ ) {
 			Block* block = *iter;
-			Vec3i mapPos = Terrain::mapLocation( block->mNode->position );
-			Vec3f realPos = Terrain::realPosition( blockResetPosition( mapPos, mapCenter, mMaxVisibleTileRadius ) );
+			Vec3i mapPos = Game::mapLocation( block->mNode->position );
+			Vec3f realPos = Game::realPosition( blockResetPosition( mapPos, mapCenter, mMaxVisibleTileRadius ) );
 			block->mNode->position.x = realPos.x;
 			block->mNode->position.z = realPos.z;
 		}
@@ -131,7 +148,6 @@ void Game::update( const float deltaTime )
 		Block* block = *iter;
 		block->update( deltaTime );
 	}
-	mTerrain->update( deltaTime );
 }
 
 

@@ -43,7 +43,7 @@ public:
 	virtual ~EditorMeshSelector();
 	
 	void									setSurrounding( std::vector<EditorSelection*>& selections, ci::Vec3i centerTilePosition  );
-	EditorMeshSelectorResult				getMeshSelection( int elevation );
+	EditorMeshSelectorResult				getMeshSelection( Block* block );
 	
 	const std::vector<EditorSelection*>		surroundings() const { return mSurroundings; };
 	

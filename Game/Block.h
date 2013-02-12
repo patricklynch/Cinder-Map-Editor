@@ -7,25 +7,15 @@
 #include "cinder/Surface.h"
 
 #include "Node.h"
+#include "Terrain.h"
 
 namespace ly {
 
-typedef enum {
-	BlockMeshNone = -1,
-	BlockMeshCenter,
-	BlockMeshFill,
-	BlockMeshEdge,
-	BlockMeshWall,
-	BlockMeshWallEnd,
-	BlockMeshWallDiagonal,
-	BlockMeshInnerCorner,
-	BlockMeshDoubleInnerCorner,
-	BlockMeshOuterCorner
-} BlockMeshType;
+class Game;
 
 class Block {
 public:
-	Block( ci::Vec3i tilePosition = ci::Vec3i::zero() );
+	Block( Game* game );
 	
 	virtual					~Block();
 	
@@ -41,19 +31,20 @@ public:
 	void					setMeshType( BlockMeshType type, float rotation );
 	BlockMeshType			meshType() const { return mBlockMeshType; }
 	
-	ci::gl::Texture*		mTextureD;
-	ci::gl::Texture*		mTextureR;
-	ci::gl::Texture*		mTextureG;
-	ci::gl::Texture*		mTextureB;
-	ci::gl::Texture*		mTextureMask;
 	ci::gl::Texture*		mBlankMask;
 	ci::gl::Texture*		mTexturePaintMask;
-	ci::gl::Texture*		mTextureEdge;
 	
 	ci::Matrix44f			mTextureMatrix;
 	ci::Matrix44f			mTextureMatrix2;
+
+	void					setTilePosition( ci::Vec3i tilePosition );
+	void					setTerrainIndex( int index );
+	int						terrainIndex() const { return mTerrainIndex; }
 	
 private:
+	Game*					mGame;
+	int						mTerrainIndex;
+	Terrain*				mTerrain;
 	float					testRotation;
 	
 	ci::gl::VboMesh*		mVboMeshTile;

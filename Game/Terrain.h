@@ -1,44 +1,35 @@
 #pragma once
 
-#include "cinder/Vector.h"
 #include "cinder/gl/Texture.h"
-#include "cinder/Surface.h"
+#include "cinder/gl/Vbo.h"
 
-#include "Node.h"
-
-#include <vector>
+#include <map>
+#include <string>
 
 namespace ly {
-	
-class Tile /*: DataObject*/ {
-public:
-	int x;
-	int y;
-	int offsetX;
-	int offsetY;
-};
+
+typedef enum {
+	BlockMeshNone = -1,
+	BlockMeshCenter,
+	BlockMeshWall,
+	BlockMeshCorner,
+	BlockMeshInnerCorner,
+	BlockMeshBridge
+} BlockMeshType;
 
 class Terrain {
 public:
+	Terrain( std::string name );
 	Terrain();
-	virtual					~Terrain();
-	void					update( const float deltaTime );
-	
-	static ci::Vec3i		mapLocation( ci::Vec3f realPosition );
-	static ci::Vec3f		realPosition( ci::Vec3i tilePosition );
-	
-	ci::Vec2i				mTextureOffset;
-	Node*					mNode;
-	ci::Vec2i				mapLocationCenter;
-	
-	ci::Surface8u			mTilemapSurface;
-	ci::gl::Texture			mTilemapTexture;
-	
-	void					setTiles( std::vector<Tile*> tiles );
-	
-private:
-	std::vector<Tile*>		mLoadedTiles;
-	
+	~Terrain();
+
+	void load( std::string name );
+
+	std::string name;
+	std::map<BlockMeshType, ci::gl::VboMesh*> mEdgeMeshes;
+	std::map<BlockMeshType, ci::gl::VboMesh*> mTileMeshes;
+	ci::gl::Texture* mMaskTexture;
+	ci::gl::Texture* mTexture;
 };
 
 }

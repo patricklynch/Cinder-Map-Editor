@@ -108,7 +108,7 @@ void Editor::update( const float deltaTime )
 	
 	applyUserEdits();
 	
-	SelectionMode_t selectionMode;
+	SelectionMode_t selectionMode = SELECTION_NONE;
 	
 	if ( mState.mode == MODE_PAINT_ELEVATION ) {
 		selectionMode = (mState.elevationRange % 2 == 0) ? SELECTION_POINT : SELECTION_FACE;
@@ -124,10 +124,11 @@ void Editor::update( const float deltaTime )
 		(*iter)->update( deltaTime );
 	}
 	
+	// TODO: This should be unecessary... figure it out
 	// Purge and blocks with BlockMeshNone
 	for( iter = mSelections.begin(); iter != mSelections.end(); iter++) {
 		if ( (*iter)->mTopBlockMeshType == BlockMeshNone ) {
-			setElevation( *iter, (*iter)->tilePosition.y-1 );
+			setElevation( *iter, (*iter)->tilePosition.y-1, (*iter)->mBlock->terrainIndex() );
 			(*iter)->update( deltaTime );
 		}
 	}
@@ -212,6 +213,7 @@ void Editor::applyUserEdits()
 				cmd->activeSelections = mActiveSelections;
 				cmd->editor = this;
 				cmd->amount = currentElevationTarget;
+				cmd->terrainIndex = mState.elevationSelection;
 				mCommandQueue.addCommand( cmd );
 			}
 			
@@ -277,7 +279,7 @@ void Editor::selectStraightLine( ci::Vec3f origin, ci::Vec3f target, bool constr
 	//}
 }
 
-bool Editor::setElevation( EditorSelection* selection, int elevationHeight )
+bool Editor::setElevation( EditorSelection* selection, int elevationHeight, int terrainIndex )
 {
 	Vec3i tilePos = selection->tilePosition;
 	Vec3i newTilePos = Vec3i( tilePos.x, elevationHeight, tilePos.z );
@@ -286,14 +288,16 @@ bool Editor::setElevation( EditorSelection* selection, int elevationHeight )
 	if ( difference > 0 ) {
 		for( int i = 0; i < difference; i++ ) {
 			Block* newBlock = mGame->addBlock( tilePos + Vec3i::yAxis() * i );
+			newBlock->setTerrainIndex( terrainIndex );
 			newBlock->mTexturePaintMask = mTexturePaint->paintMask();
+			selection->mBlock->setTerrainIndex( terrainIndex );
 			selection->addBlock( newBlock );
 			selection->resetTilePosition( newTilePos );
 			
 		}
 	}
 	else if ( difference < 0 ) {
-		/*if ( tilePos.y < 0 ) {
+		/*if ( elevationHeight < 0 ) {
 			selection->editingComplete();
 			return false;
 		}*/

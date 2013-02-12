@@ -2,6 +2,7 @@
 #include "GameConstants.h"
 #include "Terrain.h"
 #include "AssetManager.h"
+#include "Game.h"
 
 #include "cinder/CinderMath.h"
 #include "cinder/app/App.h"
@@ -12,69 +13,46 @@ using namespace ci::app;
 
 using namespace ly;
 
-Block::Block( ci::Vec3i atTilePosition ) : mRotation( 0.0f )
+Block::Block( Game* game ) : mRotation( 0.0f ), mTerrain( NULL ), mGame( game )
 {
 	mNode = new Node();
 	testOffset = Vec2f::zero();
 	mNode->colors[ MaterialSpecular ] = ColorA( 0, 0, 0, 0 );
 	
 	AssetManager* assetManager	= AssetManager::get();
-	tilePosition				= atTilePosition;
+	tilePosition				= Vec3f::zero();
 	mTextureOffset				= Vec2i( 2, 3 );
 	//mTextureOffset			= Vec2i( randInt(0,7), randInt(0,7) );
 	mNode->scale				= Vec3f::one() * kTileSize;
-	mNode->position				= tilePosition * kTileSize;
-	
-	mTextureD					= assetManager->getTexture( "textures/grass.png" );
-	mTextureR					= assetManager->getTexture( "textures/stone.png" );
-	mTextureG					= assetManager->getTexture( "textures/concrete.png" );
-	mTextureB					= assetManager->getTexture( "textures/brick.png" );
-	
-	mTextureEdge				= assetManager->getTexture( "textures/dirtwall.png" );
+
+	setTerrainIndex( 0 );
 	
 	mBlankMask					= assetManager->getTexture( "textures/default_black.png" );
-	mTextureMask				= assetManager->getTexture( "terrain/outcropping/mask.png" );
 	mTexturePaintMask			= NULL;
-	//mTexturePaintMask			= assetManager->getTexture( "textures/test_paint_mask.png" );
+}
+
+void Block::setTerrainIndex( int index )
+{
+	mTerrainIndex = index;
+	mTerrain = mGame->blockTerrains()[ mTerrainIndex ];
+}
+
+void Block::setTilePosition( ci::Vec3i newTilePosition )
+{
+	tilePosition				= newTilePosition;
+	mNode->position				= tilePosition * kTileSize;
 }
 
 void Block::setMeshType( BlockMeshType type, float rotation )
 {
+	mBlockMeshType = type;
+
 	// TODO: Fix up this rotation issue in the models
 	mRotation = rotation;
 	float textureRotation = 180.0f - mRotation;
-	
-	AssetManager* assetManager = AssetManager::get();
-	mBlockMeshType = type;
-	switch( mBlockMeshType ) {
-		case BlockMeshFill:
-			mRotation = 0.0f;
-			mNode->mVboMesh		= assetManager->getVboMesh( "terrain/outcropping/edge/center.obj" );
-			mVboMeshTile		= assetManager->getVboMesh( "terrain/outcropping/tile/center.obj" );
-			break;
-		case BlockMeshEdge:
-			mNode->mVboMesh		= assetManager->getVboMesh( "terrain/outcropping/edge/wall.obj" );
-			mVboMeshTile		= assetManager->getVboMesh( "terrain/outcropping/tile/wall.obj" );
-			break;
-		case BlockMeshOuterCorner:
-			mNode->mVboMesh		= assetManager->getVboMesh( "terrain/outcropping/edge/corner.obj" );
-			mVboMeshTile		= assetManager->getVboMesh( "terrain/outcropping/tile/corner.obj" );
-			break;
-		case BlockMeshInnerCorner:
-			mNode->mVboMesh		= assetManager->getVboMesh( "terrain/outcropping/edge/inner_corner.obj" );
-			mVboMeshTile		= assetManager->getVboMesh( "terrain/outcropping/tile/inner_corner.obj" );
-			break;
-		case BlockMeshDoubleInnerCorner:
-			mNode->mVboMesh		= assetManager->getVboMesh( "terrain/outcropping/edge/bridge.obj" );
-			mVboMeshTile		= assetManager->getVboMesh( "terrain/outcropping/tile/bridge.obj" );
-			break;
-		case BlockMeshNone:
-			mNode->mVboMesh		= NULL;
-			mVboMeshTile		= NULL;
-			break;
-		default:
-			break;
-	}
+
+	// TODO: Is there a baetter way to do this?
+	if ( mBlockMeshType == BlockMeshCenter ) mRotation = 0.0f;
 	
 	mTextureMatrix = Matrix44f::identity();
 	mTextureMatrix.translate( Vec3f( 0.5f, 0.5f, 0.5f ) );
@@ -95,17 +73,17 @@ Block::~Block()
 
 void Block::draw( ci::gl::GlslProg* shader )
 {
-	if ( !mNode->mVboMesh || !mVboMeshTile ) return;
+	if ( !mTerrain || mBlockMeshType == BlockMeshNone ) return;
 	
 	gl::enableDepthRead();
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 	
 	ci::gl::Texture* currentMask;
-	if ( meshType() == BlockMeshFill ) {
+	if ( meshType() == BlockMeshCenter ) {
 		currentMask = mBlankMask;
 	} else {
-		currentMask = mTextureMask;
+		currentMask = mTerrain->mMaskTexture;
 	}
 	
 	ci::gl::Texture* currentPaintMask;
@@ -118,11 +96,11 @@ void Block::draw( ci::gl::GlslProg* shader )
 	bool drawEdge = false;
 	
 	currentMask->bind( 0 );
-	mTextureD->bind( 1 );
-	mTextureR->bind( 2 );
-	mTextureG->bind( 3 );
-	mTextureB->bind( 4 );
-	mTextureEdge->bind(5);
+	mGame->blockTextures()[0]->bind( 1 );
+	mGame->blockTextures()[1]->bind( 2 );
+	mGame->blockTextures()[2]->bind( 3 );
+	mGame->blockTextures()[3]->bind( 4 );
+	mTerrain->mTexture->bind(5);
 	currentPaintMask->bind(6);
 	
 	shader->uniform( "transformMatrix",			mNode->transform() );
@@ -146,19 +124,19 @@ void Block::draw( ci::gl::GlslProg* shader )
 	shader->uniform( "offset", Vec2f( tilePosition.x, tilePosition.z ) + Vec2f( r, r ) );
 	
 	gl::disableDepthWrite();
-	gl::draw( *mVboMeshTile );
+	gl::draw( *mTerrain->mTileMeshes[ mBlockMeshType ] );
 	gl::enableDepthWrite();
 	
-	drawEdge = meshType() == BlockMeshFill ? false : true;
+	drawEdge = meshType() == BlockMeshCenter ? false : true;
 	shader->uniform( "edge", drawEdge );
-	gl::draw( *mNode->mVboMesh );
+	gl::draw( *mTerrain->mEdgeMeshes[ mBlockMeshType ] );
 	
 	currentMask->unbind(0);
-	mTextureD->unbind(1);
-	mTextureR->unbind(2);
-	mTextureG->unbind(3);
-	mTextureB->unbind(4);
-	mTextureEdge->unbind(5);
+	mGame->blockTextures()[0]->unbind(1);
+	mGame->blockTextures()[1]->unbind(2);
+	mGame->blockTextures()[2]->unbind(3);
+	mGame->blockTextures()[3]->unbind(4);
+	mTerrain->mTexture->unbind(5);
 	currentPaintMask->unbind(6);
 }
 

@@ -28,7 +28,9 @@ public:
 	std::vector<EditorSelection*>	activeSelections;
 	int								amount;
 	Editor*							editor;
+	int								terrainIndex;
 private:
+	std::vector<int>				previousTerrainIndices;
 	std::vector<int>				previousAmounts;
 };
 	

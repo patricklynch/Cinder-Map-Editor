@@ -23,8 +23,10 @@ void main()
 	float unit					= 1.0 / numTextures;
 	
 	if ( edge ) {
-		vec4 texColorEdge		= texture2D( textureEdge, gl_TexCoord[0].st );
-		vec4 mask				= texture2D( textureMask, gl_TexCoord[0].st );
+		vec2 st					= gl_TexCoord[0].st;
+		st.y					= 1.0 - st.y;
+		vec4 texColorEdge		= texture2D( textureEdge, st );
+		vec4 mask				= texture2D( textureMask, st );
 		vec4 finalColor			= mix( texColorEdge, vec4(0,0,0,0), mask.r );
 		gl_FragColor			= _lightingAmbiDiffSpecShort( finalColor );
 	}

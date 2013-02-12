@@ -145,7 +145,18 @@ bool Input::mouseIsDown( MouseButton mouseButton )
 
 MouseButton Input::buttonForEvent( ci::app::MouseEvent event )
 {
-	if (event.isLeft()) return MOUSE_LEFT;
-	else if (event.isRight()) return MOUSE_RIGHT;
-	else return MOUSE_MIDDLE;
+	if ( event.isLeft() ) {
+		return MOUSE_LEFT;
+	} else if ( event.isRight() ) { 
+		return MOUSE_RIGHT;
+	} else if ( event.isMiddle() ) {
+		return MOUSE_MIDDLE;
+
+	} else if ( mouseIsDown( MOUSE_LEFT ) ) {
+		return MOUSE_LEFT;
+	} else if ( mouseIsDown( MOUSE_RIGHT ) ) {
+		return MOUSE_RIGHT;
+	} else if ( mouseIsDown( MOUSE_MIDDLE ) ) {
+		return MOUSE_MIDDLE;
+	}
 }

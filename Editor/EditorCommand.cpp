@@ -12,12 +12,13 @@ bool EditorCommandModifyElevation::execute()
 	for( iter = activeSelections.begin(); iter != activeSelections.end(); iter++ ) {
 		EditorSelection* activeSelection = *iter;
 		previousAmounts.push_back( activeSelection->tilePosition.y );
+		previousTerrainIndices.push_back( activeSelection->mBlock->terrainIndex() );
 		activeSelection->editingStarted();
 	}
 	for( iter = activeSelections.begin(); iter != activeSelections.end(); iter++ ) {
 		EditorSelection* activeSelection = *iter;
 		if ( editor->currentElevationTarget != activeSelection->tilePosition.y ) {
-			editor->setElevation( activeSelection, amount );
+			editor->setElevation( activeSelection, amount, terrainIndex );
 			elevationDidChange = true;
 		}
 	}
@@ -30,7 +31,7 @@ bool EditorCommandModifyElevation::undo()
 	std::vector<EditorSelection*>::iterator iter;
 	for( iter = activeSelections.begin(); iter != activeSelections.end(); iter++ ) {
 		EditorSelection* activeSelection = *iter;
-		editor->setElevation( activeSelection, previousAmounts[i++] );
+		editor->setElevation( activeSelection, previousAmounts[i++], previousTerrainIndices[i] );
 	}
 	return true;
 }

@@ -54,7 +54,6 @@ void EditorCamera::update( const float deltaTime )
 		mRotationStart.y = mCamera->rotation.y;
 		mPositionStart = mCamera->position;
 	}
-	
 	if ( drag.isActive && drag.mouseButton == MOUSE_RIGHT && drag.isAltDown ) {
 		mCamera->setZoom( mZoomStart - drag.difference().x * 0.07f );
 	}

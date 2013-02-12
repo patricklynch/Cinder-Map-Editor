@@ -12,7 +12,7 @@ namespace ly {
 static const float	kFrameRate		= 60.0f;
 static const int	kWindowWidth	= 1920;
 static const int	kWindowHeight	= 1080;
-	
+
 class BlockTestApp : public AppBasic {
   public:
 	void prepareSettings( Settings *settings );
@@ -55,6 +55,8 @@ void BlockTestApp::resize( ResizeEvent event ) {}
 
 void BlockTestApp::update()
 {
+	Sleep( 1000/60.f );
+
     float currentTime = (float) app::getElapsedSeconds();
     float deltaTime = currentTime - mPrevElapsedSeconds;
     mPrevElapsedSeconds = currentTime;

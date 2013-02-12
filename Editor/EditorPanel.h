@@ -1,6 +1,7 @@
 #pragma once
 
 #include "EditorPalette.h"
+#include "Terrain.h"
 
 #include "cinder/params/Params.h"
 #include "cinder/gl/Texture.h"

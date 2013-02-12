@@ -70,16 +70,15 @@ void EditorSelection::addBlock( Block* block )
 {
 	Vec3i tilePos = tilePosition;
 	tilePos.y -= 1;
-	mBlockStack.push_back( block );
+	mBlockStack.insert( mBlockStack.begin(), block );
 	update( 0.0f );
 }
 
 Block*  EditorSelection::removeBlock()
 {
 	if ( mBlockStack.size() > 0 ) {
-		std::vector<Block*>::iterator top = mBlockStack.end()-1;
-		Block* output = *top;
-		mBlockStack.erase( top );
+		Block* output = *mBlockStack.begin();
+		mBlockStack.erase( mBlockStack.begin() );
 		return output;
 	}
 	return NULL;
@@ -92,7 +91,7 @@ void EditorSelection::findSurroundingBlocks( std::vector<EditorSelection*>& sele
 
 void EditorSelection::updateMesh( Block* block )
 {
-	EditorMeshSelectorResult result = mMeshSelector.getMeshSelection( block->tilePosition.y );
+	EditorMeshSelectorResult result = mMeshSelector.getMeshSelection( block );
 	block->setMeshType( result.type, result.rotation );
 	
 	// If it's the top block
@@ -148,7 +147,7 @@ void EditorSelection::draw( int elevationHeight, bool gridLines )
 		gl::drawStrokedCube( center, size );
 	}
 	
-	if ( gridLines && mTopBlockMeshType == BlockMeshFill ) {
+	if ( gridLines && mTopBlockMeshType == BlockMeshCenter ) {
 		gl::color( ColorA::white() );
 		Vec3f offset = Vec3f( 0.5f, 1.2f, 0.5f );
 		offset = Vec3f( 0.5f, 1.2f, 0.5f );

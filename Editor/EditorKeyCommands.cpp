@@ -44,8 +44,11 @@ void EditorKeyCommands::update( const float deltaTime )
 void EditorKeyCommands::onKeyDown( ci::app::KeyEvent event )
 {
 	int code = event.getCode();
+#if _WINDOWS
+	bool meta = event.isControlDown();
+#else
 	bool meta = event.isMetaDown();
-	bool ctrl = event.isControlDown();
+#endif
 	bool shift = event.isShiftDown();
 	bool alt  = event.isAltDown();
 	EditorState& state = mEditor->mState;
@@ -53,14 +56,12 @@ void EditorKeyCommands::onKeyDown( ci::app::KeyEvent event )
 	if ( meta ) {
 		
 		// Undo & Redo
-		if ( code == KeyEvent::KEY_z )  {
-			if ( !shift  ) {
-				mEditor->mCommandQueue.undo();
-				return;
-			} else if ( shift ) {
-				mEditor->mCommandQueue.redo();
-				return;
-			}
+		if ( !shift && code == KeyEvent::KEY_z )  {
+			mEditor->mCommandQueue.undo();
+		}  else if ( code == KeyEvent::KEY_y )  {
+			mEditor->mCommandQueue.redo();
+		} else if ( shift && code == KeyEvent::KEY_z )  {
+			mEditor->mCommandQueue.redo();
 		}
 	}
 	
