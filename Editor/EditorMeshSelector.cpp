@@ -116,6 +116,7 @@ EditorMeshSelectorResult EditorMeshSelector::getMeshSelection( Block* block )
 	// Solid cube when compeltely surrounded
 	if ( md.rowt && md.horizontal && md.rowb ) {
 		newMeshType = BlockMeshCenter;
+		rotationY = 0.0f;
 	}
 	
 	else if ( md.horizontal && md.vertical ) {

@@ -47,23 +47,25 @@ void Block::setMeshType( BlockMeshType type, float rotation )
 {
 	mBlockMeshType = type;
 
-	// TODO: Fix up this rotation issue in the models
 	mRotation = rotation;
-	float textureRotation = 180.0f - mRotation;
+	float textureRotation = rotation;
 
 	// TODO: Is there a baetter way to do this?
-	if ( mBlockMeshType == BlockMeshCenter ) mRotation = 0.0f;
+	if ( mBlockMeshType == BlockMeshCenter ) {
+		mRotation = 0.0f;
+		textureRotation = 180.0f;
+	}
+	
+	//mTextureMatrix = Matrix44f::identity();
+	//mTextureMatrix.translate( Vec3f( 0.5f, 0.5f, 0.5f ) );
+	//mTextureMatrix.rotate( Vec3f::zAxis(), toRadians( textureRotation ) );
+	//mTextureMatrix.translate( Vec3f( -0.5f, -0.5f, 0.5f ) );
+	//mTextureMatrix.scale( Vec3f( -1.0f, 1.0f, 0.0f ) );
 	
 	mTextureMatrix = Matrix44f::identity();
 	mTextureMatrix.translate( Vec3f( 0.5f, 0.5f, 0.5f ) );
 	mTextureMatrix.rotate( Vec3f::zAxis(), toRadians( textureRotation ) );
 	mTextureMatrix.translate( Vec3f( -0.5f, -0.5f, 0.5f ) );
-	mTextureMatrix.scale( Vec3f( -1.0f, 1.0f, 0.0f ) );
-	
-	mTextureMatrix2 = Matrix44f::identity();
-	mTextureMatrix2.translate( Vec3f( 0.5f, 0.5f, 0.5f ) );
-	mTextureMatrix2.rotate( Vec3f::zAxis(), toRadians( -mRotation ) );
-	mTextureMatrix2.translate( Vec3f( -0.5f, -0.5f, 0.5f ) );
 }
 
 Block::~Block()
@@ -118,7 +120,7 @@ void Block::draw( ci::gl::GlslProg* shader )
 	shader->uniform( "textureEdge",				5 );
 	shader->uniform( "texturePaintMask",		6 );
 	shader->uniform( "textureMatrix",			mTextureMatrix );
-	shader->uniform( "textureMatrix2",			mTextureMatrix2 );
+	//shader->uniform( "textureMatrix2",			mTextureMatrix2 );
 	
 	float r = kDefaultMaxVisibleTileRadius;
 	shader->uniform( "offset", Vec2f( tilePosition.x, tilePosition.z ) + Vec2f( r, r ) );

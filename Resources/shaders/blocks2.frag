@@ -6,7 +6,7 @@ uniform sampler2D	textureEdge;
 uniform sampler2D	textureMask;
 uniform sampler2D	texturePaintMask;
 uniform mat4		textureMatrix;
-uniform mat4		textureMatrix2;
+//uniform mat4		textureMatrix2;
 
 uniform float		numTextures;
 uniform vec2		offset;
@@ -39,10 +39,10 @@ void main()
 		vec4 texColorB			= texture2D( textureB, st );
 
 		st						= gl_TexCoord[0].st;
-		st						= vec2( 1.0-st.x, st.y );
+		st						= vec2( textureMatrix * vec4( st.x, st.y, 0, 1 ) );
+		st						= vec2( st.x, 1.0-st.y );
 		st						+= offset;
 		st						= st * unit;
-		//st					= vec2( textureMatrix2 * vec4( st.x, st.y, 0, 1 ) );
 		vec4 paintMask			= texture2D( texturePaintMask, st );
 		
 		vec4 finalColor			= texColorD;

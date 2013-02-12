@@ -8,6 +8,25 @@
 
 #include <boost/bind.hpp>
 
+/* KEY
+1,2,3,4, etc.					- Select texture/terrain type
+P								- Paint mode
+E								- Terrain (Elevation) mode
+[								- Smaller brush size
+]								- Larger brush size
++								- Higher elevation / stronger texture paint
+-								- Lower elevation / weaker texture paint
+SPACE							- Reset elevation
+CTRL+z							- Undo
+CTRL+SHFT+z / CTRL+y			- Redo
+Arrows up/down					- rotate camera x-axis
+Arrows left/right				- rotation camera y-axis
+Left click and drag				- Paint/apply elevation
+Middle click and drag			- Move map location
+ALT + Middle click and drag		- Rotate camera
+ALT + Right click and drag		- Zoom camera in/out
+*/
+
 using namespace ly;
 
 using namespace ci;
