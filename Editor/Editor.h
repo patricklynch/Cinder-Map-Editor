@@ -63,6 +63,7 @@ public:
 private:
 	ci::Vec3f								mLastSelectionTarget;
 	void									applyUserEdits();
+	void									purgeBlocksWithNoMesh();
 	bool									mDragWasActive;
 	
 	std::vector<EditorSelection*>			select( ci::Ray ray, int range, float maxDistance = MAXFLOAT, bool allIntersections = false );

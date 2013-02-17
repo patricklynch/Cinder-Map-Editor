@@ -66,10 +66,22 @@ void Game::drawBlocks( std::vector<Block*>& blocks, ci::Camera& camera )
 	mBlockShader.uniform( "ambientColor",			ColorA( 0.3f, 0.3f, 0.3f, 1.0f ) );
 	mBlockShader.uniform( "numTextures",			(float) kTextureTileSize );
 	
-	for( std::vector<Block*>::const_iterator iter = blocks.begin(); iter != blocks.end(); iter++ ) {
+	std::vector<Block*>::const_iterator iter;
+	for( iter = blocks.begin(); iter != blocks.end(); iter++ ) {
 		(*iter)->draw( &mBlockShader );
 	}
 	mBlockShader.unbind();
+	
+	glPushMatrix();
+	gl::setMatrices( camera );
+	gl::color( 1, 1, 0, 1 );
+	for( iter = blocks.begin(); iter != blocks.end(); iter++ ) {
+		if ( (*iter)->meshType() == BlockMeshNone ) {
+			gl::drawCube( (*iter)->mNode->globalPosition(), Vec3f::one() * 0.2f );
+		}
+	}
+	glPopMatrix();
+
 	
 	glDisable( GL_CULL_FACE );
 }

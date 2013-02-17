@@ -20,8 +20,6 @@ bool testModeBlock = false;
 
 EditorSelection::EditorSelection( Block* block, Editor* editor ) : mEditor( editor ), mIsHighlighted( false ), mBlock( block ), mHasBeenEdited( false ), mTopBlockMeshType( BlockMeshNone )
 {
-	tilePosition = block->tilePosition;
-	position = tilePosition * kTileSize;
 	defineBoundingBox();
 }
 
@@ -35,6 +33,7 @@ void EditorSelection::setSelectionMode( SelectionMode_t mode )
 void EditorSelection::defineBoundingBox()
 {
 	Vec3f offset;
+	Vec3f position = getTilePosition() * kTileSize;
 	if ( selectionMode == SELECTION_POINT ) {
 		offset = -Vec3f( 0.5f, 0.0f, 0.5f ) * kTileSize;
 	}
@@ -47,19 +46,8 @@ void EditorSelection::defineBoundingBox()
 	mBoundingBox = AxisAlignedBox3f( mBoundingBoxCenter + min, mBoundingBoxCenter + max );
 }
 
-void EditorSelection::resetTilePosition( ci::Vec3f iPosition )
-{
-	if ( iPosition == tilePosition ) return;
-	tilePosition = iPosition;
-	position = tilePosition * kTileSize;
-	if ( !mHasBeenEdited ) defineBoundingBox();
-}
-
 void EditorSelection::update( const float deltaTime )
 {
-	mBlock->tilePosition = tilePosition;
-	mBlock->mNode->position = position;
-	
 	updateMesh( mBlock );
 	for( std::vector<Block*>::iterator iter = mBlockStack.begin(); iter != mBlockStack.end(); iter++ ) {
 		updateMesh( *iter );
@@ -68,7 +56,7 @@ void EditorSelection::update( const float deltaTime )
 
 void EditorSelection::addBlock( Block* block )
 {
-	Vec3i tilePos = tilePosition;
+	Vec3i tilePos = getTilePosition();
 	tilePos.y -= 1;
 	mBlockStack.insert( mBlockStack.begin(), block );
 	update( 0.0f );
@@ -86,7 +74,7 @@ Block*  EditorSelection::removeBlock()
 
 void EditorSelection::findSurroundingBlocks( std::vector<EditorSelection*>& selections )
 {
-	mMeshSelector.setSurrounding( selections, tilePosition );
+	mMeshSelector.setSurrounding( selections, getTilePosition() );
 }
 
 void EditorSelection::updateMesh( Block* block )
@@ -95,7 +83,7 @@ void EditorSelection::updateMesh( Block* block )
 	block->setMeshType( result.type, result.rotation );
 	
 	// If it's the top block
-	if ( mBlock->tilePosition.y == tilePosition.y ) {
+	if ( mBlock->tilePosition.y == getTilePosition().y ) {
 		mTopBlockMeshType = result.type;
 	}
 }
@@ -118,6 +106,7 @@ void EditorSelection::editingStarted()
 
 float EditorSelection::cameraDistance()
 {
+	Vec3f position = getTilePosition() * kTileSize;
 	return position.distance( ly::Camera::get()->globalPosition() );
 }
 
@@ -128,7 +117,18 @@ bool EditorSelection::sortCameraDistance( EditorSelection* a, EditorSelection* b
 
 bool EditorSelection::sortHeight( EditorSelection* a, EditorSelection* b )
 {
-	return a->tilePosition.y <= b->tilePosition.y;
+	return a->getTilePosition().y <= b->getTilePosition().y;
+}
+
+Block* EditorSelection::getBlockAtElevation( int elevation )
+{
+	if ( mBlock->tilePosition.y == elevation ) return mBlock;
+	for( std::vector<Block*>::iterator iter = mBlockStack.begin(); iter != mBlockStack.end(); iter++ ) {
+		if ( (*iter)->tilePosition.y == elevation ) {
+			return *iter;
+		}
+	}
+	return NULL;
 }
 
 void EditorSelection::draw( int elevationHeight, bool gridLines )
@@ -137,7 +137,7 @@ void EditorSelection::draw( int elevationHeight, bool gridLines )
 	gl::enableAlphaBlending();
 	Vec3f size = mBoundingBox.getSize();
 	size.y *= elevationHeight;
-	Vec3f center = Vec3f( tilePosition.x, 1.0f + 0.5f * elevationHeight, tilePosition.z );
+	Vec3f center = Vec3f( getTilePosition().x, 1.0f + 0.5f * elevationHeight, getTilePosition().z );
 	
 	if ( mIsHighlighted ) {
 		gl::color( ColorA( 0.0f, 1.0f, 0.0f, 0.1f ) );
@@ -147,13 +147,22 @@ void EditorSelection::draw( int elevationHeight, bool gridLines )
 		gl::drawStrokedCube( center, size );
 	}
 	
-	if ( gridLines && mTopBlockMeshType == BlockMeshCenter ) {
+	if ( gridLines ) {
+		gl::color( ColorA( 1.0f, 1.0f, 1.0f, 1.0f ) );
+		Vec3f targ = getTilePosition() + Vec3f(0.0f, 1.02f, 0.0f );
+		gl::drawCube( targ, Vec3f( 0.2f, 0.05f, 0.2f ) );
+		gl::drawLine( Vec3f( getTilePosition().x, 0.0f, getTilePosition().z ), targ );
+	}
+	
+	//if ( gridLines && mTopBlockMeshType == BlockMeshCenter ) {
+	if ( false ) {
 		gl::color( ColorA::white() );
 		Vec3f offset = Vec3f( 0.5f, 1.2f, 0.5f );
 		offset = Vec3f( 0.5f, 1.2f, 0.5f );
 		SurroundingType types[] = { BC, MR, TC, ML };
 		for( int i = 0; i < sizeof( types ) / sizeof( SurroundingType ); i++ ) {
-			gl::drawLine( mMeshSelector.surroundings()[ types[ i ] ]->position + offset, position + offset );
+			Vec3f position = mMeshSelector.surroundings()[ types[ i ] ]->getTilePosition() * kTileSize;
+			gl::drawLine( position + offset, position + offset );
 		}
 	}
 }
