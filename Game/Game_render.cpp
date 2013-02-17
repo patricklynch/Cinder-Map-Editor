@@ -74,10 +74,15 @@ void Game::drawBlocks( std::vector<Block*>& blocks, ci::Camera& camera )
 	
 	glPushMatrix();
 	gl::setMatrices( camera );
-	gl::color( 1, 1, 0, 1 );
 	for( iter = blocks.begin(); iter != blocks.end(); iter++ ) {
 		if ( (*iter)->meshType() == BlockMeshNone ) {
-			gl::drawCube( (*iter)->mNode->globalPosition(), Vec3f::one() * 0.2f );
+			gl::color( 1, 1, 0, 1 );
+			Vec3f pos = (*iter)->mNode->globalPosition() + Vec3f( 0.0f, 0.5f, 0.0f );
+			gl::drawCube( pos, Vec3f::one() * 0.2f );
+			gl::enableWireframe();
+			gl::color( 1, 1, 0, 0.4f );
+			gl::drawCube( pos, Vec3f::one() );
+			gl::disableWireframe();
 		}
 	}
 	glPopMatrix();

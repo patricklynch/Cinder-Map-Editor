@@ -52,15 +52,15 @@ void Game::setupScene()
 	int n = mMaxVisibleTileRadius;
 	for(int x = -n; x <= n; x++) {
 		for(int z = -n; z <= n; z++) {
-			addBlock( Vec3f( x, 0, z ) );
+			Block* block = addBlock();
+			block->setTilePosition( Vec3f( x, 0, z ) );
 		}
 	}
 }
 
-Block* Game::addBlock( ci::Vec3i atTilePosition )
+Block* Game::addBlock()
 {
 	Block* block = new Block( this );
-	block->setTilePosition( atTilePosition );
 	mBlocks.push_back( block );
 	return block;
 }
@@ -84,6 +84,9 @@ void Game::removeBlock( Block* block )
 	if ( match != mBlocks.end() ) {
 		delete *match;
 		mBlocks.erase( match );
+	}
+	else {
+		console() << "Unable to remove block" << std::endl;
 	}
 }
 

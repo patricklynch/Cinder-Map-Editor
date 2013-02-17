@@ -124,7 +124,7 @@ void Editor::update( const float deltaTime )
 		(*iter)->update( deltaTime );
 	}
 	
-	//purgeBlocksWithNoMesh();
+	purgeBlocksWithNoMesh();
 }
 
 void Editor::purgeBlocksWithNoMesh()
@@ -135,6 +135,14 @@ void Editor::purgeBlocksWithNoMesh()
 			(*iter)->mBlock->setMeshType( BlockMeshCenter, 0.0f );
 			setElevation( *iter, (*iter)->getTilePosition().y-1, (*iter)->mBlock->terrainIndex() );
 			(*iter)->update( 0.0f );
+		}
+		
+		for( std::vector<Block*>::iterator iter_b = (*iter)->mBlockStack.begin(); iter_b != (*iter)->mBlockStack.end(); iter_b++ ) {
+			if ( (*iter_b)->meshType() == BlockMeshNone ) {
+				setElevation( *iter, (*iter)->getTilePosition().y-1, (*iter)->mBlock->terrainIndex() );
+				(*iter)->update( 0.0f );
+				break;
+			}
 		}
 	}
 }
@@ -292,13 +300,11 @@ bool Editor::setElevation( EditorSelection* selection, int elevationHeight, int 
 	
 	if ( difference > 0 ) {
 		for( int i = 0; i < difference; i++ ) {
-			Block* newBlock = mGame->addBlock( tilePos + Vec3i::yAxis() * i );
+			Block* newBlock = mGame->addBlock();
 			newBlock->setTerrainIndex( terrainIndex );
 			newBlock->mTexturePaintMask = mTexturePaint->paintMask();
 			selection->mBlock->setTerrainIndex( terrainIndex );
 			selection->addBlock( newBlock );
-			selection->setTilePosition( newTilePos );
-			
 		}
 	}
 	else if ( difference < 0 ) {
@@ -306,10 +312,11 @@ bool Editor::setElevation( EditorSelection* selection, int elevationHeight, int 
 			selection->editingComplete();
 			return false;
 		}*/
-		selection->setTilePosition( newTilePos );
 		for( int i = 0; i < math<int>::abs( difference ); i++ ) {
 			Block* oldBlock = selection->removeBlock();
-			mGame->removeBlock( oldBlock );
+			if ( oldBlock ) {
+				mGame->removeBlock( oldBlock );
+			}
 		}
 	}
 	return selection->getTilePosition().y == elevationHeight;

@@ -57,16 +57,19 @@ void EditorSelection::update( const float deltaTime )
 void EditorSelection::addBlock( Block* block )
 {
 	Vec3i tilePos = getTilePosition();
-	tilePos.y -= 1;
-	mBlockStack.insert( mBlockStack.begin(), block );
+	block->setTilePosition( tilePos );
+	setTilePosition( tilePos + Vec3i( 0, 1, 0 ) );
+	mBlockStack.push_back( block );
 	update( 0.0f );
 }
 
 Block*  EditorSelection::removeBlock()
 {
 	if ( mBlockStack.size() > 0 ) {
-		Block* output = *mBlockStack.begin();
-		mBlockStack.erase( mBlockStack.begin() );
+		Block* output = *(mBlockStack.end()-1);
+		Vec3i tilePos = getTilePosition();
+		setTilePosition( tilePos - Vec3i( 0, 1, 0 ) );
+		mBlockStack.pop_back();
 		return output;
 	}
 	return NULL;
