@@ -131,8 +131,7 @@ void Editor::purgeBlocksWithNoMesh()
 {
 	std::vector<EditorSelection*>::iterator iter;
 	for( iter = mSelections.begin(); iter != mSelections.end(); iter++) {
-		if ( (*iter)->mTopBlockMeshType == BlockMeshNone ) {
-			(*iter)->mBlock->setMeshType( BlockMeshCenter, 0.0f );
+		if ( (*iter)->mBlock->meshType() == BlockMeshNone ) {
 			setElevation( *iter, (*iter)->getTilePosition().y-1, (*iter)->mBlock->terrainIndex() );
 			(*iter)->update( 0.0f );
 		}
