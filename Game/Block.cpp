@@ -74,8 +74,12 @@ Block::~Block()
 }
 
 void Block::draw( ci::gl::GlslProg* shader )
-{
-	if ( !mTerrain || mBlockMeshType == BlockMeshNone ) return;
+{	
+	if (!mTerrain ||
+		!mTerrain->mTileMeshes[ mBlockMeshType ] ||
+		!mTerrain->mEdgeMeshes[ mBlockMeshType ]  ) {
+		return;
+	}
 	
 	gl::enableDepthRead();
 	glEnable(GL_BLEND);

@@ -46,6 +46,7 @@ public:
 	EditorMeshSelectorResult				getMeshSelection( Block* block );
 	
 	const std::vector<EditorSelection*>		surroundings() const { return mSurroundings; };
+	bool									check( EditorSelection* surrounding, Block* block );
 	
 private:
 	MeshPositionData						mMeshPositionData;

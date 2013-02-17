@@ -11,13 +11,13 @@ bool EditorCommandModifyElevation::execute()
 	bool elevationDidChange = false;
 	for( iter = activeSelections.begin(); iter != activeSelections.end(); iter++ ) {
 		EditorSelection* activeSelection = *iter;
-		previousAmounts.push_back( activeSelection->tilePosition.y );
+		previousAmounts.push_back( activeSelection->getTilePosition().y );
 		previousTerrainIndices.push_back( activeSelection->mBlock->terrainIndex() );
 		activeSelection->editingStarted();
 	}
 	for( iter = activeSelections.begin(); iter != activeSelections.end(); iter++ ) {
 		EditorSelection* activeSelection = *iter;
-		if ( editor->currentElevationTarget != activeSelection->tilePosition.y ) {
+		if ( editor->currentElevationTarget != activeSelection->getTilePosition().y ) {
 			editor->setElevation( activeSelection, amount, terrainIndex );
 			elevationDidChange = true;
 		}

@@ -55,8 +55,6 @@ void BlockTestApp::resize( ResizeEvent event ) {}
 
 void BlockTestApp::update()
 {
-	Sleep( 1000/60.f );
-
     float currentTime = (float) app::getElapsedSeconds();
     float deltaTime = currentTime - mPrevElapsedSeconds;
     mPrevElapsedSeconds = currentTime;

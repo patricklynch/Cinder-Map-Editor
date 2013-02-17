@@ -22,8 +22,8 @@ Editor::Editor( Game* game ) : mGame( game ), mTexturePaint( NULL ), mPanel( NUL
 	mState.mode = MODE_PAINT_TEXTURE;
 	
 	mCamera = ly::Camera::get();
-	mCamera->setFov( 50 );
-	mCamera->setZoom( 40 );
+	mCamera->setFov( 20 );
+	mCamera->setZoom( 80 );
 	mCamera->setAngle( -80.0f);
 	mCamera->rotation.y = 180.0f;
 	mCamera->setAngle( -89.0f);
@@ -71,8 +71,8 @@ void Editor::mapCenterDidUpdate( ci::Vec3i center )
 {
 	for( std::vector<EditorSelection*>::iterator iter = mSelections.begin(); iter != mSelections.end(); iter++ ) {
 		EditorSelection* selection = *iter;
-		Vec3f resetPosition = Game::blockResetPosition( selection->tilePosition, center, kDefaultMaxVisibleTileRadius );
-		selection->resetTilePosition( resetPosition );
+		Vec3f resetPosition = Game::blockResetPosition( selection->getTilePosition(), center, kDefaultMaxVisibleTileRadius );
+		selection->setTilePosition( resetPosition );
 	}
 }
 
@@ -89,7 +89,7 @@ Block* Editor::findBlock( std::vector<Block*>& blocks, ci::Vec3i tilePos )
 EditorSelection* Editor::findBlock( std::vector<EditorSelection*>& blocks, ci::Vec3i tilePos )
 {
 	for( std::vector<EditorSelection*>::iterator iter = blocks.begin(); iter != blocks.end(); iter++ ) {
-		if ( (*iter)->tilePosition == tilePos ) {
+		if ( (*iter)->getTilePosition() == tilePos ) {
 			return *iter;
 		}
 	}
@@ -124,12 +124,17 @@ void Editor::update( const float deltaTime )
 		(*iter)->update( deltaTime );
 	}
 	
-	// TODO: This should be unecessary... figure it out
-	// Purge and blocks with BlockMeshNone
+	//purgeBlocksWithNoMesh();
+}
+
+void Editor::purgeBlocksWithNoMesh()
+{
+	std::vector<EditorSelection*>::iterator iter;
 	for( iter = mSelections.begin(); iter != mSelections.end(); iter++) {
 		if ( (*iter)->mTopBlockMeshType == BlockMeshNone ) {
-			setElevation( *iter, (*iter)->tilePosition.y-1, (*iter)->mBlock->terrainIndex() );
-			(*iter)->update( deltaTime );
+			(*iter)->mBlock->setMeshType( BlockMeshCenter, 0.0f );
+			setElevation( *iter, (*iter)->getTilePosition().y-1, (*iter)->mBlock->terrainIndex() );
+			(*iter)->update( 0.0f );
 		}
 	}
 }
@@ -167,7 +172,7 @@ void Editor::applyUserEdits()
 		Ray ray = mCamera->rayIntoScene( Input::get()->mousePosition() );
 		std::vector<EditorSelection*> selections = select( ray, 1 );
 		if ( selections.size() > 0 ) {
-			float elevation = selections[0]->tilePosition.y;
+			float elevation = selections[0]->getTilePosition().y;
 			float result;
 			ray.calcPlaneIntersection( Vec3f( 0, elevation + 1, 0 ), Vec3f::yAxis(), &result );
 			mTexturePaint->setTarget( ray.calcPosition( result ) );
@@ -281,7 +286,7 @@ void Editor::selectStraightLine( ci::Vec3f origin, ci::Vec3f target, bool constr
 
 bool Editor::setElevation( EditorSelection* selection, int elevationHeight, int terrainIndex )
 {
-	Vec3i tilePos = selection->tilePosition;
+	Vec3i tilePos = selection->getTilePosition();
 	Vec3i newTilePos = Vec3i( tilePos.x, elevationHeight, tilePos.z );
 	int difference = newTilePos.y - tilePos.y;
 	
@@ -292,7 +297,7 @@ bool Editor::setElevation( EditorSelection* selection, int elevationHeight, int 
 			newBlock->mTexturePaintMask = mTexturePaint->paintMask();
 			selection->mBlock->setTerrainIndex( terrainIndex );
 			selection->addBlock( newBlock );
-			selection->resetTilePosition( newTilePos );
+			selection->setTilePosition( newTilePos );
 			
 		}
 	}
@@ -301,13 +306,13 @@ bool Editor::setElevation( EditorSelection* selection, int elevationHeight, int 
 			selection->editingComplete();
 			return false;
 		}*/
-		selection->resetTilePosition( newTilePos );
-		for( int i = 0; i < selection->mBlockStack.size(); i++ ) {
+		selection->setTilePosition( newTilePos );
+		for( int i = 0; i < math<int>::abs( difference ); i++ ) {
 			Block* oldBlock = selection->removeBlock();
 			mGame->removeBlock( oldBlock );
 		}
 	}
-	return selection->tilePosition.y == elevationHeight;
+	return selection->getTilePosition().y == elevationHeight;
 }
 
 std::vector<EditorSelection*> Editor::select( Ray ray, int range, float maxDistance, bool allIntersections )
@@ -336,10 +341,10 @@ std::vector<EditorSelection*> Editor::select( Ray ray, int range, float maxDista
 					Vec3f offset = Vec3f( x, 0, z );
 					
 					// Find surrounding blocks
-					Vec3i tilePos = centerSelection->tilePosition + offset;
+					Vec3i tilePos = centerSelection->getTilePosition() + offset;
 					std::vector<EditorSelection*> allSurroundingSelections;
 					for( std::vector<EditorSelection*>::iterator iter = mSelections.begin(); iter != mSelections.end(); iter++ ) {
-						if ( (*iter)->tilePosition.x == tilePos.x && (*iter)->tilePosition.z == tilePos.z ) {
+						if ( (*iter)->getTilePosition().x == tilePos.x && (*iter)->getTilePosition().z == tilePos.z ) {
 							allSurroundingSelections.push_back( *iter );
 							break;
 						}
