@@ -57,7 +57,8 @@ build/
 *_p.c
 *.ilk
 *.meta
-*.obj
+vc10/Debug/*.obj
+vc10/Release/*.obj
 *.pch
 *.pdb
 *.pgc
