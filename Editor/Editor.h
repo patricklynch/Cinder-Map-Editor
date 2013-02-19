@@ -42,7 +42,6 @@ public:
 	
 	static Block*							findBlock( std::vector<Block*>& blocks, ci::Vec3i tilePos );
 	static EditorSelection*					findBlock( std::vector<EditorSelection*>& blocks, ci::Vec3i tilePos );
-	void									resetElevation();
 		
 	/** IGameEventDelegate methods */
 	virtual void							mapCenterDidUpdate( ci::Vec3i center );

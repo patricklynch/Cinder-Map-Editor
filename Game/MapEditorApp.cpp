@@ -13,7 +13,7 @@ static const float	kFrameRate		= 60.0f;
 static const int	kWindowWidth	= 1920;
 static const int	kWindowHeight	= 1080;
 
-class BlockTestApp : public AppBasic {
+class MapEditorApp : public AppBasic {
   public:
 	void prepareSettings( Settings *settings );
 	void setup();
@@ -39,21 +39,21 @@ class BlockTestApp : public AppBasic {
 
 using namespace ly;
 
-void BlockTestApp::prepareSettings( Settings *settings )
+void MapEditorApp::prepareSettings( Settings *settings )
 {
 	settings->setFrameRate( kFrameRate );
 	settings->setWindowSize( kWindowWidth, kWindowHeight );
 }
 
-void BlockTestApp::setup()
+void MapEditorApp::setup()
 {
 	mGame = new Game();
 	mEditor = new Editor( mGame );
 }
 
-void BlockTestApp::resize( ResizeEvent event ) {}
+void MapEditorApp::resize( ResizeEvent event ) {}
 
-void BlockTestApp::update()
+void MapEditorApp::update()
 {
     float currentTime = (float) app::getElapsedSeconds();
     float deltaTime = currentTime - mPrevElapsedSeconds;
@@ -64,11 +64,11 @@ void BlockTestApp::update()
 	mEditor->update( deltaTime );
 }
 
-void BlockTestApp::draw()
+void MapEditorApp::draw()
 {
 	mGame->draw();
 	mEditor->draw();
 }
 
 
-CINDER_APP_BASIC( BlockTestApp, RendererGl(0) )
+CINDER_APP_BASIC( MapEditorApp, RendererGl(0) )

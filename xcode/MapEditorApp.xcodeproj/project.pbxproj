@@ -7,22 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5AAD277916D2FA74000FA993 /* MapEditorApp-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5AAD277716D2FA74000FA993 /* MapEditorApp-Info.plist */; };
 		5AADB19F16C7616300AACE72 /* CGCredits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5AADB19A16C7616300AACE72 /* CGCredits.rtf */; };
 		5AADB1A016C7616300AACE72 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5AADB19B16C7616300AACE72 /* Credits.rtf */; };
 		5AADB1A116C7616300AACE72 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5AADB19C16C7616300AACE72 /* InfoPlist.strings */; };
-		5AADB1BC16C7616D00AACE72 /* Animator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AADB1A316C7616D00AACE72 /* Animator.cpp */; };
 		5AADB1BD16C7616D00AACE72 /* AssetManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AADB1A516C7616D00AACE72 /* AssetManager.cpp */; };
 		5AADB1BE16C7616D00AACE72 /* Block.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AADB1A716C7616D00AACE72 /* Block.cpp */; };
-		5AADB1BF16C7616D00AACE72 /* BlockTestApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AADB1A916C7616D00AACE72 /* BlockTestApp.cpp */; };
+		5AADB1BF16C7616D00AACE72 /* MapEditorApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AADB1A916C7616D00AACE72 /* MapEditorApp.cpp */; };
 		5AADB1C016C7616D00AACE72 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AADB1AA16C7616D00AACE72 /* Camera.cpp */; };
 		5AADB1C116C7616D00AACE72 /* Game_render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AADB1AD16C7616D00AACE72 /* Game_render.cpp */; };
 		5AADB1C216C7616D00AACE72 /* Game_setup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AADB1AE16C7616D00AACE72 /* Game_setup.cpp */; };
 		5AADB1C316C7616D00AACE72 /* Input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AADB1B016C7616D00AACE72 /* Input.cpp */; };
-		5AADB1C416C7616D00AACE72 /* Light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AADB1B316C7616D00AACE72 /* Light.cpp */; };
 		5AADB1C516C7616D00AACE72 /* LoadSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AADB1B516C7616D00AACE72 /* LoadSequence.cpp */; };
 		5AADB1C616C7616D00AACE72 /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AADB1B716C7616D00AACE72 /* Node.cpp */; };
 		5AADB1C716C7616D00AACE72 /* Terrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AADB1B916C7616D00AACE72 /* Terrain.cpp */; };
-		5AADB1CA16C7619400AACE72 /* RPG3-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5AADB1C816C7619400AACE72 /* RPG3-Info.plist */; };
 		5AADB1E416C761D000AACE72 /* Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AADB1CD16C761D000AACE72 /* Editor.cpp */; };
 		5AADB1E516C761D000AACE72 /* EditorCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AADB1CF16C761D000AACE72 /* EditorCamera.cpp */; };
 		5AADB1E616C761D000AACE72 /* EditorCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AADB1D116C761D000AACE72 /* EditorCommand.cpp */; };
@@ -35,8 +33,6 @@
 		5AADB1ED16C761D000AACE72 /* EditorState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AADB1E016C761D000AACE72 /* EditorState.cpp */; };
 		5AADB1EE16C761D000AACE72 /* EditorTexturePaint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AADB1E216C761D000AACE72 /* EditorTexturePaint.cpp */; };
 		5AADB1F516C761F800AACE72 /* brushes in Resources */ = {isa = PBXBuildFile; fileRef = 5AADB1EF16C761F800AACE72 /* brushes */; };
-		5AADB1F616C761F800AACE72 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 5AADB1F016C761F800AACE72 /* fonts */; };
-		5AADB1F716C761F800AACE72 /* models in Resources */ = {isa = PBXBuildFile; fileRef = 5AADB1F116C761F800AACE72 /* models */; };
 		5AADB1F816C761F800AACE72 /* shaders in Resources */ = {isa = PBXBuildFile; fileRef = 5AADB1F216C761F800AACE72 /* shaders */; };
 		5AADB1F916C761F800AACE72 /* terrain in Resources */ = {isa = PBXBuildFile; fileRef = 5AADB1F316C761F800AACE72 /* terrain */; };
 		5AADB1FA16C761F800AACE72 /* textures in Resources */ = {isa = PBXBuildFile; fileRef = 5AADB1F416C761F800AACE72 /* textures */; };
@@ -76,16 +72,16 @@
 		5A4698ED16A46B2C00EDE9CE /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
 		5A4699D516A48A1400EDE9CE /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = Library/Frameworks/ApplicationServices.framework; sourceTree = DEVELOPER_DIR; };
 		5A4699D716A48A1400EDE9CE /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Library/Frameworks/CoreData.framework; sourceTree = DEVELOPER_DIR; };
+		5AAD277716D2FA74000FA993 /* MapEditorApp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MapEditorApp-Info.plist"; sourceTree = SOURCE_ROOT; };
+		5AAD277816D2FA74000FA993 /* MapEditorApp-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MapEditorApp-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		5AADB19A16C7616300AACE72 /* CGCredits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = CGCredits.rtf; sourceTree = SOURCE_ROOT; };
 		5AADB19B16C7616300AACE72 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = SOURCE_ROOT; };
 		5AADB19D16C7616300AACE72 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
-		5AADB1A316C7616D00AACE72 /* Animator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Animator.cpp; sourceTree = "<group>"; };
-		5AADB1A416C7616D00AACE72 /* Animator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animator.h; sourceTree = "<group>"; };
 		5AADB1A516C7616D00AACE72 /* AssetManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AssetManager.cpp; sourceTree = "<group>"; };
 		5AADB1A616C7616D00AACE72 /* AssetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetManager.h; sourceTree = "<group>"; };
 		5AADB1A716C7616D00AACE72 /* Block.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Block.cpp; sourceTree = "<group>"; };
 		5AADB1A816C7616D00AACE72 /* Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Block.h; sourceTree = "<group>"; };
-		5AADB1A916C7616D00AACE72 /* BlockTestApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlockTestApp.cpp; sourceTree = "<group>"; };
+		5AADB1A916C7616D00AACE72 /* MapEditorApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MapEditorApp.cpp; path = ../Game/MapEditorApp.cpp; sourceTree = "<group>"; };
 		5AADB1AA16C7616D00AACE72 /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
 		5AADB1AB16C7616D00AACE72 /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
 		5AADB1AC16C7616D00AACE72 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
@@ -95,8 +91,6 @@
 		5AADB1B016C7616D00AACE72 /* Input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Input.cpp; sourceTree = "<group>"; };
 		5AADB1B116C7616D00AACE72 /* Input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Input.h; sourceTree = "<group>"; };
 		5AADB1B216C7616D00AACE72 /* InputButtons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputButtons.h; sourceTree = "<group>"; };
-		5AADB1B316C7616D00AACE72 /* Light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Light.cpp; sourceTree = "<group>"; };
-		5AADB1B416C7616D00AACE72 /* Light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Light.h; sourceTree = "<group>"; };
 		5AADB1B516C7616D00AACE72 /* LoadSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoadSequence.cpp; sourceTree = "<group>"; };
 		5AADB1B616C7616D00AACE72 /* LoadSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadSequence.h; sourceTree = "<group>"; };
 		5AADB1B716C7616D00AACE72 /* Node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Node.cpp; sourceTree = "<group>"; };
@@ -104,8 +98,6 @@
 		5AADB1B916C7616D00AACE72 /* Terrain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Terrain.cpp; sourceTree = "<group>"; };
 		5AADB1BA16C7616D00AACE72 /* Terrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Terrain.h; sourceTree = "<group>"; };
 		5AADB1BB16C7616D00AACE72 /* Timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timer.h; sourceTree = "<group>"; };
-		5AADB1C816C7619400AACE72 /* RPG3-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RPG3-Info.plist"; sourceTree = SOURCE_ROOT; };
-		5AADB1C916C7619400AACE72 /* RPG3-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RPG3-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		5AADB1CB16C761BB00AACE72 /* GlslInclude.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlslInclude.h; path = ../Utils/GlslInclude.h; sourceTree = "<group>"; };
 		5AADB1CD16C761D000AACE72 /* Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Editor.cpp; sourceTree = "<group>"; };
 		5AADB1CE16C761D000AACE72 /* Editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Editor.h; sourceTree = "<group>"; };
@@ -131,12 +123,10 @@
 		5AADB1E216C761D000AACE72 /* EditorTexturePaint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EditorTexturePaint.cpp; sourceTree = "<group>"; };
 		5AADB1E316C761D000AACE72 /* EditorTexturePaint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorTexturePaint.h; sourceTree = "<group>"; };
 		5AADB1EF16C761F800AACE72 /* brushes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = brushes; path = ../Resources/brushes; sourceTree = "<group>"; };
-		5AADB1F016C761F800AACE72 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = ../Resources/fonts; sourceTree = "<group>"; };
-		5AADB1F116C761F800AACE72 /* models */ = {isa = PBXFileReference; lastKnownFileType = folder; name = models; path = ../Resources/models; sourceTree = "<group>"; };
 		5AADB1F216C761F800AACE72 /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = shaders; path = ../Resources/shaders; sourceTree = "<group>"; };
 		5AADB1F316C761F800AACE72 /* terrain */ = {isa = PBXFileReference; lastKnownFileType = folder; name = terrain; path = ../Resources/terrain; sourceTree = "<group>"; };
 		5AADB1F416C761F800AACE72 /* textures */ = {isa = PBXFileReference; lastKnownFileType = folder; name = textures; path = ../Resources/textures; sourceTree = "<group>"; };
-		5AE3F96016A592FE006BF38E /* RPG3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RPG3.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5AE3F96016A592FE006BF38E /* MapEditorApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapEditorApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,7 +168,7 @@
 		5A346E0016879CB800D8463A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5AE3F96016A592FE006BF38E /* RPG3.app */,
+				5AE3F96016A592FE006BF38E /* MapEditorApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -223,8 +213,6 @@
 			isa = PBXGroup;
 			children = (
 				5AADB1EF16C761F800AACE72 /* brushes */,
-				5AADB1F016C761F800AACE72 /* fonts */,
-				5AADB1F116C761F800AACE72 /* models */,
 				5AADB1F216C761F800AACE72 /* shaders */,
 				5AADB1F316C761F800AACE72 /* terrain */,
 				5AADB1F416C761F800AACE72 /* textures */,
@@ -235,6 +223,7 @@
 		5AADB16A16C75FFF00AACE72 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				5AADB1A916C7616D00AACE72 /* MapEditorApp.cpp */,
 				5AE3F96F16A592FF006BF38E /* Supporting Files */,
 			);
 			name = Application;
@@ -243,13 +232,10 @@
 		5AADB1A216C7616D00AACE72 /* Game */ = {
 			isa = PBXGroup;
 			children = (
-				5AADB1A316C7616D00AACE72 /* Animator.cpp */,
-				5AADB1A416C7616D00AACE72 /* Animator.h */,
 				5AADB1A516C7616D00AACE72 /* AssetManager.cpp */,
 				5AADB1A616C7616D00AACE72 /* AssetManager.h */,
 				5AADB1A716C7616D00AACE72 /* Block.cpp */,
 				5AADB1A816C7616D00AACE72 /* Block.h */,
-				5AADB1A916C7616D00AACE72 /* BlockTestApp.cpp */,
 				5AADB1AA16C7616D00AACE72 /* Camera.cpp */,
 				5AADB1AB16C7616D00AACE72 /* Camera.h */,
 				5AADB1AC16C7616D00AACE72 /* Game.h */,
@@ -259,8 +245,6 @@
 				5AADB1B016C7616D00AACE72 /* Input.cpp */,
 				5AADB1B116C7616D00AACE72 /* Input.h */,
 				5AADB1B216C7616D00AACE72 /* InputButtons.h */,
-				5AADB1B316C7616D00AACE72 /* Light.cpp */,
-				5AADB1B416C7616D00AACE72 /* Light.h */,
 				5AADB1B516C7616D00AACE72 /* LoadSequence.cpp */,
 				5AADB1B616C7616D00AACE72 /* LoadSequence.h */,
 				5AADB1B716C7616D00AACE72 /* Node.cpp */,
@@ -307,8 +291,8 @@
 		5AE3F96F16A592FF006BF38E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				5AADB1C816C7619400AACE72 /* RPG3-Info.plist */,
-				5AADB1C916C7619400AACE72 /* RPG3-Prefix.pch */,
+				5AAD277716D2FA74000FA993 /* MapEditorApp-Info.plist */,
+				5AAD277816D2FA74000FA993 /* MapEditorApp-Prefix.pch */,
 				5AADB19A16C7616300AACE72 /* CGCredits.rtf */,
 				5AADB19B16C7616300AACE72 /* Credits.rtf */,
 				5AADB19C16C7616300AACE72 /* InfoPlist.strings */,
@@ -320,9 +304,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5AE3F95F16A592FE006BF38E /* RPG3 */ = {
+		5AE3F95F16A592FE006BF38E /* MapEditorApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5AE3F98816A592FF006BF38E /* Build configuration list for PBXNativeTarget "RPG3" */;
+			buildConfigurationList = 5AE3F98816A592FF006BF38E /* Build configuration list for PBXNativeTarget "MapEditorApp" */;
 			buildPhases = (
 				5AE3F95C16A592FE006BF38E /* Sources */,
 				5AE3F95D16A592FE006BF38E /* Frameworks */,
@@ -332,9 +316,9 @@
 			);
 			dependencies = (
 			);
-			name = RPG3;
+			name = MapEditorApp;
 			productName = BlockTest;
-			productReference = 5AE3F96016A592FE006BF38E /* RPG3.app */;
+			productReference = 5AE3F96016A592FE006BF38E /* MapEditorApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -346,7 +330,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = lynchdev;
 			};
-			buildConfigurationList = 5A346DF916879CB800D8463A /* Build configuration list for PBXProject "RPG3" */;
+			buildConfigurationList = 5A346DF916879CB800D8463A /* Build configuration list for PBXProject "MapEditorApp" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -358,7 +342,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5AE3F95F16A592FE006BF38E /* RPG3 */,
+				5AE3F95F16A592FE006BF38E /* MapEditorApp */,
 			);
 		};
 /* End PBXProject section */
@@ -371,13 +355,11 @@
 				5AADB19F16C7616300AACE72 /* CGCredits.rtf in Resources */,
 				5AADB1A016C7616300AACE72 /* Credits.rtf in Resources */,
 				5AADB1A116C7616300AACE72 /* InfoPlist.strings in Resources */,
-				5AADB1CA16C7619400AACE72 /* RPG3-Info.plist in Resources */,
 				5AADB1F516C761F800AACE72 /* brushes in Resources */,
-				5AADB1F616C761F800AACE72 /* fonts in Resources */,
-				5AADB1F716C761F800AACE72 /* models in Resources */,
 				5AADB1F816C761F800AACE72 /* shaders in Resources */,
 				5AADB1F916C761F800AACE72 /* terrain in Resources */,
 				5AADB1FA16C761F800AACE72 /* textures in Resources */,
+				5AAD277916D2FA74000FA993 /* MapEditorApp-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,15 +370,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5AADB1BC16C7616D00AACE72 /* Animator.cpp in Sources */,
 				5AADB1BD16C7616D00AACE72 /* AssetManager.cpp in Sources */,
 				5AADB1BE16C7616D00AACE72 /* Block.cpp in Sources */,
-				5AADB1BF16C7616D00AACE72 /* BlockTestApp.cpp in Sources */,
+				5AADB1BF16C7616D00AACE72 /* MapEditorApp.cpp in Sources */,
 				5AADB1C016C7616D00AACE72 /* Camera.cpp in Sources */,
 				5AADB1C116C7616D00AACE72 /* Game_render.cpp in Sources */,
 				5AADB1C216C7616D00AACE72 /* Game_setup.cpp in Sources */,
 				5AADB1C316C7616D00AACE72 /* Input.cpp in Sources */,
-				5AADB1C416C7616D00AACE72 /* Light.cpp in Sources */,
 				5AADB1C516C7616D00AACE72 /* LoadSequence.cpp in Sources */,
 				5AADB1C616C7616D00AACE72 /* Node.cpp in Sources */,
 				5AADB1C716C7616D00AACE72 /* Terrain.cpp in Sources */,
@@ -493,14 +473,14 @@
 				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "RPG3-Prefix.pch";
+				GCC_PREFIX_HEADER = "MapEditorApp-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				HEADER_SEARCH_PATHS = "$(CINDER_PATH)/boost";
-				INFOPLIST_FILE = "RPG3-Info.plist";
+				INFOPLIST_FILE = "/Users/pdlynch/Development/RPG3/xcode/MapEditorApp-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_LDFLAGS = "$(CINDER_PATH)/lib/libcinder_d.a";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = MapEditorApp;
 				SDKROOT = macosx;
 				SUPPORTED_PLATFORMS = macosx;
 				USER_HEADER_SEARCH_PATHS = "../include $(CINDER_PATH)/include";
@@ -520,14 +500,14 @@
 				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "RPG3-Prefix.pch";
+				GCC_PREFIX_HEADER = "MapEditorApp-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				HEADER_SEARCH_PATHS = "$(CINDER_PATH)/boost";
-				INFOPLIST_FILE = "RPG3-Info.plist";
+				INFOPLIST_FILE = "/Users/pdlynch/Development/RPG3/xcode/MapEditorApp-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_LDFLAGS = "$(CINDER_PATH)/lib/libcinder.a";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = MapEditorApp;
 				SDKROOT = macosx;
 				SUPPORTED_PLATFORMS = macosx;
 				USER_HEADER_SEARCH_PATHS = "../include $(CINDER_PATH)/include";
@@ -538,7 +518,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5A346DF916879CB800D8463A /* Build configuration list for PBXProject "RPG3" */ = {
+		5A346DF916879CB800D8463A /* Build configuration list for PBXProject "MapEditorApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5A346E3916879CB800D8463A /* Debug */,
@@ -547,7 +527,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5AE3F98816A592FF006BF38E /* Build configuration list for PBXNativeTarget "RPG3" */ = {
+		5AE3F98816A592FF006BF38E /* Build configuration list for PBXNativeTarget "MapEditorApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5AE3F98916A592FF006BF38E /* Debug */,

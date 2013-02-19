@@ -64,7 +64,6 @@ private:
 	float							mPrevElapsedSeconds;
 	ly::EditorCamera				mEditorCamera;
 	ci::gl::GlslProg				mBlockShader;
-	ci::gl::GlslProg				mTerrainShader;
 	std::vector<Block*>				mBlocks;
 	ci::Vec3i						mPrevMapCenter;
 	int								mMaxVisibleTileRadius;

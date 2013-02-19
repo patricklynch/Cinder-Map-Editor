@@ -22,11 +22,10 @@ Editor::Editor( Game* game ) : mGame( game ), mTexturePaint( NULL ), mPanel( NUL
 	mState.mode = MODE_PAINT_TEXTURE;
 	
 	mCamera = ly::Camera::get();
-	mCamera->setFov( 20 );
-	mCamera->setZoom( 80 );
-	mCamera->setAngle( -80.0f);
-	mCamera->rotation.y = 180.0f;
-	mCamera->setAngle( -89.0f);
+	mCamera->setFov( 50 );
+	mCamera->setZoom( 30 );
+	mCamera->setAngle( -45.0f);
+	mCamera->rotation.y = 45.0f;
 	
 	mTexturePaint = new EditorTexturePaint( mState.texturePaint );
 	
@@ -124,14 +123,14 @@ void Editor::update( const float deltaTime )
 		(*iter)->update( deltaTime );
 	}
 	
-	//purgeBlocksWithNoMesh();
+	purgeBlocksWithNoMesh();
 }
 
 void Editor::purgeBlocksWithNoMesh()
 {
 	std::vector<EditorSelection*>::iterator iter;
 	for( iter = mSelections.begin(); iter != mSelections.end(); iter++) {
-		if ( (*iter)->mTopBlockMeshType == BlockMeshNone ) {
+		if ( (*iter)->mBlock->meshType() == BlockMeshNone ) {
 			(*iter)->mBlock->setMeshType( BlockMeshCenter, 0.0f );
 			setElevation( *iter, (*iter)->getTilePosition().y-1, (*iter)->mBlock->terrainIndex() );
 			(*iter)->update( 0.0f );
@@ -146,15 +145,6 @@ void Editor::clearActiveSelections()
 		(*iter)->unhighlight();
 	}
 	mActiveSelections.clear();
-}
-
-void Editor::resetElevation()
-{
-	EditorCommandModifyElevation* cmd = new EditorCommandModifyElevation();
-	cmd->activeSelections = mSelections;
-	cmd->editor = this;
-	cmd->amount = 0;
-	mCommandQueue.addCommand( cmd );
 }
 
 void Editor::applyUserEdits()

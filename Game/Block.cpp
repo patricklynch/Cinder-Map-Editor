@@ -16,13 +16,11 @@ using namespace ly;
 Block::Block( Game* game ) : mRotation( 0.0f ), mTerrain( NULL ), mGame( game )
 {
 	mNode = new Node();
-	testOffset = Vec2f::zero();
 	mNode->colors[ MaterialSpecular ] = ColorA( 0, 0, 0, 0 );
 	
 	AssetManager* assetManager	= AssetManager::get();
 	tilePosition				= Vec3f::zero();
 	mTextureOffset				= Vec2i( 2, 3 );
-	//mTextureOffset			= Vec2i( randInt(0,7), randInt(0,7) );
 	mNode->scale				= Vec3f::one() * kTileSize;
 
 	setTerrainIndex( 0 );
@@ -50,17 +48,10 @@ void Block::setMeshType( BlockMeshType type, float rotation )
 	mRotation = rotation;
 	float textureRotation = rotation;
 
-	// TODO: Is there a baetter way to do this?
 	if ( mBlockMeshType == BlockMeshCenter ) {
 		mRotation = 0.0f;
 		textureRotation = 180.0f;
 	}
-	
-	//mTextureMatrix = Matrix44f::identity();
-	//mTextureMatrix.translate( Vec3f( 0.5f, 0.5f, 0.5f ) );
-	//mTextureMatrix.rotate( Vec3f::zAxis(), toRadians( textureRotation ) );
-	//mTextureMatrix.translate( Vec3f( -0.5f, -0.5f, 0.5f ) );
-	//mTextureMatrix.scale( Vec3f( -1.0f, 1.0f, 0.0f ) );
 	
 	mTextureMatrix = Matrix44f::identity();
 	mTextureMatrix.translate( Vec3f( 0.5f, 0.5f, 0.5f ) );
@@ -124,7 +115,6 @@ void Block::draw( ci::gl::GlslProg* shader )
 	shader->uniform( "textureEdge",				5 );
 	shader->uniform( "texturePaintMask",		6 );
 	shader->uniform( "textureMatrix",			mTextureMatrix );
-	//shader->uniform( "textureMatrix2",			mTextureMatrix2 );
 	
 	float r = kDefaultMaxVisibleTileRadius;
 	shader->uniform( "offset", Vec2f( tilePosition.x, tilePosition.z ) + Vec2f( r, r ) );
@@ -150,6 +140,4 @@ void Block::update( const float deltaTime )
 {
 	mNode->rotation.y = mRotation;
 	mNode->update( deltaTime );
-	
-	testOffset += Vec2f::one() * 0.01f;
 }

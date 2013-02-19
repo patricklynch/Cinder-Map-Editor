@@ -16,7 +16,6 @@ void Game::setupRenderer()
 {
 	try {
 		mBlockShader	= GlslInclude::compileShader( "shaders/blocks.vert",	"shaders/blocks2.frag" );
-		mTerrainShader	= GlslInclude::compileShader( "shaders/terrain.vert",	"shaders/terrain.frag" );
 	}
 	catch( gl::GlslProgCompileExc &exc ) {
 		console() << "Shader compile error: " << exc.what() << std::endl;
@@ -26,12 +25,6 @@ void Game::setupRenderer()
 		console() << "Cannot load shader: " << exc.what() << std::endl;
 		exit( 1 );
 	}
-	
-	/*mParams = params::InterfaceGl( "DEBUG", Vec2i( 200, 300 ) );
-	mTerrainScaleAdjust = 1.0f;
-	mParams.addParam( "Terrain Scale Adjust", &mTerrainScaleAdjust, "max=2.0 min=0.0 step=0.00001" );
-	mTerrainOffsetAdjust = 0.0f;
-	mParams.addParam( "Terrain Offset Adjust", &mTerrainOffsetAdjust, "max=1.0 min=-1.0 step=0.00001" );*/
 }
 
 void Game::draw()
@@ -41,8 +34,8 @@ void Game::draw()
 	mCamera->update( 0.0f );
 	drawBlocks( mBlocks, mCamera->cinderCamera() );
 	
-	gl::setMatricesWindow( app::getWindowSize(), true );
 	// Now draw GUI
+	gl::setMatricesWindow( app::getWindowSize(), true );
 	
 	if ( mLoadSequence != NULL ) {
 		mLoadSequence->draw();
@@ -71,17 +64,6 @@ void Game::drawBlocks( std::vector<Block*>& blocks, ci::Camera& camera )
 		(*iter)->draw( &mBlockShader );
 	}
 	mBlockShader.unbind();
-	
-	glPushMatrix();
-	gl::setMatrices( camera );
-	gl::color( 1, 1, 0, 1 );
-	for( iter = blocks.begin(); iter != blocks.end(); iter++ ) {
-		if ( (*iter)->meshType() == BlockMeshNone ) {
-			gl::drawCube( (*iter)->mNode->globalPosition(), Vec3f::one() * 0.2f );
-		}
-	}
-	glPopMatrix();
-
 	
 	glDisable( GL_CULL_FACE );
 }

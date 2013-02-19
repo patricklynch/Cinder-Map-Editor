@@ -45,11 +45,9 @@ private:
 	Game*					mGame;
 	int						mTerrainIndex;
 	Terrain*				mTerrain;
-	float					testRotation;
 	
 	ci::gl::VboMesh*		mVboMeshTile;
 	BlockMeshType			mBlockMeshType;
-	ci::Vec2f				testOffset;
 };
 	
 }

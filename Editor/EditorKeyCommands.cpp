@@ -129,11 +129,6 @@ void EditorKeyCommands::onKeyDown( ci::app::KeyEvent event )
 			state.showGrid = !state.showGrid;
 		}
 		
-		// Clear everything off the map
-		else if ( code == KeyEvent::KEY_SPACE ) {
-			mEditor->resetElevation();
-		}
-		
 		// Set to texture paint mode
 		else if ( code == KeyEvent::KEY_p ) {
 			state.mode = MODE_PAINT_TEXTURE;
