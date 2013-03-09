@@ -8,23 +8,6 @@ using namespace ly;
 EditorState::EditorState()
 {
 	resetDefaults();
-	
-	/*testFloat = EditorValue<float>( 0.0f, -2.0f, 4.0f );
-	
-	testFloat = 1.0f;
-	testInt = 5;
-	testType = MODE_PAINT_ELEVATION;
-	
-	if ( testFloat == 1.0f ) console() << "PASS" << std::endl;
-	else  console() << "FAIL" << std::endl;
-	if ( testFloat != 1.0f ) console() << "FAIL" << std::endl;
-	else console() << "PASS" << std::endl;
-	
-	
-	if ( testInt != 5 ) console() << "FAIL" << std::endl;
-	else console() << "PASS" << std::endl;
-	if ( testInt == 5 ) console() << "PASS" << std::endl;
-	else  console() << "FAIL" << std::endl;*/
 }
 
 void EditorState::resetDefaults()
