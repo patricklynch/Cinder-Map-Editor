@@ -6,3 +6,22 @@ This is a simple map editor designed to recreate some of the functionality of th
 ![Screenshot] (https://raw.github.com/patricklynch/MapEditor/master/screenshot_00.png)
 
 ![Screenshot] (https://raw.github.com/patricklynch/MapEditor/master/screenshot_01.png)
+
+COMPILED VERSION:
+- MAC: http://www.lynchdev.com/github/MapEditorApp.zip
+- PC: Coming soon...
+
+MOUSE AND KEY COMMANDS:
+- Undo: CMD + Z
+- Redo: CMD + SHFT + Z
+- Paint Mode: P
+- Elevation Mode: E
+- Larger Brush: ]
+- Smaller Brush: [
+- Higher Elevation: +
+- Lower Elevation -
+- Orbit: ALT + Middle Mouse, or arrow keys
+- Zoom: ALT + Right Mouse (left and right)
+
+OTHER NOTES:
+- The buttons on the control panel with labels in all caps do not work, but undo and redo will work with the above key commands.
